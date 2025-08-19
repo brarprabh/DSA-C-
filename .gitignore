@@ -1,0 +1,28 @@
+# Ignore build outputs
+*.exe
+*.out
+*.obj
+*.o
+*.a
+*.so
+*.dll
+*.lib
+
+# Ignore temp files
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore temp files created by Code Runner
+tempCodeRunnerFile.cpp
+tempCodeRunnerFile.exe
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Windows system files
+Thumbs.db
