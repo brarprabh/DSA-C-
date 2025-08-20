@@ -2095,30 +2095,106 @@
 
 // Find the missing and the repeating number
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> missrep(vector<int> arr, int n)
+// {
+//     int sn = n * (n + 1) / 2;
+//     int sn2 = n * (n + 1) * (2 * n + 1) / 6;
+
+//     int s = 0;
+//     int s2 = 0;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         s += arr[i];
+//         s2 += arr[i] * arr[i];
+//     }
+//     int val1 = s - sn;
+//     int val2 = s2 - sn2;
+
+//     val2 = val2 / val1;        // value of x + y;
+//     int x = (val1 + val2) / 2; // these should be different..
+//     int y = x - val1;
+
+//     return {x, y};
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     vector<int> ans = missrep(arr, n);
+
+//     for (auto it : ans)
+//     {
+//         cout << it << " ";
+//     }
+//     return 0;
+// }
+
+// Count the number of inversions
+
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> missrep(vector<int> arr, int n)
+int merge(vector<int> &arr, int n, int low, int mid, int high)
 {
-    int sn = n * (n + 1) / 2;
-    int sn2 = n * (n + 1) * (2 * n + 1) / 6;
-
-    int s = 0;
-    int s2 = 0;
-
-    for (int i = 0; i < n; i++)
+    vector<int> temp;
+    int left = low;
+    int right = mid + 1;
+    int count = 0;
+    while (left <= mid && right <= high)
     {
-        s += arr[i];
-        s2 += arr[i] * arr[i];
+        if (arr[left] <= arr[right])
+        {
+            temp.push_back(arr[left]);
+            left++;
+        }
+        else
+        {
+            temp.push_back(arr[right]);
+            count += (mid - left + 1);
+            right++;
+        }
     }
-    int val1 = s - sn;
-    int val2 = s2 - sn2;
+    while (left <= mid)
+    {
+        temp.push_back(arr[left]);
+        left++;
+    }
+    while (right <= high)
+    {
+        temp.push_back(arr[right]);
+        right++;
+    }
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp[i - low];
+    }
+    return count;
+}
 
-    val2 = val2 / val1;        // value of x + y;
-    int x = (val1 + val2) / 2; // these should be different..
-    int y = x - val1;
+int mergesort(vector<int> &arr, int n, int low, int high)
+{
+    int count = 0;
+    int mid = (low + high) / 2;
 
-    return {x, y};
+    if (low == high)
+        return count;
+    count += mergesort(arr, n, low, mid);
+    count += mergesort(arr, n, mid + 1, high);
+    count += merge(arr, n, low, mid, high);
+    return count;
 }
 
 int main()
@@ -2133,11 +2209,7 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    vector<int> ans = missrep(arr, n);
-
-    for (auto it : ans)
-    {
-        cout << it << " ";
-    }
+    int count = mergesort(arr, n, 0, n - 1);
+    cout << count;
     return 0;
 }
