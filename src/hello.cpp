@@ -1885,7 +1885,7 @@
 //         sum += arr[i];
 //         if (sum == 0)
 //         {
-//             int maxi = i + 1;
+//              maxi = i + 1;
 //         }
 //         else if (mpp.find(sum) != mpp.end())
 //         {
@@ -1913,7 +1913,7 @@
 //     int maxi = maxsubarray(arr, n);
 //     cout << maxi;
 //     return 0;
-//}
+// }
 
 // number of subarray with xor k
 
@@ -2022,7 +2022,7 @@
 //             break;
 //         }
 //     }
-//     sort(arr.begin(), arr.end() + n1);  // make sure that zero should not come in first
+//     sort(arr.begin(), arr.end() + n1);  // make sure that zero should not come in first for leetcode case..
 //     sort(brr.begin(), brr.end());
 // }
 
@@ -2049,7 +2049,7 @@
 //     }
 //     merge(arr, brr, n1, n2);
 //     return 0;
-// }
+//}
 
 // max product of subarray
 
@@ -2092,3 +2092,52 @@
 //     cout << count;
 //     return 0;
 // }
+
+// Find the missing and the repeating number
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> missrep(vector<int> arr, int n)
+{
+    int sn = n * (n + 1) / 2;
+    int sn2 = n * (n + 1) * (2 * n + 1) / 6;
+
+    int s = 0;
+    int s2 = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        s += arr[i];
+        s2 += arr[i] * arr[i];
+    }
+    int val1 = s - sn;
+    int val2 = s2 - sn2;
+
+    val2 = val2 / val1;        // value of x + y;
+    int x = (val1 + val2) / 2; // these should be different..
+    int y = x - val1;
+
+    return {x, y};
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr;
+
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    vector<int> ans = missrep(arr, n);
+
+    for (auto it : ans)
+    {
+        cout << it << " ";
+    }
+    return 0;
+}
