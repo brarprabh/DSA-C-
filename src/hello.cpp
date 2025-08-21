@@ -1234,7 +1234,7 @@
 // using namespace std;
 // void rotate90(int n, int m, vector<vector<int>> &matrix)
 // {
-
+//     // Transposing the matrix..
 //     for (int i = 0; i < n; i++)
 //     {
 //         for (int j = 0; j < i; j++)
@@ -1242,9 +1242,9 @@
 //             swap(matrix[i][j], matrix[j][i]);
 //         }
 //     }
-//     for (int i = 0; i < n; i++)
+//     for (int i = 0; i < n; i++)  // for rows
 //     {
-//         reverse(matrix[i].begin(), matrix[i].end());
+//         reverse(matrix[i].begin(), matrix[i].end());   // its in vector so these functions are used..
 //     }
 // }
 // int main()
@@ -1299,7 +1299,7 @@
 //             answer.push_back(arr[i][right]);
 //         }
 //         right--;
-//         if (top <= bottom)
+//         if (top <= bottom) //as a safe case..
 //         {
 //             for (int i = right; i >= left; i--)
 //             {
@@ -1681,7 +1681,7 @@
 //         cout << it << " ";
 //     }
 //     return 0;
-//}
+// }
 
 // Three sum problem  better soln
 
@@ -2216,74 +2216,109 @@
 
 // Reverse pairs
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// void merge(vector<int> &arr, int n, int low, int mid, int high)
+// {
+//     vector<int> temp;
+//     int left = low;
+//     int right = mid + 1;
+//     int count = 0;
+//     while (left <= mid && right <= high)
+//     {
+//         if (arr[left] <= arr[right])
+//         {
+//             temp.push_back(arr[left]);
+//             left++;
+//         }
+//         else
+//         {
+//             temp.push_back(arr[right]);
+
+//             right++;
+//         }
+//     }
+//     while (left <= mid)
+//     {
+//         temp.push_back(arr[left]);
+//         left++;
+//     }
+//     while (right <= high)
+//     {
+//         temp.push_back(arr[right]);
+//         right++;
+//     }
+//     for (int i = low; i <= high; i++)
+//     {
+//         arr[i] = temp[i - low];
+//     }
+// }
+
+// int countpairs(vector<int> &arr, int n, int low, int mid, int high)
+// {
+//     int right = mid + 1;
+//     int count = 0;
+//     for (int i = low; i <= mid; i++)
+//     {
+//         while (right <= high && arr[i] > 2 * arr[right])
+//             right++;
+//         count += right - (mid + 1);
+//     }
+//     return count;
+// }
+// int mergesort(vector<int> &arr, int n, int low, int high)
+// {
+//     int count = 0;
+//     int mid = (low + high) / 2;
+
+//     if (low == high)
+//         return count;
+//     count += mergesort(arr, n, low, mid);
+//     count += mergesort(arr, n, mid + 1, high);
+//     count += countpairs(arr, n, low, mid, high);
+//     merge(arr, n, low, mid, high);
+//     return count;
+// }
+// int reversepairs(vector<int> &arr)
+// {
+//     int n = arr.size();
+//     return mergesort(arr, n, 0, n - 1);
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int count = reversepairs(arr);
+//     cout << count;
+//     return 0;
+// }
+
+// Binary search using recursion
+
 #include <bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int> &arr, int n, int low, int mid, int high)
+int recurbinary(vector<int> arr, int low, int high, int target)
 {
-    vector<int> temp;
-    int left = low;
-    int right = mid + 1;
-    int count = 0;
-    while (left <= mid && right <= high)
-    {
-        if (arr[left] <= arr[right])
-        {
-            temp.push_back(arr[left]);
-            left++;
-        }
-        else
-        {
-            temp.push_back(arr[right]);
-
-            right++;
-        }
-    }
-    while (left <= mid)
-    {
-        temp.push_back(arr[left]);
-        left++;
-    }
-    while (right <= high)
-    {
-        temp.push_back(arr[right]);
-        right++;
-    }
-    for (int i = low; i <= high; i++)
-    {
-        arr[i] = temp[i - low];
-    }
-}
-
-int countpairs(vector<int> &arr, int n, int low, int mid, int high)
-{
-    int right = mid + 1;
-    int count = 0;
-    for (int i = low; i <= mid; i++)
-    {
-        while (right <= high && arr[i] > 2 * arr[right])
-            right++;
-        count += right - (mid + 1);
-    }
-    return count;
-}
-int mergesort(vector<int> &arr, int n, int low, int high)
-{
-    int count = 0;
+    if (low > high)
+        return -1;
     int mid = (low + high) / 2;
-
-    if (low == high)
-        return count;
-    count += mergesort(arr, n, low, mid);
-    count += mergesort(arr, n, mid + 1, high);
-    count += countpairs(arr, n, low, mid, high);
-    merge(arr, n, low, mid, high);
-    return count;
-}
-int reversepairs(vector<int> &arr)
-{
-    int n = arr.size();
-    return mergesort(arr, n, 0, n - 1);
+    if (target == arr[mid])
+        return mid;
+    else if (target > arr[mid])
+        return recurbinary(arr, mid + 1, high, target);
+    else
+        return recurbinary(arr, low, mid - 1, target);
 }
 
 int main()
@@ -2291,14 +2326,15 @@ int main()
     int n;
     cin >> n;
     vector<int> arr;
-
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
         arr.push_back(x);
     }
-    int count = reversepairs(arr);
-    cout << count;
+    int target;
+    cin >> target;
+    int index = recurbinary(arr, 0, n - 1, target);
+    cout << index;
     return 0;
 }
