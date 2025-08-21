@@ -2305,20 +2305,64 @@
 
 // Binary search using recursion
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int recurbinary(vector<int> arr, int low, int high, int target)
+// {
+//     if (low > high)
+//         return -1;
+//     int mid = (low + high) / 2;
+//     if (target == arr[mid])
+//         return mid;
+//     else if (target > arr[mid])
+//         return recurbinary(arr, mid + 1, high, target);
+//     else
+//         return recurbinary(arr, low, mid - 1, target);
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int target;
+//     cin >> target;
+//     int index = recurbinary(arr, 0, n - 1, target);
+//     cout << index;
+//     return 0;
+//}
+
+// Lower Bound
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int recurbinary(vector<int> arr, int low, int high, int target)
+int bs(vector<int> arr, int n, int target)
 {
-    if (low > high)
-        return -1;
-    int mid = (low + high) / 2;
-    if (target == arr[mid])
-        return mid;
-    else if (target > arr[mid])
-        return recurbinary(arr, mid + 1, high, target);
-    else
-        return recurbinary(arr, low, mid - 1, target);
+    int low = 0;
+    int high = n - 1;
+    int ans = n;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] >= target)
+        {
+            ans = mid; // for this condition this could be lower bound
+            high = mid - 1;
+        }
+        else
+        {
+            low = low + 1;
+        }
+    }
+    return ans;
 }
 
 int main()
@@ -2334,7 +2378,6 @@ int main()
     }
     int target;
     cin >> target;
-    int index = recurbinary(arr, 0, n - 1, target);
+    int index = bs(arr, n, target);
     cout << index;
-    return 0;
 }
