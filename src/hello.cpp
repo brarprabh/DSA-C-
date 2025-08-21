@@ -2341,28 +2341,111 @@
 
 // Lower Bound
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int bs(vector<int> arr, int n, int target)
+// {
+//     int low = 0;
+//     int high = n - 1;
+//     int ans = n;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (arr[mid] >= target) // search insert position is also solved by lb   // it will be (arr[mid] > target) for upper bound;
+//         {
+//             ans = mid; // for this condition this could be lower bound
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return ans;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int target;
+//     cin >> target;
+//     int index = bs(arr, n, target);
+//     cout << index;
+// }
+
+// in floor just reverse the sign i.e <=  and retrun the arr[mid];
+
+// Count the first and the last occurance of the elements
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int bs(vector<int> arr, int n, int target)
+int firstocc(vector<int> arr, int n, int target)
 {
+    int first = -1;
     int low = 0;
     int high = n - 1;
-    int ans = n;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        if (arr[mid] >= target)
+        if (arr[mid] == target)
         {
-            ans = mid; // for this condition this could be lower bound
+            first = mid;
+            high = mid - 1;
+        }
+        else if (arr[mid] > target)
+        {
             high = mid - 1;
         }
         else
         {
-            low = low + 1;
+            low = mid + 1;
         }
     }
-    return ans;
+    return first;
+}
+
+int lastocc(vector<int> arr, int n, int target)
+{
+    int last = -1;
+    int low = 0;
+    int high = n - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] == target)
+        {
+            last = mid;
+            low = mid + 1;
+        }
+        else if (arr[mid] > target)
+        {
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return last;
+}
+
+vector<int> firstndlast(vector<int> arr, int n, int target)
+{
+    int first = firstocc(arr, n, target);
+    if (first == -1)
+        return {-1, -1};
+    int last = lastocc(arr, n, target);
+    return {first, last}; // for no of occurance last - first + 1;
 }
 
 int main()
@@ -2378,6 +2461,13 @@ int main()
     }
     int target;
     cin >> target;
-    int index = bs(arr, n, target);
-    cout << index;
+    vector<int> answer;
+
+    answer = firstndlast(arr, n, target);
+
+    for (auto it : answer)
+    {
+        cout << it << " ";
+    }
+    return 0;
 }
