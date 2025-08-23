@@ -2162,7 +2162,7 @@
 //         }
 //         else
 //         {
-//             temp.push_back(arr[right]);
+//             temp.push_back(arr[right]);  // left vich greater aa..
 //             count += (mid - left + 1);
 //             right++;
 //         }
@@ -2193,7 +2193,7 @@
 //         return count;
 //     count += mergesort(arr, n, low, mid);
 //     count += mergesort(arr, n, mid + 1, high);
-//     count += merge(arr, n, low, mid, high);
+//     count += merge(arr, n, low, mid, high);  //inversions are check in merge array while for pairs a separate func is written since logic is diff
 //     return count;
 // }
 
@@ -2212,7 +2212,7 @@
 //     int count = mergesort(arr, n, 0, n - 1);
 //     cout << count;
 //     return 0;
-// }
+//}
 
 // Reverse pairs
 
@@ -2337,7 +2337,7 @@
 //     int index = recurbinary(arr, 0, n - 1, target);
 //     cout << index;
 //     return 0;
-//}
+// }
 
 // Lower Bound
 
@@ -2352,7 +2352,7 @@
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
-//         if (arr[mid] >= target) // search insert position is also solved by lb   // it will be (arr[mid] > target) for upper bound;
+//         if (arr[mid] >= target) // search insert position is also solved by lb   &&   it will be (arr[mid] > target) for upper bound;
 //         {
 //             ans = mid; // for this condition this could be lower bound
 //             high = mid - 1;
@@ -2386,66 +2386,136 @@
 
 // Count the first and the last occurance of the elements
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int firstocc(vector<int> arr, int n, int target)
+// {
+//     int first = -1;
+//     int low = 0;
+//     int high = n - 1;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (arr[mid] == target)
+//         {
+//             first = mid;
+//             high = mid - 1;    // since we have to find smaller...
+//         }
+//         else if (arr[mid] > target)
+//         {
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return first;
+// }
+
+// int lastocc(vector<int> arr, int n, int target)
+// {
+//     int last = -1;
+//     int low = 0;
+//     int high = n - 1;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (arr[mid] == target)
+//         {
+//             last = mid;
+//             low = mid + 1; // since we have to find greater..
+//         }
+//         else if (arr[mid] > target)
+//         {
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return last;
+// }
+
+// vector<int> firstndlast(vector<int> arr, int n, int target)
+// {
+//     int first = firstocc(arr, n, target);
+//     if (first == -1)
+//         return {-1, -1};
+//     int last = lastocc(arr, n, target);
+//     return {first, last}; // for no of occurance last - first + 1;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int target;
+//     cin >> target;
+//     vector<int> answer;
+
+//     answer = firstndlast(arr, n, target);
+
+//     for (auto it : answer)
+//     {
+//         cout << it << " ";
+//     }
+//     return 0;
+// }
+
+// Bianry search in rotated sorted array
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int firstocc(vector<int> arr, int n, int target)
+int bins(vector<int> arr, int n, int target)
 {
-    int first = -1;
     int low = 0;
     int high = n - 1;
+    int pos;
     while (low <= high)
     {
         int mid = (low + high) / 2;
         if (arr[mid] == target)
         {
-            first = mid;
-            high = mid - 1;
-        }
-        else if (arr[mid] > target)
+            pos = mid;
+            return pos;
+                }
+        // left sorted  b/c binary search is performed on sorted array
+        if (arr[low] <= arr[mid])
         {
-            high = mid - 1;
+            if (arr[low] <= target && target <= arr[mid]) // make sure the value lie in bt the two..
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
         }
+        // right sorted array...
         else
         {
-            low = mid + 1;
+            if (arr[mid] <= target && target <= arr[high])
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
         }
     }
-    return first;
-}
-
-int lastocc(vector<int> arr, int n, int target)
-{
-    int last = -1;
-    int low = 0;
-    int high = n - 1;
-    while (low <= high)
-    {
-        int mid = (low + high) / 2;
-        if (arr[mid] == target)
-        {
-            last = mid;
-            low = mid + 1;
-        }
-        else if (arr[mid] > target)
-        {
-            high = mid - 1;
-        }
-        else
-        {
-            low = mid + 1;
-        }
-    }
-    return last;
-}
-
-vector<int> firstndlast(vector<int> arr, int n, int target)
-{
-    int first = firstocc(arr, n, target);
-    if (first == -1)
-        return {-1, -1};
-    int last = lastocc(arr, n, target);
-    return {first, last}; // for no of occurance last - first + 1;
+    return -1;
 }
 
 int main()
@@ -2461,13 +2531,7 @@ int main()
     }
     int target;
     cin >> target;
-    vector<int> answer;
-
-    answer = firstndlast(arr, n, target);
-
-    for (auto it : answer)
-    {
-        cout << it << " ";
-    }
+    int pos = bins(arr, n, target);
+    cout << pos;
     return 0;
 }
