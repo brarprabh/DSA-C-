@@ -2538,55 +2538,106 @@
 
 // Binary Search with duplicates..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool bins(vector<int> arr, int n, int target)
+// {
+//     int low = 0;
+//     int high = n - 1;
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (arr[mid] == target)
+//         {
+//             return true;
+//         }
+//         // if sorted cant be found....
+//         if (arr[low] == arr[mid] && arr[mid] == arr[high])
+//         {
+//             high--;
+//             low++;
+//             continue;
+//         }
+//         // left sorted  b/c binary search is performed on sorted array
+//         if (arr[low] <= arr[mid])
+//         {
+//             if (arr[low] <= target && target <= arr[mid]) // make sure the value lie in bt the two..
+//             {
+//                 high = mid - 1;
+//             }
+//             else
+//             {
+//                 low = mid + 1;
+//             }
+//         }
+//         // right sorted array...
+//         else
+//         {
+//             if (arr[mid] <= target && target <= arr[high])
+//             {
+//                 low = mid + 1;
+//             }
+//             else
+//             {
+//                 high = mid - 1;
+//             }
+//         }
+//     }
+//     return false;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int target;
+//     cin >> target;
+//     int pos = bins(arr, n, target);
+//     cout << pos;
+//     return 0;
+// }
+
+// Find the smallest in the sorted rotated array...
+
 #include <bits/stdc++.h>
 using namespace std;
 
-bool bins(vector<int> arr, int n, int target)
+int smallbs(vector<int> arr, int n)
 {
     int low = 0;
     int high = n - 1;
-
+    int ans = INT_MAX;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        if (arr[mid] == target)
-        {
 
-            return true;
-        }
-        // if sorted cant be found....
-        if (arr[low] == arr[mid] && arr[mid] == arr[high])
+        if (arr[low] <= arr[high])
         {
-            high--;
-            low++;
-            continue;
+            ans = min(ans, arr[low]);
+            break;
         }
-        // left sorted  b/c binary search is performed on sorted array
-        if (arr[low] <= arr[mid])
+
+        else if (arr[low] <= arr[mid])
         {
-            if (arr[low] <= target && target <= arr[mid]) // make sure the value lie in bt the two..
-            {
-                high = mid - 1;
-            }
-            else
-            {
-                low = mid + 1;
-            }
+            ans = min(ans, arr[low]);
+            low = mid + 1;
         }
-        // right sorted array...
         else
         {
-            if (arr[mid] <= target && target <= arr[high])
-            {
-                low = mid + 1;
-            }
-            else
-            {
-                high = mid - 1;
-            }
+            ans = min(ans, arr[mid]);
+            high = mid - 1;
         }
     }
-    return false;
+    return ans;
 }
 
 int main()
@@ -2600,9 +2651,7 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int target;
-    cin >> target;
-    int pos = bins(arr, n, target);
-    cout << pos;
-    return 0;
+    int small = smallbs(arr, n);
+    cout << small;
+    return small;
 }
