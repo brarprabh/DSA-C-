@@ -2608,6 +2608,56 @@
 
 // Find the smallest in the sorted rotated array...
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int smallbs(vector<int> arr, int n)
+// {
+//     int low = 0;
+//     int high = n - 1;
+//     int ans = INT_MAX;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+
+//         if (arr[low] <= arr[high])
+//         {
+//             ans = min(ans, arr[low]);
+//             break;
+//         }
+
+//         else if (arr[low] <= arr[mid])
+//         {
+//             ans = min(ans, arr[low]);
+//             low = mid + 1;
+//         }
+//         else
+//         {
+//             ans = min(ans, arr[mid]);
+//             high = mid - 1;
+//         }
+//     }
+//     return ans;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int small = smallbs(arr, n);
+//     cout << small;
+//     return small;
+// }
+
+// Find the number of times the array is rotated..
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -2616,6 +2666,7 @@ int smallbs(vector<int> arr, int n)
     int low = 0;
     int high = n - 1;
     int ans = INT_MAX;
+    int index;
     while (low <= high)
     {
         int mid = (low + high) / 2;
@@ -2628,16 +2679,24 @@ int smallbs(vector<int> arr, int n)
 
         else if (arr[low] <= arr[mid])
         {
-            ans = min(ans, arr[low]);
+            if (arr[low] < ans)
+            {
+                index = low;
+                ans = arr[low];
+            }
             low = mid + 1;
         }
         else
         {
-            ans = min(ans, arr[mid]);
+            if (arr[mid] < ans)
+            {
+                index = mid;
+                ans = arr[mid];
+            }
             high = mid - 1;
         }
     }
-    return ans;
+    return index;
 }
 
 int main()
