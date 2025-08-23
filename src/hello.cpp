@@ -2658,45 +2658,100 @@
 
 // Find the number of times the array is rotated..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int smallbs(vector<int> arr, int n)
+// {
+//     int low = 0;
+//     int high = n - 1;
+//     int ans = INT_MAX;
+//     int index;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+
+//         if (arr[low] <= arr[high])
+//         {
+//             ans = min(ans, arr[low]);
+//             break;
+//         }
+
+//         else if (arr[low] <= arr[mid])
+//         {
+//             if (arr[low] < ans)
+//             {
+//                 index = low;
+//                 ans = arr[low];
+//             }
+//             low = mid + 1;
+//         }
+//         else
+//         {
+//             if (arr[mid] < ans)
+//             {
+//                 index = mid;
+//                 ans = arr[mid];
+//             }
+//             high = mid - 1;
+//         }
+//     }
+//     return index;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int small = smallbs(arr, n);
+//     cout << small;
+//     return small;
+// }
+
+//  single element in sorted array..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int smallbs(vector<int> arr, int n)
+int singlebs(vector<int> arr, int n)
 {
-    int low = 0;
-    int high = n - 1;
-    int ans = INT_MAX;
-    int index;
+    if (n == 1)
+        return arr[0];
+    if (arr[0] != arr[1])
+        return arr[0];
+    if (arr[n - 1] != arr[n - 2])
+        return arr[n - 1];
+
+    int low = 1;
+    int high = n - 2;
+
     while (low <= high)
     {
         int mid = (low + high) / 2;
 
-        if (arr[low] <= arr[high])
+        //  both sides are not equal..
+        if (arr[mid] != arr[mid - 1] && arr[mid] != arr[mid + 1])
         {
-            ans = min(ans, arr[low]);
-            break;
+            return arr[mid];
         }
-
-        else if (arr[low] <= arr[mid])
+        // right side vich element present aa and we will move left..
+        else if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) || (mid % 2 == 0 && arr[mid] == arr[mid + 1]))
         {
-            if (arr[low] < ans)
-            {
-                index = low;
-                ans = arr[low];
-            }
             low = mid + 1;
         }
         else
         {
-            if (arr[mid] < ans)
-            {
-                index = mid;
-                ans = arr[mid];
-            }
             high = mid - 1;
         }
     }
-    return index;
+    return -1;
 }
 
 int main()
@@ -2710,7 +2765,7 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int small = smallbs(arr, n);
-    cout << small;
-    return small;
+    int ele = singlebs(arr, n);
+    cout << ele;
+    return 0;
 }
