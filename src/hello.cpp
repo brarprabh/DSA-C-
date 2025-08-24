@@ -2772,50 +2772,87 @@
 
 // Find the peak elements..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int findpeak(vector<int> arr, int n)
+// {
+//     if (n == 1)
+//         return 0;
+//     if (arr[0] > arr[1])
+//         return 0;
+//     if (arr[n - 1] > arr[n - 2])
+//         return n - 1;
+
+//     int low = 1;
+//     int high = n - 2;
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1])
+//         {
+//             return arr[mid];
+//         } // Does the number is increasing so the peak lie on the right side...
+//         else if (arr[mid] > arr[mid - 1])
+//         {
+//             low = mid + 1;
+//         }
+//         else
+//             high = mid - 1;
+//     }
+//     return -1;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int ele = findpeak(arr, n);
+//     cout << ele;
+//     return 0;
+// }
+
+// Find sqrt using binary search..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int findpeak(vector<int> arr, int n)
+int findsq(int n)
 {
-    if (n == 1)
-        return 0;
-    if (arr[0] > arr[1])
-        return 0;
-    if (arr[n - 1] > arr[n - 2])
-        return n - 1;
-
     int low = 1;
-    int high = n - 2;
-
+    int high = n;
+    int ans = 1;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        if (arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1])
+        int val = (mid * mid);
+
+        if (val <= n)
         {
-            return arr[mid];
-        } // Does the number is increasing so the peak lie on the right side...
-        else if (arr[mid] > arr[mid - 1])
-        {
+            ans = mid;
             low = mid + 1;
         }
         else
+        {
             high = mid - 1;
+        }
     }
-    return -1;
+    return ans;
 }
 
 int main()
 {
     int n;
     cin >> n;
-    vector<int> arr;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        arr.push_back(x);
-    }
-    int ele = findpeak(arr, n);
+    int ele = findsq(n);
     cout << ele;
     return 0;
 }
