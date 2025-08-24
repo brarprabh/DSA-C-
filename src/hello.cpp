@@ -2859,38 +2859,101 @@
 
 // Find the nth root..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int func(int mid, int n, int m)
+// {
+//     long long ans = 1;
+//     for (int i = 0; i < n; i++)
+//     {
+//         ans *= mid;
+//         if (ans > m)
+//         {
+//             return 2;
+//         }
+//     }
+//     if (ans == m)
+//         return 1;
+//     return -1;
+// }
+
+// int findnth(int n, int m)
+// {
+//     int low = 1;
+//     int high = m;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (func(mid, n, m) == 1)
+//         {
+//             return mid;
+//         }
+//         else if (func(mid, n, m) == 2)
+//         {
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return -1;
+// }
+
+// int main()
+// {
+//     int m;
+//     cin >> m;
+//     int n;
+//     cin >> n;
+
+//     int answer = findnth(n, m);
+//     cout << answer;
+//     return 0;
+// }
+
+// Koko eating bananas
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int func(int mid, int n, int m)
+int maxi(vector<int> &arr, int n)
 {
-    long long ans = 1;
+    int large = INT_MIN;
     for (int i = 0; i < n; i++)
     {
-        ans *= mid;
-        if (ans > m)
+        if (arr[i] > large)
         {
-            return 2;
+            large = arr[i];
         }
     }
-    if (ans == m)
-        return 1;
-    return -1;
+    return large;
 }
 
-int findnth(int n, int m)
+long long totaltime(vector<int> &arr, int n, int mid)
+{
+    long long hrs = 0;
+    for (int i = 0; i < n; i++)
+    {
+        hrs += ceil((double)arr[i] / (double)mid);
+    }
+    return hrs;
+}
+
+int countminbanana(vector<int> &arr, int n, int hourlimit)
 {
     int low = 1;
-    int high = m;
+    int high = maxi(arr, n);
+    int ans = INT_MAX;
+
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        if (func(mid, n, m) == 1)
+        long long totalhrs = totaltime(arr, n, mid);
+        if (totalhrs <= hourlimit)
         {
-            return mid;
-        }
-        else if (func(mid, n, m) == 2)
-        {
+            ans = mid;
             high = mid - 1;
         }
         else
@@ -2898,17 +2961,26 @@ int findnth(int n, int m)
             low = mid + 1;
         }
     }
-    return -1;
+    return ans;
 }
 
 int main()
 {
-    int m;
-    cin >> m;
     int n;
     cin >> n;
 
-    int answer = findnth(n, m);
-    cout << answer;
+    vector<int> arr;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+
+    int hourlimit;
+    cin >> hourlimit;
+
+    int minbanana = countminbanana(arr, n, hourlimit);
+    cout << minbanana;
     return 0;
 }
