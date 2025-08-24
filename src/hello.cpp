@@ -2915,43 +2915,123 @@
 
 // Koko eating bananas
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int maxi(vector<int> &arr, int n)
+// {
+//     int large = INT_MIN;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (arr[i] > large)
+//         {
+//             large = arr[i];
+//         }
+//     }
+//     return large;
+// }
+
+// long long totaltime(vector<int> &arr, int n, int mid)
+// {
+//     long long hrs = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         hrs += ceil((double)arr[i] / (double)mid);
+//     }
+//     return hrs;
+// }
+
+// int countminbanana(vector<int> &arr, int n, int hourlimit)
+// {
+//     int low = 1;
+//     int high = maxi(arr, n);
+//     int ans = INT_MAX;
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         long long totalhrs = totaltime(arr, n, mid);
+//         if (totalhrs <= hourlimit)
+//         {
+//             ans = mid;
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return ans;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+
+//     int hourlimit;
+//     cin >> hourlimit;
+
+//     int minbanana = countminbanana(arr, n, hourlimit);
+//     cout << minbanana;
+//     return 0;
+// }
+
+// No of bouquets..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int maxi(vector<int> &arr, int n)
+int noofbposs(vector<int> arr, int n, int mid, int m, int k)
 {
-    int large = INT_MIN;
+    int count = 0;
+    int noofB = 0;
     for (int i = 0; i < n; i++)
     {
-        if (arr[i] > large)
+        if (arr[i] <= mid)
+            count++;
+        else
         {
-            large = arr[i];
+            noofB += count / k;
+            count = 0;
         }
     }
-    return large;
+    noofB += count / k;
+    return noofB;
 }
 
-long long totaltime(vector<int> &arr, int n, int mid)
-{
-    long long hrs = 0;
+int countDays(vector<int> arr, int n, int m, int k)
+{ // since no of days return krne aa no need of return any array..
+    long long val = m * 1LL * k * 1LL;
+    ;
+    if (val > n)
+        return -1;
+
+    int mini = INT_MAX;
+    int maxi = INT_MIN;
     for (int i = 0; i < n; i++)
     {
-        hrs += ceil((double)arr[i] / (double)mid);
+        if (arr[i] > maxi)
+            maxi = arr[i];
+        if (arr[i] < mini)
+            mini = arr[i];
     }
-    return hrs;
-}
-
-int countminbanana(vector<int> &arr, int n, int hourlimit)
-{
-    int low = 1;
-    int high = maxi(arr, n);
-    int ans = INT_MAX;
-
+    int low = mini;
+    int high = maxi;
+    int ans = high;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        long long totalhrs = totaltime(arr, n, mid);
-        if (totalhrs <= hourlimit)
+        int possible = noofbposs(arr, n, mid, m, k);
+        if (possible >= m)
         {
             ans = mid;
             high = mid - 1;
@@ -2970,17 +3050,19 @@ int main()
     cin >> n;
 
     vector<int> arr;
+
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
         arr.push_back(x);
     }
+    int m;
+    cin >> m;
+    int k;
+    cin >> k;
 
-    int hourlimit;
-    cin >> hourlimit;
-
-    int minbanana = countminbanana(arr, n, hourlimit);
-    cout << minbanana;
+    int minDays = countDays(arr, n, m, k);
+    cout << minDays;
     return 0;
 }
