@@ -2553,8 +2553,8 @@
 //         {
 //             return true;
 //         }
-//         // if sorted cant be found....
-//         if (arr[low] == arr[mid] && arr[mid] == arr[high])
+//         // if sorted cant be found.... it is a edge case..
+//         if (arr[low] == arr[mid] && arr[mid] == arr[high])   // {2, 1, 2, 3 ,4, 3} // unsorted
 //         {
 //             high--;
 //             low++;
@@ -2686,7 +2686,7 @@
 //             }
 //             low = mid + 1;
 //         }
-//         else
+//         else   // all other conditions are taken..
 //         {
 //             if (arr[mid] < ans)
 //             {
@@ -2717,17 +2717,72 @@
 
 //  single element in sorted array..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int singlebs(vector<int> arr, int n)
+// {
+//     if (n == 1)
+//         return arr[0];
+//     if (arr[0] != arr[1])
+//         return arr[0];
+//     if (arr[n - 1] != arr[n - 2])
+//         return arr[n - 1];
+
+//     int low = 1;
+//     int high = n - 2;
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+
+//         //  both sides are not equal..
+//         if (arr[mid] != arr[mid - 1] && arr[mid] != arr[mid + 1])
+//         {
+//             return arr[mid];
+//         }
+//         // right side vich element present aa and we will move left..
+//         else if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) || (mid % 2 == 0 && arr[mid] == arr[mid + 1]))
+//         {
+//             low = mid + 1;
+//         }
+//         else
+//         {
+//             high = mid - 1;
+//         }
+//     }
+//     return -1;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int ele = singlebs(arr, n);
+//     cout << ele;
+//     return 0;
+// }
+
+// Find the peak elements..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int singlebs(vector<int> arr, int n)
+int findpeak(vector<int> arr, int n)
 {
     if (n == 1)
-        return arr[0];
-    if (arr[0] != arr[1])
-        return arr[0];
-    if (arr[n - 1] != arr[n - 2])
-        return arr[n - 1];
+        return 0;
+    if (arr[0] > arr[1])
+        return 0;
+    if (arr[n - 1] > arr[n - 2])
+        return n - 1;
 
     int low = 1;
     int high = n - 2;
@@ -2735,21 +2790,16 @@ int singlebs(vector<int> arr, int n)
     while (low <= high)
     {
         int mid = (low + high) / 2;
-
-        //  both sides are not equal..
-        if (arr[mid] != arr[mid - 1] && arr[mid] != arr[mid + 1])
+        if (arr[mid - 1] < arr[mid] && arr[mid] > arr[mid + 1])
         {
             return arr[mid];
-        }
-        // right side vich element present aa and we will move left..
-        else if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) || (mid % 2 == 0 && arr[mid] == arr[mid + 1]))
+        } // Does the number is increasing so the peak lie on the right side...
+        else if (arr[mid] > arr[mid - 1])
         {
             low = mid + 1;
         }
         else
-        {
             high = mid - 1;
-        }
     }
     return -1;
 }
@@ -2765,7 +2815,7 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int ele = singlebs(arr, n);
+    int ele = findpeak(arr, n);
     cout << ele;
     return 0;
 }
