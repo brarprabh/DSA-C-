@@ -2822,37 +2822,93 @@
 
 // Find sqrt using binary search..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int findsq(int n)
+// {
+//     int low = 1;
+//     int high = n;
+//     int ans = 1;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         int val = (mid * mid);
+
+//         if (val <= n)
+//         {
+//             ans = mid;
+//             low = mid + 1;
+//         }
+//         else
+//         {
+//             high = mid - 1;
+//         }
+//     }
+//     return ans;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     int ele = findsq(n);
+//     cout << ele;
+//     return 0;
+// }
+
+// Find the nth root..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int findsq(int n)
+int func(int mid, int n, int m)
+{
+    long long ans = 1;
+    for (int i = 0; i < n; i++)
+    {
+        ans *= mid;
+        if (ans > m)
+        {
+            return 2;
+        }
+    }
+    if (ans == m)
+        return 1;
+    return -1;
+}
+
+int findnth(int n, int m)
 {
     int low = 1;
-    int high = n;
-    int ans = 1;
+    int high = m;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        int val = (mid * mid);
-
-        if (val <= n)
+        if (func(mid, n, m) == 1)
         {
-            ans = mid;
-            low = mid + 1;
+            return mid;
         }
-        else
+        else if (func(mid, n, m) == 2)
         {
             high = mid - 1;
         }
+        else
+        {
+            low = mid + 1;
+        }
     }
-    return ans;
+    return -1;
 }
 
 int main()
 {
+    int m;
+    cin >> m;
     int n;
     cin >> n;
-    int ele = findsq(n);
-    cout << ele;
+
+    int answer = findnth(n, m);
+    cout << answer;
     return 0;
 }
