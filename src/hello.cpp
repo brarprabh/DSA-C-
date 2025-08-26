@@ -3131,48 +3131,91 @@
 
 // BS-15. Capacity to Ship Packages within D Days
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int noofdays(vector<int> arr, int n, int mid)
+// {
+//     int days = 1;
+//     int load = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (load + arr[i] > mid)
+//         {
+//             days += 1;
+//             load = arr[i];
+//         }
+//         else
+//         {
+//             load += arr[i];
+//         }
+//     }
+//     return days;
+// }
+
+// int leastdays(vector<int> arr, int n, int capacity)
+// {
+//     int low = *max_element(arr.begin(), arr.end());
+//     int high = accumulate(arr.begin(), arr.end(), 0);
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         int noofd = noofdays(arr, n, mid);
+
+//         if (noofd <= capacity)
+//         {
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return low;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int capacity;
+//     cin >> capacity;
+//     int ans = leastdays(arr, n, capacity);
+//     cout << ans;
+//     return 0;
+// }
+
+// BS-16. Kth Missing Positive Number | Maths + Binary Search
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int noofdays(vector<int> arr, int n, int mid)
+int findmissele(vector<int> arr, int n, int k)
 {
-    int days = 1;
-    int load = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (load + arr[i] > mid)
-        {
-            days += 1;
-            load = arr[i];
-        }
-        else
-        {
-            load += arr[i];
-        }
-    }
-    return days;
-}
-
-int leastdays(vector<int> arr, int n, int capacity)
-{
-    int low = *max_element(arr.begin(), arr.end());
-    int high = accumulate(arr.begin(), arr.end(), 0);
-
+    int low = 0;
+    int high = n - 1;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        int noofd = noofdays(arr, n, mid);
-
-        if (noofd <= capacity)
-        {
-            high = mid - 1;
-        }
-        else
+        int missing = arr[mid] - (mid + 1);
+        if (missing < k)
         {
             low = mid + 1;
         }
+        else
+        {
+            high = mid - 1;
+        }
     }
-    return low;
+    return high + 1 + k;
 }
 
 int main()
@@ -3186,9 +3229,9 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int capacity;
-    cin >> capacity;
-    int ans = leastdays(arr, n, capacity);
+    int k;
+    cin >> k;
+    int ans = findmissele(arr, n, k);
     cout << ans;
     return 0;
 }
