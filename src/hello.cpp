@@ -3195,27 +3195,89 @@
 
 // BS-16. Kth Missing Positive Number | Maths + Binary Search
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int findmissele(vector<int> arr, int n, int k)
+// {
+//     int low = 0;
+//     int high = n - 1;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         int missing = arr[mid] - (mid + 1);
+//         if (missing < k)
+//         {
+//             low = mid + 1;
+//         }
+//         else
+//         {
+//             high = mid - 1;
+//         }
+//     }
+//     return high + 1 + k;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int k;
+//     cin >> k;
+//     int ans = findmissele(arr, n, k);
+//     cout << ans;
+//     return 0;
+// }
+
+// BS-17. Aggressive Cows | Binary Search Hard
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int findmissele(vector<int> arr, int n, int k)
+bool canweplace(vector<int> arr, int n, int distance, int cows)
 {
-    int low = 0;
-    int high = n - 1;
+    int cntcows = 1;   // phela ek leli
+    int last = arr[0]; // 1 element te place kiti aa...
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] - last >= distance) // distance is mid
+        {
+            cntcows++;
+            last = arr[i];
+        }
+        if (cntcows >= cows) // okay from the given cows
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+int maxdis(vector<int> arr, int n, int cows)
+{
+    sort(arr.begin(), arr.end());
+    int low = 1;
+    int high = arr[n - 1] - arr[0]; // it is the distance bt the two coes..
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        int missing = arr[mid] - (mid + 1);
-        if (missing < k)
-        {
-            low = mid + 1;
+        if (canweplace(arr, n, mid, cows) == true)
+        {                  // mid is the cow we have taken
+            low = mid + 1; // sice we have to find max;
         }
         else
         {
             high = mid - 1;
         }
     }
-    return high + 1 + k;
+    return high;
 }
 
 int main()
@@ -3229,9 +3291,9 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int k;
-    cin >> k;
-    int ans = findmissele(arr, n, k);
+    int cows;
+    cin >> cows;
+    int ans = maxdis(arr, n, cows); // distance ta apa find krna..
     cout << ans;
     return 0;
 }
