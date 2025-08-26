@@ -1885,7 +1885,7 @@
 //         sum += arr[i];
 //         if (sum == 0)
 //         {
-//              maxi = i + 1;
+//              maxi = i + 1; // the first time sum = 0 is coming..
 //         }
 //         else if (mpp.find(sum) != mpp.end())
 //         {
@@ -2049,7 +2049,7 @@
 //     }
 //     merge(arr, brr, n1, n2);
 //     return 0;
-//}
+// }
 
 // max product of subarray
 
@@ -2162,8 +2162,8 @@
 //         }
 //         else
 //         {
-//             temp.push_back(arr[right]);  // left vich greater aa..
-//             count += (mid - left + 1);
+//             temp.push_back(arr[right]);  // left (>) vich greater aa..
+//             count += (mid - left + 1);  //left wale count krne aa..
 //             right++;
 //         }
 //     }
@@ -2193,7 +2193,7 @@
 //         return count;
 //     count += mergesort(arr, n, low, mid);
 //     count += mergesort(arr, n, mid + 1, high);
-//     count += merge(arr, n, low, mid, high);  //inversions are check in merge array while for pairs a separate func is written since logic is diff
+//     count += merge(arr, n, low, mid, high);  //inversions are check in merge array while for reverse pairs a separate func is written since logic is diff
 //     return count;
 // }
 
@@ -2212,9 +2212,9 @@
 //     int count = mergesort(arr, n, 0, n - 1);
 //     cout << count;
 //     return 0;
-//}
+// }
 
-// Reverse pairs
+// Reverse pairs  arr[i] > 2 * arr[right]
 
 // #include <bits/stdc++.h>
 // using namespace std;
@@ -2224,7 +2224,7 @@
 //     vector<int> temp;
 //     int left = low;
 //     int right = mid + 1;
-//     int count = 0;
+
 //     while (left <= mid && right <= high)
 //     {
 //         if (arr[left] <= arr[right])
@@ -2269,7 +2269,7 @@
 // }
 // int mergesort(vector<int> &arr, int n, int low, int high)
 // {
-//     int count = 0;
+//     int count = 0;  //how many pairs are present..
 //     int mid = (low + high) / 2;
 
 //     if (low == high)
@@ -2308,7 +2308,7 @@
 // #include <bits/stdc++.h>
 // using namespace std;
 
-// int recurbinary(vector<int> arr, int low, int high, int target)
+// int recurbinary(vector<int> arr, int low, int high, int target)  // tine parameters pass hon ge
 // {
 //     if (low > high)
 //         return -1;
@@ -2382,7 +2382,7 @@
 //     cout << index;
 // }
 
-// in floor just reverse the sign i.e <=  and retrun the arr[mid];
+// in floor just reverse the sign i.e <=  and return the arr[mid];
 
 // Count the first and the last occurance of the elements
 
@@ -2472,7 +2472,7 @@
 //     return 0;
 // }
 
-// Bianry search in rotated sorted array
+// Bianry search in rotated sorted array   je edr aa ta binary search lagu ja odher...
 
 // #include <bits/stdc++.h>
 // using namespace std;
@@ -2536,7 +2536,7 @@
 //     return 0;
 // }
 
-// Binary Search with duplicates..
+// Binary Search with duplicates..  make sure the val lie in between  and two cases left sorted and right sorted..
 
 // #include <bits/stdc++.h>
 // using namespace std;
@@ -2619,10 +2619,10 @@
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
-
+//         // taking first case..
 //         if (arr[low] <= arr[high])
 //         {
-//             ans = min(ans, arr[low]);
+//             ans = min(ans, arr[low]); // min jarrori aa kyunki array sorted aa
 //             break;
 //         }
 
@@ -2670,7 +2670,7 @@
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
-
+//    // checking from the starting to end..
 //         if (arr[low] <= arr[high])
 //         {
 //             ans = min(ans, arr[low]);
@@ -2681,8 +2681,8 @@
 //         {
 //             if (arr[low] < ans)
 //             {
-//                 index = low;
-//                 ans = arr[low];
+//                 index = low;  // give the index how much is rotated..
+//                 ans = arr[low];  // sab toh cut index wala
 //             }
 //             low = mid + 1;
 //         }
@@ -2741,7 +2741,7 @@
 //         {
 //             return arr[mid];
 //         }
-//         // right side vich element present aa and we will move left..
+//         // right side vich element present aa and we will move right..
 //         else if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) || (mid % 2 == 0 && arr[mid] == arr[mid + 1]))
 //         {
 //             low = mid + 1;
@@ -2770,7 +2770,7 @@
 //     return 0;
 // }
 
-// Find the peak elements..
+// Find the peak elements..  // in leetcode we have to retrun the index..
 
 // #include <bits/stdc++.h>
 // using namespace std;
@@ -2835,7 +2835,7 @@
 //         int mid = (low + high) / 2;
 //         int val = (mid * mid);
 
-//         if (val <= n)
+//         if (val <= n)   // equal to hona chaiyeda
 //         {
 //             ans = mid;
 //             low = mid + 1;
@@ -2865,7 +2865,7 @@
 // int func(int mid, int n, int m)
 // {
 //     long long ans = 1;
-//     for (int i = 0; i < n; i++)
+//     for (int i = 0; i < n; i++) // nth root of m..
 //     {
 //         ans *= mid;
 //         if (ans > m)
@@ -2881,7 +2881,7 @@
 // int findnth(int n, int m)
 // {
 //     int low = 1;
-//     int high = m;
+//     int high = m;   // high te mai notice kita max range hi hundi that it can attain..
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
@@ -2891,7 +2891,7 @@
 //         }
 //         else if (func(mid, n, m) == 2)
 //         {
-//             high = mid - 1;
+//             high = mid - 1;  // vada answer aa gya ta chota krna...
 //         }
 //         else
 //         {
@@ -2936,7 +2936,7 @@
 //     long long hrs = 0;
 //     for (int i = 0; i < n; i++)
 //     {
-//         hrs += ceil((double)arr[i] / (double)mid);
+//         hrs += ceil((double)arr[i] / (double)mid); // kinna time lg reha mid kolo...
 //     }
 //     return hrs;
 // }
@@ -2944,14 +2944,14 @@
 // int countminbanana(vector<int> &arr, int n, int hourlimit)
 // {
 //     int low = 1;
-//     int high = maxi(arr, n);
+//     int high = maxi(arr, n);   // These are ranges of how many banana he can eat..
 //     int ans = INT_MAX;
 
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
 //         long long totalhrs = totaltime(arr, n, mid);
-//         if (totalhrs <= hourlimit)
+//         if (totalhrs <= hourlimit) // within hourlimit complete krna..
 //         {
 //             ans = mid;
 //             high = mid - 1;
@@ -2987,53 +2987,120 @@
 
 // No of bouquets..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int noofbposs(vector<int> arr, int n, int mid, int m, int k) // k is __ how many for one..
+// {
+//     int count = 0;
+//     int noofB = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (arr[i] <= mid)
+//             count++;
+//         else
+//         {
+//             noofB += count / k;
+//             count = 0;
+//         }
+//     }
+//     noofB += count / k;
+//     return noofB;
+// }
+
+// int countDays(vector<int> arr, int n, int m, int k)
+// { // since no of days return krne aa no need of return any array..
+//     long long val = m * 1LL * k * 1LL;
+
+//     if (val > n) // edge case..   if the number of flower exceeds the existing flower then exits
+//         return -1;
+
+//     int mini = INT_MAX;
+//     int maxi = INT_MIN;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (arr[i] > maxi)
+//             maxi = arr[i];
+//         if (arr[i] < mini)
+//             mini = arr[i];
+//     }
+//     int low = mini;
+//     int high = maxi;
+//     int ans = high;
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         int possible = noofbposs(arr, n, mid, m, k);  // mid vale din te kinne bouquet possible aa..
+//         if (possible >= m)  // min possible dekhna
+//         {
+//             ans = mid;
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return ans;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+
+//     vector<int> arr;
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int m;
+//     cin >> m;
+//     int k;
+//     cin >> k;
+
+//     int minDays = countDays(arr, n, m, k);
+//     cout << minDays;
+//     return 0;
+// }
+
+// Find the Smallest Divisor Given a Threshold | Binary Search
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int noofbposs(vector<int> arr, int n, int mid, int m, int k)
+int noofdivisor(vector<int> arr, int n, int mid)
 {
-    int count = 0;
-    int noofB = 0;
+    int sum = 0;
     for (int i = 0; i < n; i++)
     {
-        if (arr[i] <= mid)
-            count++;
-        else
-        {
-            noofB += count / k;
-            count = 0;
-        }
+        sum += ceil((double)arr[i] / (double)mid);
     }
-    noofB += count / k;
-    return noofB;
+    return sum;
 }
 
-int countDays(vector<int> arr, int n, int m, int k)
-{ // since no of days return krne aa no need of return any array..
-    long long val = m * 1LL * k * 1LL;
-    ;
-    if (val > n)
+int mindivisor(vector<int> arr, int n, int threshold)
+{
+    if (n > threshold)
         return -1;
-
-    int mini = INT_MAX;
-    int maxi = INT_MIN;
+    int low = 1;
+    int high = INT_MIN;
     for (int i = 0; i < n; i++)
     {
-        if (arr[i] > maxi)
-            maxi = arr[i];
-        if (arr[i] < mini)
-            mini = arr[i];
+        if (arr[i] > high)
+        {
+            high = arr[i];
+        }
     }
-    int low = mini;
-    int high = maxi;
-    int ans = high;
     while (low <= high)
     {
         int mid = (low + high) / 2;
-        int possible = noofbposs(arr, n, mid, m, k);
-        if (possible >= m)
+        int noofd = noofdivisor(arr, n, mid);
+        if (noofd <= threshold)
         {
-            ans = mid;
             high = mid - 1;
         }
         else
@@ -3041,28 +3108,23 @@ int countDays(vector<int> arr, int n, int m, int k)
             low = mid + 1;
         }
     }
-    return ans;
+    return low;
 }
 
 int main()
 {
     int n;
     cin >> n;
-
     vector<int> arr;
-
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
         arr.push_back(x);
     }
-    int m;
-    cin >> m;
-    int k;
-    cin >> k;
-
-    int minDays = countDays(arr, n, m, k);
-    cout << minDays;
+    int threshold;
+    cin >> threshold;
+    int ans = mindivisor(arr, n, threshold);
+    cout << ans;
     return 0;
 }
