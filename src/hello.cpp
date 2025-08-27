@@ -1039,15 +1039,15 @@
 //     {
 //         if (arr[i] < arr[i + 1])
 //         {
-//             index = i;
+//             index = i;  //smallest index.. or dip is found
 //             break;
 //         }
 //     }
 //     if (index == -1)
-//         reverse(arr.begin(), arr.end());
+//         reverse(arr.begin(), arr.end()); //if no dip found just reverse
 //     for (int i = n - 1; i > index; i--)
 //     {
-//         if (arr[i] > arr[index])
+//         if (arr[i] > arr[index])  // thoda ja greater ..
 //         {
 //             swap(arr[i], arr[index]);
 //         } // since ek element nal compare krna
@@ -1166,7 +1166,7 @@
 //         {
 //             if (matrix[i][j] == 0)
 //             {
-//                 matrix[i][0] = 0;
+//                 matrix[i][0] = 0; // making rows 0;
 //                 if (j != 0)
 //                     matrix[0][j] = 0;
 //                 else
@@ -1191,7 +1191,7 @@
 //     {
 //         for (int j = 0; j < m; j++)
 
-//             matrix[0][j] == 0;
+//             matrix[0][j] = 0;
 //     }
 //     if (col0 == 0)
 //     {
@@ -1516,7 +1516,7 @@
 // {
 //     if (low < high)
 //     {
-//         int pindex = partion(n, arr, low, high);
+//         int pindex = partion(n, arr, low, high); //sorting ethe perform hogi..
 //         quicksort(n, arr, low, pindex - 1);
 //         quicksort(n, arr, pindex + 1, high);
 //     }
@@ -3077,14 +3077,14 @@
 //     int sum = 0;
 //     for (int i = 0; i < n; i++)
 //     {
-//         sum += ceil((double)arr[i] / (double)mid);
+//         sum += ceil((double)arr[i] / (double)mid); // ceil value le k sum vich store kari jani aa..
 //     }
 //     return sum;
 // }
 
 // int mindivisor(vector<int> arr, int n, int threshold)
 // {
-//     if (n > threshold)
+//     if (n > threshold)  //it is a edge case...
 //         return -1;
 //     int low = 1;
 //     int high = INT_MIN;
@@ -3092,7 +3092,7 @@
 //     {
 //         if (arr[i] > high)
 //         {
-//             high = arr[i];
+//             high = arr[i];  // max nal ta divide hona jarrori aa..
 //         }
 //     }
 //     while (low <= high)
@@ -3101,7 +3101,7 @@
 //         int noofd = noofdivisor(arr, n, mid);
 //         if (noofd <= threshold)
 //         {
-//             high = mid - 1;
+//             high = mid - 1;  //min find krna..
 //         }
 //         else
 //         {
@@ -3136,11 +3136,11 @@
 
 // int noofdays(vector<int> arr, int n, int mid)
 // {
-//     int days = 1;
+//     int days = 1;  // start will be from day 1 not day 0
 //     int load = 0;
 //     for (int i = 0; i < n; i++)
 //     {
-//         if (load + arr[i] > mid)
+//         if (load + arr[i] > mid)  // the load becomes greater than capacity the next day will be made
 //         {
 //             days += 1;
 //             load = arr[i];
@@ -3155,15 +3155,15 @@
 
 // int leastdays(vector<int> arr, int n, int capacity)
 // {
-//     int low = *max_element(arr.begin(), arr.end());
-//     int high = accumulate(arr.begin(), arr.end(), 0);
+//     int low = *max_element(arr.begin(), arr.end()); // max of all [for 1 load to be taken atleast]
+//     int high = accumulate(arr.begin(), arr.end(), 0); // submission of all
 
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
 //         int noofd = noofdays(arr, n, mid);
 
-//         if (noofd <= capacity)
+//         if (noofd <= capacity)  // min days find krne aa
 //         {
 //             high = mid - 1;
 //         }
@@ -3205,17 +3205,17 @@
 //     while (low <= high)
 //     {
 //         int mid = (low + high) / 2;
-//         int missing = arr[mid] - (mid + 1);
+//         int missing = arr[mid] - (mid + 1);  // it is the how many missing ele are there
 //         if (missing < k)
 //         {
-//             low = mid + 1;
+//             low = mid + 1;  // since cut aa ta aage jana..
 //         }
 //         else
 //         {
 //             high = mid - 1;
 //         }
 //     }
-//     return high + 1 + k;
+//     return high + 1 + k ; // low + k;
 // }
 
 // int main()
@@ -3238,46 +3238,113 @@
 
 // BS-17. Aggressive Cows | Binary Search Hard
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool canweplace(vector<int> arr, int n, int distance, int cows)
+// {
+//     int cntcows = 1;   // phela ek leli
+//     int last = arr[0]; // 1 element te place kiti aa...
+//     for (int i = 1; i < n; i++)
+//     {
+//         if (arr[i] - last >= distance) // distance is mid
+//         {
+//             cntcows++;
+//             last = arr[i];
+//         }
+//         if (cntcows >= cows) // okay from the given cows
+//         {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+// int maxdis(vector<int> arr, int n, int cows)
+// {
+//     sort(arr.begin(), arr.end());
+//     int low = 1;// the least distaance can be 1
+//     int high = arr[n - 1] - arr[0]; // it is the distance bt the two cows..
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2;
+//         if (canweplace(arr, n, mid, cows) == true)
+//         {                  // mid is the distance we have taken
+//             low = mid + 1; // since we have to find max;
+//         }
+//         else
+//         {
+//             high = mid - 1;
+//         }
+//     }
+//     return high;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int cows;
+//     cin >> cows;
+//     int ans = maxdis(arr, n, cows); // distance ta apa find krna..
+//     cout << ans;
+//     return 0;
+// }
+
+// Book allocation
+
 #include <bits/stdc++.h>
 using namespace std;
 
-bool canweplace(vector<int> arr, int n, int distance, int cows)
+int noofstudents(vector<int> arr, int n, int mid)
 {
-    int cntcows = 1;   // phela ek leli
-    int last = arr[0]; // 1 element te place kiti aa...
-    for (int i = 1; i < n; i++)
+    int stud = 1;
+    long long cntpages = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (arr[i] - last >= distance) // distance is mid
-        {
-            cntcows++;
-            last = arr[i];
-        }
-        if (cntcows >= cows) // okay from the given cows
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-int maxdis(vector<int> arr, int n, int cows)
-{
-    sort(arr.begin(), arr.end());
-    int low = 1;
-    int high = arr[n - 1] - arr[0]; // it is the distance bt the two coes..
-    while (low <= high)
-    {
-        int mid = (low + high) / 2;
-        if (canweplace(arr, n, mid, cows) == true)
-        {                  // mid is the cow we have taken
-            low = mid + 1; // sice we have to find max;
+        if (arr[i] + cntpages <= mid)
+        { // mid is the pages...
+            cntpages += arr[i];
         }
         else
         {
-            high = mid - 1;
+            stud++;
+            cntpages = arr[i];
         }
     }
-    return high;
+    return stud;
+}
+
+int leastnoofpages(vector<int> arr, int n, int m)
+{
+    if (m > n)
+    { // if no of students are greater than books
+        return -1;
+    }
+    int low = *max_element(arr.begin(), arr.end());
+    int high = accumulate(arr.begin(), arr.end(), 0);
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        int noofstud = noofstudents(arr, n, mid);
+        if (noofstud <= m)
+        {
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+    return low;
 }
 
 int main()
@@ -3291,9 +3358,9 @@ int main()
         cin >> x;
         arr.push_back(x);
     }
-    int cows;
-    cin >> cows;
-    int ans = maxdis(arr, n, cows); // distance ta apa find krna..
+    int m;
+    cin >> m;
+    int ans = leastnoofpages(arr, n, m);
     cout << ans;
     return 0;
 }
