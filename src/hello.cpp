@@ -3364,3 +3364,57 @@ int main()
     cout << ans;
     return 0;
 }
+// Split array - Largest Sum and Painter's partition same as book allocation
+
+// Minimise Maximum Distance between Gas Stations Brute force
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int mindis(vector<int> arr, int n, int k)
+{
+    vector<int> howmany(n - 1, 0);
+    for (int gasst = 0; gasst < k; gasst++) // since we have to put k inside arr
+    {
+        long double maxsectionlength = -1;
+        int maxind = -1;
+        for (int i = 0; i < n - 1; i++)
+        {
+            long double diff = arr[i + 1] - arr[i];
+            long double sectionlength = diff / (long double)(howmany[i] + 1); // since howmany[maxind]++ kri jane aa if sectionlength greater previous wale te aa ta combine nal divide krna
+            if (sectionlength > maxsectionlength)
+            {
+                maxsectionlength = sectionlength;
+                maxind = i;
+            }
+        }
+        howmany[maxind]++; // now it have value stored at max distance in section [1,0,0]
+    }
+    long double maxans = -1;
+    for (int i = 0; i < n - 1; i++)
+    {
+
+        long double diff = arr[i + 1] - arr[i];
+        long double sectionlength = diff / (long double)(howmany[i] + 1);
+        maxans = max(maxans, sectionlength);
+    }
+    return maxans;
+}
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    int k;
+    cin >> k;
+
+    int ans = mindis(arr, n, k);
+    cout << ans;
+    return 0;
+}
