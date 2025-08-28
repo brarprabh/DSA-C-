@@ -145,7 +145,7 @@
 //         if(n % i == 0) {
 //            ls.push_back(i);
 //             if((n/i) != i) {
-//                 ls.push_back(n/i);
+//                 ls.push_back(n/i); // like for 36 - 6 * 6 the first i i.e 6 will be taken
 //             }
 //         }
 //      }
@@ -238,7 +238,7 @@
 //     {
 //         return true; // jdo condition true ho gyi ta palindrome ho ju...
 //     }
-//     if (s[i] != s[s.size() - i - 1])
+//     if (s[i] != s[s.size() - i - 1])  // conditon is checked for palindrome..
 //         return false;
 
 //     return f(i + 1, s);
@@ -291,7 +291,7 @@
 //     // int q;
 //     // cin >> q;
 
-//     map<char, int> mpp;
+//     map<char, int> mpp;  // imp...
 //     for (int i = 0; i < s.size(); i++)
 //     {
 //         mpp[s[i]]++;
@@ -362,7 +362,7 @@
 //     return 0;
 // }
 
-// rotate array by d elements
+//  left rotate array by d elements
 
 // # include <bits/stdc++.h>
 // using namespace std;
@@ -396,7 +396,7 @@
 // vector<int> move(vector<int> &arr, int n)
 // {
 //     int j = -1; // we dont know the position of j
-//     for (int i = 0; i < n; i++)  // position of first zero
+//     for (int i = 0; i < n; i++)  // position of first zero  // optimisation
 //     {
 //         if (arr[i] == 0)
 //         {
@@ -447,20 +447,20 @@
 //     {
 //         // Avoid duplicates in result
 //         int val;
-//         if (arr[i] < brr[j])
+//         if (arr[i] < brr[j]) // jehde element arr vich smaller aa o print ho jan ge
 //         {
 //             val = arr[i++];
 //         }
-//         else if (arr[i] > brr[j])
+//         else if (arr[i] > brr[j]) // jehde element brr vich smaller aa o print ho jan ge
 //         {
 //             val = brr[j++];
 //         }
 //         else
 //         {
-//             val = arr[i++];
-//             j++;
+//             val = arr[i++]; // unique value ek var leni aa..
+//             j++;// so j will not be considered..
 //         }
-//         if (result.empty() || result.back() != val)
+//         if (result.empty() || result.back() != val)  // since .back() aa gaya egde case should be considered
 //             result.push_back(val);
 //     }
 //     // Add remaining elements from arr
@@ -566,7 +566,7 @@
 //             Xor1 = Xor1 ^ (i+1); // to store all natural number
 //         }
 //         Xor1 = Xor1 ^ n;
-//         ans.push_back(Xor1 ^ Xor2);
+//         ans.push_back(Xor1 ^ Xor2);  // jehda nhi aaya is vich push_back hoju ga..
 //         return ans;
 //     }
 // int main() {
@@ -614,7 +614,7 @@
 //     return 0;
 // }
 
-// Sub array with sum = k
+// Sub array with sum = k // this appproach is known as sliding window..
 
 // #include <bits/stdc++.h>
 // using namespace std;
@@ -660,7 +660,7 @@
 
 // #include <bits/stdc++.h>
 // using namespace std;
-// vector<int> twosum(vector<int> arr, int n, int target)
+// vector<vector<int>> twosum(vector<int> arr, int n, int target)
 // {
 //     map<int, int> mpp;
 //     for (int i = 0; i < n; i++)
@@ -670,11 +670,11 @@
 //         if (mpp.find(more) != mpp.end())
 //         {
 //             cout << "Yes" << endl;
-//             return {mpp[more], i};
+//             return {{more, num}, {mpp[more], i}}; // returning the indexes
 //         }
-//         mpp[i] = num; // index ta store krna hi aa na...
+//         mpp[num] = i; // index ta store krna hi aa na...
 //     }
-//     return {-1, -1};
+//     return {{-1, -1}, {-1, -1}};
 // }
 // int main()
 // {
@@ -689,11 +689,9 @@
 //     }
 //     int target;
 //     cin >> target;
-//     vector<int> answer = twosum(arr, n, target);
-//     for (auto it : answer)
-//     {
-//         cout << it << " ";
-//     }
+//     vector<vector<int>> answer = twosum(arr, n, target);
+//     cout << "Numbers: " << answer[0][0] << " " << answer[0][1] << endl;
+//     cout << "Indices: " << answer[1][0] << " " << answer[1][1] << endl;
 //     return 0;
 // }
 
@@ -815,7 +813,7 @@
 //     }
 //     maj(arr, n);
 //     return 0;
-//}
+// }
 
 // majority element using moore algorithm  n/2 times..
 
@@ -843,7 +841,7 @@
 //             cnt++; // to check if its the majority element or not
 //     }
 //     if (cnt > n / 2)
-//         return el;
+//         return el;  // el apa moore's algo toh vekhya..
 //     else
 //         return -1;
 // }
@@ -2835,7 +2833,7 @@
 //         int mid = (low + high) / 2;
 //         int val = (mid * mid);
 
-//         if (val <= n)   // equal to hona chaiyeda
+//         if (val <= n)   // equal to hona chaiyeda  ta low = mid + 1 we do...
 //         {
 //             ans = mid;
 //             low = mid + 1;
@@ -3300,106 +3298,151 @@
 
 // Book allocation
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int noofstudents(vector<int> arr, int n, int mid)
+// {
+//     int stud = 1;
+//     long long cntpages = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (arr[i] + cntpages <= mid)
+//         { // mid is the pages...
+//             cntpages += arr[i];
+//         }
+//         else
+//         {
+//             stud++;
+//             cntpages = arr[i];
+//         }
+//     }
+//     return stud;
+// }
+
+// int leastnoofpages(vector<int> arr, int n, int m)
+// {
+//     if (m > n)
+//     { // if no of students are greater than books
+//         return -1;
+//     }
+//     int low = *max_element(arr.begin(), arr.end());
+//     int high = accumulate(arr.begin(), arr.end(), 0);
+
+//     while (low <= high)
+//     {
+//         int mid = (low + high) / 2; // since mid is finding pages..
+//         int noofstud = noofstudents(arr, n, mid);
+//         if (noofstud <= m)
+//         {
+//             high = mid - 1;
+//         }
+//         else
+//         {
+//             low = mid + 1;
+//         }
+//     }
+//     return low;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int m;
+//     cin >> m;
+//     int ans = leastnoofpages(arr, n, m);
+//     cout << ans;
+//     return 0;
+// }
+// // Split array - Largest Sum and Painter's partition same as book allocation
+
+//  Minimise Maximum Distance between Gas Stations Brute force
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int mindis(vector<int> arr, int n, int k)
+// {
+//     vector<int> howmany(n - 1, 0);  //stores the indexes
+//     for (int gasst = 0; gasst < k; gasst++) // since we have to put k inside arr
+//     {
+//         long double maxsectionlength = -1;
+//         int maxind = -1;
+//         for (int i = 0; i < n - 1; i++)
+//         {
+//             long double diff = arr[i + 1] - arr[i];
+//             long double sectionlength = diff / (long double)(howmany[i] + 1); // since howmany[maxind]++ kri jane aa if sectionlength greater previous wale te aa ta combine nal divide krna
+//             if (sectionlength > maxsectionlength)
+//             {
+//                 maxsectionlength = sectionlength;
+//                 maxind = i;
+//             }
+//         }
+//         howmany[maxind]++; // now it have value stored at max distance in section [1,0,0]
+//     }
+//     long double maxans = -1;
+//     for (int i = 0; i < n - 1; i++)
+//     {
+
+//         long double diff = arr[i + 1] - arr[i];
+//         long double sectionlength = diff / (long double)(howmany[i] + 1);
+//         maxans = max(maxans, sectionlength);
+//     }
+//     return maxans;
+// }
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int k;
+//     cin >> k;
+
+//     int ans = mindis(arr, n, k);
+//     cout << ans;
+//     return 0;
+// }
+
+// Minimise Maximum Distance between Gas Stations Brute force Better solution using priority_queue..
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int noofstudents(vector<int> arr, int n, int mid)
-{
-    int stud = 1;
-    long long cntpages = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (arr[i] + cntpages <= mid)
-        { // mid is the pages...
-            cntpages += arr[i];
-        }
-        else
-        {
-            stud++;
-            cntpages = arr[i];
-        }
-    }
-    return stud;
-}
-
-int leastnoofpages(vector<int> arr, int n, int m)
-{
-    if (m > n)
-    { // if no of students are greater than books
-        return -1;
-    }
-    int low = *max_element(arr.begin(), arr.end());
-    int high = accumulate(arr.begin(), arr.end(), 0);
-
-    while (low <= high)
-    {
-        int mid = (low + high) / 2;
-        int noofstud = noofstudents(arr, n, mid);
-        if (noofstud <= m)
-        {
-            high = mid - 1;
-        }
-        else
-        {
-            low = mid + 1;
-        }
-    }
-    return low;
-}
-
-int main()
-{
-    int n;
-    cin >> n;
-    vector<int> arr;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        arr.push_back(x);
-    }
-    int m;
-    cin >> m;
-    int ans = leastnoofpages(arr, n, m);
-    cout << ans;
-    return 0;
-}
-// Split array - Largest Sum and Painter's partition same as book allocation
-
-// Minimise Maximum Distance between Gas Stations Brute force
-
-#include <bits/stdc++.h>
-using namespace std;
-
-int mindis(vector<int> arr, int n, int k)
+long double mindis(vector<int> arr, int n, int k)
 {
     vector<int> howmany(n - 1, 0);
-    for (int gasst = 0; gasst < k; gasst++) // since we have to put k inside arr
-    {
-        long double maxsectionlength = -1;
-        int maxind = -1;
-        for (int i = 0; i < n - 1; i++)
-        {
-            long double diff = arr[i + 1] - arr[i];
-            long double sectionlength = diff / (long double)(howmany[i] + 1); // since howmany[maxind]++ kri jane aa if sectionlength greater previous wale te aa ta combine nal divide krna
-            if (sectionlength > maxsectionlength)
-            {
-                maxsectionlength = sectionlength;
-                maxind = i;
-            }
-        }
-        howmany[maxind]++; // now it have value stored at max distance in section [1,0,0]
-    }
-    long double maxans = -1;
+    priority_queue<pair<long double, int>> pq;
     for (int i = 0; i < n - 1; i++)
     {
-
-        long double diff = arr[i + 1] - arr[i];
-        long double sectionlength = diff / (long double)(howmany[i] + 1);
-        maxans = max(maxans, sectionlength);
+        pq.push({arr[i + 1] - arr[i], i}); // just storing
     }
-    return maxans;
+    for (int gasSt = 0; gasSt < k; gasSt++)
+    {
+        auto tp = pq.top();
+        pq.pop();
+        int secInd = tp.second; // top nu leya te oda index chakya te howmany vich plus krta..
+        howmany[secInd]++;      // 0 toh 1 krta initially..
+        long double iniDiff = arr[secInd + 1] - arr[secInd];
+        long double newSection = iniDiff / (long double)(howmany[secInd] + 1);
+        pq.push({newSection, secInd});
+    }
+    return pq.top().first;
 }
+
 int main()
 {
     int n;
@@ -3412,9 +3455,8 @@ int main()
         arr.push_back(x);
     }
     int k;
-    cin >> k;
-
-    int ans = mindis(arr, n, k);
-    cout << ans;
+    cin >> k; // gas stations
+    long double minimimdist = mindis(arr, n, k);
+    cout << minimimdist;
     return 0;
 }
