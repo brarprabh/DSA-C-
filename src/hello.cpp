@@ -3463,20 +3463,106 @@
 
 // Median of two Sorted Arrays of Different Sizes  optimal
 
+// brute and better on notebook..
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// double median(vector<int> arr, vector<int> brr)
+// {
+//     int n1 = arr.size();
+//     int n2 = brr.size();
+
+//     if (n1 > n2)
+//         return median(brr, arr); // bc we need small
+
+//     int low = 0;
+//     int high = n1;
+//     int left = (n1 + n2 + 1) / 2; // left wala case (l1, l2) pointer wala..|| right wala case
+//     int n = n1 + n2;
+//     while (low <= high)
+//     {
+//         int mid1 = (low + high) / 2;
+//         int mid2 = left - mid1;
+
+//         int l1 = INT_MIN, r1 = INT_MAX;
+//         int l2 = INT_MIN, r2 = INT_MAX;
+
+//         if (mid1 < n1) // check the edge conditions..
+//         {
+//             r1 = arr[mid1];
+//         }
+//         if (mid2 < n2)
+//         {
+//             r2 = brr[mid2];
+//         } // retain..
+//         if (mid1 - 1 >= 0)
+//         {
+//             l1 = arr[mid1 - 1]; // see notes to see the position of l1 and l2 all will be clear
+//         }
+//         if (mid2 - 1 >= 0)
+//         {
+//             l2 = brr[mid2 - 1];
+//         }
+//         if (l1 <= r2 && l2 <= r1)
+//         {
+//             if (n % 2 == 1)
+//             {
+//                 return max(l1, l2);
+//             }
+//             return (double)((double)(max(l1, l2) + min(r1, r2)) / 2.0); // l1 l2 vich initial sorted store hoya so oh shote aa..
+//         }
+//         else if (l1 > r2)
+//         {
+//             high = mid1 - 1;
+//         }
+//         else
+//         {
+//             low = mid1 + 1;
+//         }
+//     }
+//     return 0;
+// }
+
+// int main()
+// {
+//     int n1;
+//     cin >> n1;
+//     vector<int> arr;
+//     for (int i = 0; i < n1; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int n2;
+//     cin >> n2;
+//     vector<int> brr;
+//     for (int i = 0; i < n2; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         brr.push_back(x);
+//     }
+
+//     double ans = median(arr, brr);
+//     cout << ans;
+//     return 0;
+// }
+
+// Bs-22. K-th element of two sorted arrays | Binary Search Approach
+
 #include <bits/stdc++.h>
 using namespace std;
 
-double median(vector<int> arr, vector<int> brr)
+double median(vector<int> arr, vector<int> brr, int n1, int n2, int k)
 {
-    int n1 = arr.size();
-    int n2 = brr.size();
-
     if (n1 > n2)
-        return median(brr, arr); // bc we need small
+        return median(brr, arr, n2, n1, k); // bc we need small
 
-    int low = 0;
-    int high = n1;
-    int left = (n1 + n2 + 1) / 2; // left wala case (l1, l2) pointer wala..|| right wala case
+    int low = max(k - n1, 0); // atleast we rerure this for ex : 2 - 5 = -3 and max will pick from 0
+    int high = min(k, n1);
+    int left = k; // left wala case (l1, l2) pointer wala..|| right wala case
     int n = n1 + n2;
     while (low <= high)
     {
@@ -3504,11 +3590,7 @@ double median(vector<int> arr, vector<int> brr)
         }
         if (l1 <= r2 && l2 <= r1)
         {
-            if (n % 2 == 1)
-            {
-                return max(l1, l2);
-            }
-            return (double)((double)(max(l1, l2) + min(r1, r2)) / 2.0); // l1 l2 vich initial sorted store hoya so oh shote aa..
+            return max(l1, l2);
         }
         else if (l1 > r2)
         {
@@ -3542,8 +3624,9 @@ int main()
         cin >> x;
         brr.push_back(x);
     }
-
-    double ans = median(arr, brr);
+    int k;
+    cin >> k;
+    double ans = median(arr, brr, n1, n2, k);
     cout << ans;
     return 0;
 }
