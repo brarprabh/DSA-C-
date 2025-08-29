@@ -3419,44 +3419,131 @@
 
 // Minimise Maximum Distance between Gas Stations Brute force Better solution using priority_queue..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// long double mindis(vector<int> arr, int n, int k)
+// {
+//     vector<int> howmany(n - 1, 0);
+//     priority_queue<pair<long double, int>> pq;
+//     for (int i = 0; i < n - 1; i++)
+//     {
+//         pq.push({arr[i + 1] - arr[i], i}); // just storing
+//     }
+//     for (int gasSt = 0; gasSt < k; gasSt++)
+//     {
+//         auto tp = pq.top();  //iterator that will point to top()
+//         pq.pop();
+//         int secInd = tp.second; // top nu leya te oda index chakya te howmany vich plus krta..
+//         howmany[secInd]++;      // 0 toh 1 krta initially..
+//         long double iniDiff = arr[secInd + 1] - arr[secInd];
+//         long double newSection = iniDiff / (long double)(howmany[secInd] + 1);
+//         pq.push({newSection, secInd});  // it will be automatically sorted
+//     }
+//     return pq.top().first;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int k;
+//     cin >> k; // gas stations
+//     long double minimimdist = mindis(arr, n, k);
+//     cout << minimimdist;
+//     return 0;
+// }
+
+// Median of two Sorted Arrays of Different Sizes  optimal
+
 #include <bits/stdc++.h>
 using namespace std;
 
-long double mindis(vector<int> arr, int n, int k)
+double median(vector<int> arr, vector<int> brr)
 {
-    vector<int> howmany(n - 1, 0);
-    priority_queue<pair<long double, int>> pq;
-    for (int i = 0; i < n - 1; i++)
+    int n1 = arr.size();
+    int n2 = brr.size();
+
+    if (n1 > n2)
+        return median(brr, arr); // bc we need small
+
+    int low = 0;
+    int high = n1;
+    int left = (n1 + n2 + 1) / 2; // left wala case (l1, l2) pointer wala..|| right wala case
+    int n = n1 + n2;
+    while (low <= high)
     {
-        pq.push({arr[i + 1] - arr[i], i}); // just storing
+        int mid1 = (low + high) / 2;
+        int mid2 = left - mid1;
+
+        int l1 = INT_MIN, r1 = INT_MAX;
+        int l2 = INT_MIN, r2 = INT_MAX;
+
+        if (mid1 < n1) // check the edge conditions..
+        {
+            r1 = arr[mid1];
+        }
+        if (mid2 < n2)
+        {
+            r2 = brr[mid2];
+        } // retain..
+        if (mid1 - 1 >= 0)
+        {
+            l1 = arr[mid1 - 1]; // see notes to see the position of l1 and l2 all will be clear
+        }
+        if (mid2 - 1 >= 0)
+        {
+            l2 = brr[mid2 - 1];
+        }
+        if (l1 <= r2 && l2 <= r1)
+        {
+            if (n % 2 == 1)
+            {
+                return max(l1, l2);
+            }
+            return (double)((double)(max(l1, l2) + min(r1, r2)) / 2.0); // l1 l2 vich initial sorted store hoya so oh shote aa..
+        }
+        else if (l1 > r2)
+        {
+            high = mid1 - 1;
+        }
+        else
+        {
+            low = mid1 + 1;
+        }
     }
-    for (int gasSt = 0; gasSt < k; gasSt++)
-    {
-        auto tp = pq.top();
-        pq.pop();
-        int secInd = tp.second; // top nu leya te oda index chakya te howmany vich plus krta..
-        howmany[secInd]++;      // 0 toh 1 krta initially..
-        long double iniDiff = arr[secInd + 1] - arr[secInd];
-        long double newSection = iniDiff / (long double)(howmany[secInd] + 1);
-        pq.push({newSection, secInd});
-    }
-    return pq.top().first;
+    return 0;
 }
 
 int main()
 {
-    int n;
-    cin >> n;
+    int n1;
+    cin >> n1;
     vector<int> arr;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n1; i++)
     {
         int x;
         cin >> x;
         arr.push_back(x);
     }
-    int k;
-    cin >> k; // gas stations
-    long double minimimdist = mindis(arr, n, k);
-    cout << minimimdist;
+    int n2;
+    cin >> n2;
+    vector<int> brr;
+    for (int i = 0; i < n2; i++)
+    {
+        int x;
+        cin >> x;
+        brr.push_back(x);
+    }
+
+    double ans = median(arr, brr);
+    cout << ans;
     return 0;
 }
