@@ -3552,81 +3552,152 @@
 
 // Bs-22. K-th element of two sorted arrays | Binary Search Approach
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int median(vector<int> arr, vector<int> brr, int n1, int n2, int k)
+// {
+//     if (n1 > n2)
+//         return median(brr, arr, n2, n1, k); // bc we need small
+
+//     int low = max(k - n1, 0); // atleast we rerure this for ex : 2 - 5 = -3 and max will pick from 0
+//     int high = min(k, n1);
+//     int left = k; // left wala case (l1, l2) pointer wala..|| right wala case
+//     int n = n1 + n2;
+//     while (low <= high)
+//     {
+//         int mid1 = (low + high) / 2;
+//         int mid2 = left - mid1;
+
+//         int l1 = INT_MIN, r1 = INT_MAX;
+//         int l2 = INT_MIN, r2 = INT_MAX;
+
+//         if (mid1 < n1) // check the edge conditions..
+//         {
+//             r1 = arr[mid1];
+//         }
+//         if (mid2 < n2)
+//         {
+//             r2 = brr[mid2];
+//         } // retain..
+//         if (mid1 - 1 >= 0)
+//         {
+//             l1 = arr[mid1 - 1]; // see notes to see the position of l1 and l2 all will be clear
+//         }
+//         if (mid2 - 1 >= 0)
+//         {
+//             l2 = brr[mid2 - 1];
+//         }
+//         if (l1 <= r2 && l2 <= r1)
+//         {
+//             return max(l1, l2);
+//         }
+//         else if (l1 > r2)
+//         {
+//             high = mid1 - 1;
+//         }
+//         else
+//         {
+//             low = mid1 + 1;
+//         }
+//     }
+//     return 0;
+// }
+
+// int main()
+// {
+//     int n1;
+//     cin >> n1;
+//     vector<int> arr;
+//     for (int i = 0; i < n1; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int n2;
+//     cin >> n2;
+//     vector<int> brr;
+//     for (int i = 0; i < n2; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         brr.push_back(x);
+//     }
+//     int k;
+//     cin >> k;
+//     int ans = median(arr, brr, n1, n2, k);
+//     cout << ans;
+//     return 0;
+// }
+
+// Linked list
+
 #include <bits/stdc++.h>
 using namespace std;
 
-double median(vector<int> arr, vector<int> brr, int n1, int n2, int k)
+struct Node
 {
-    if (n1 > n2)
-        return median(brr, arr, n2, n1, k); // bc we need small
-
-    int low = max(k - n1, 0); // atleast we rerure this for ex : 2 - 5 = -3 and max will pick from 0
-    int high = min(k, n1);
-    int left = k; // left wala case (l1, l2) pointer wala..|| right wala case
-    int n = n1 + n2;
-    while (low <= high)
+public:
+    int data;
+    Node *next; // node tahara da ptr banaya
+public:
+    Node(int data1, Node *next1)
     {
-        int mid1 = (low + high) / 2;
-        int mid2 = left - mid1;
+        data = data1;
+        next = next1;
+    }
+    Node(int data1)
+    {
+        data = data1;
+        next = nullptr;
+    }
+};
 
-        int l1 = INT_MIN, r1 = INT_MAX;
-        int l2 = INT_MIN, r2 = INT_MAX;
+Node *convertarrtoll(vector<int> &arr)
+{
+    Node *head = new Node(arr[0]); // constructor will be called...
+    Node *mover = head;            // head will always point to first element...
+    for (int i = 1; i < arr.size(); i++)
+    {
+        Node *temp = new Node(arr[i]); // second list will be created
+        mover->next = temp;            // but the link will be made here..
+        mover = temp;                  // then move mover to temp..
+    }
+    return head;
+}
 
-        if (mid1 < n1) // check the edge conditions..
-        {
-            r1 = arr[mid1];
-        }
-        if (mid2 < n2)
-        {
-            r2 = brr[mid2];
-        } // retain..
-        if (mid1 - 1 >= 0)
-        {
-            l1 = arr[mid1 - 1]; // see notes to see the position of l1 and l2 all will be clear
-        }
-        if (mid2 - 1 >= 0)
-        {
-            l2 = brr[mid2 - 1];
-        }
-        if (l1 <= r2 && l2 <= r1)
-        {
-            return max(l1, l2);
-        }
-        else if (l1 > r2)
-        {
-            high = mid1 - 1;
-        }
-        else
-        {
-            low = mid1 + 1;
-        }
+int ifpresent(Node *head, int ele)
+{
+    Node *temp = head;
+    while (temp)
+    {
+        if (temp->data == ele)
+            return 1;
+        temp = temp->next;
     }
     return 0;
 }
 
 int main()
 {
-    int n1;
-    cin >> n1;
-    vector<int> arr;
-    for (int i = 0; i < n1; i++)
-    {
-        int x;
-        cin >> x;
-        arr.push_back(x);
-    }
-    int n2;
-    cin >> n2;
-    vector<int> brr;
-    for (int i = 0; i < n2; i++)
-    {
-        int x;
-        cin >> x;
-        brr.push_back(x);
-    }
-    int k;
-    cin >> k;
-    double ans = median(arr, brr, n1, n2, k);
-    cout << ans;
+    vector<int> arr = {1, 2, 3, 4, 5};
+    // Node *y = new Node(arr[0], nullptr); // Node tahra de ptr nu point krvona
+    // cout << y << endl;                   // prints the address
+    // cout << y->data << endl;
+    // cout << y->next;
+    Node *head = convertarrtoll(arr);
+    // cout << head->data;
+
+    Node *temp = head;
+    int count = 0;
+    // while (temp)
+    // {
+    //     cout << temp->data << " ";
+    //     temp = temp->next;
+    //     count++;
+    // }
+    // cout << count;
+    cout << ifpresent(head, 5);
     return 0;
 }
