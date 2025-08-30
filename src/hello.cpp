@@ -3702,7 +3702,7 @@
 //     return 0;
 // }
 
-//  deletion  // head nu hmesha lena
+//  deletion and insertion // head nu hmesha lena
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -3718,6 +3718,11 @@ public:
     {
         data = data1;
         next = nullptr;
+    }
+    Node(int data1, Node *next1)
+    {
+        data = data1;
+        next = next1;
     }
 };
 
@@ -3826,6 +3831,83 @@ Node *removeEl(Node *head, int el)
     return head;
 }
 
+Node *inserthead(Node *head, int val)
+{
+    Node *temp = new Node(val, head);
+    return temp;
+}
+
+Node *insertTail(Node *head, int val)
+{
+    if (head == NULL)
+        return new Node(val); // if it is empty just create one node..
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next; // moving the temp...
+    }
+    Node *newNode = new Node(val);
+    temp->next = newNode; // pointing is done here....
+    return head;
+}
+
+Node *insertPosition(Node *head, int el, int k)
+{
+    if (head == NULL)
+    {
+        if (k == 1)
+        {
+            return new Node(el);
+        }
+        else
+            return head;
+    }
+    if (k == 1)
+    {
+        return new Node(el);
+    }
+    int cnt = 0;
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        cnt++;
+        if (cnt == k - 1)
+        {                                       // bec insert krna ek cut vekhna
+            Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
+            temp->next = x;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
+Node *insertBeforeValue(Node *head, int el, int val)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    if (head->data == val)
+    {
+        return new Node(el);
+    }
+
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+
+        if (temp->next->data == val)
+        {                                       // bec insert krna ek cut vekhna
+            Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
+            temp->next = x;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
 int main()
 {
 
@@ -3835,7 +3917,11 @@ int main()
                                    // head = deletehead(head);
                                    // head = removetail(head);
                                    // head = removek(head, 3);
-    head = removeEl(head, 3);
+    // head = removeEl(head, 3);
+    // head = inserthead(head, 100);
+    // head = insertTail(head, 100);
+    // head = insertPosition(head, 23, 4);
+    head = insertBeforeValue(head, 100, 3);
     printnode(head);
     return 0;
 }
