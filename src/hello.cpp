@@ -3704,6 +3704,230 @@
 
 //  deletion and insertion // head nu hmesha lena
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *next;
+
+// public:
+//     Node(int data1)
+//     {
+//         data = data1;
+//         next = nullptr;
+//     }
+//     Node(int data1, Node *next1)
+//     {
+//         data = data1;
+//         next = next1;
+//     }
+// };
+
+// void printnode(Node *head)
+// {
+//     while (head)
+//     {
+//         cout << head->data << " ";
+//         head = head->next;
+//     }
+//     cout << endl;
+// }
+
+// Node *converttoll(vector<int> arr) // converting to ll  // also we have to return pointer
+// {
+//     Node *head = new Node(arr[0]);
+//     Node *mover = head;
+//     for (int i = 1; i < arr.size(); i++)
+//     {
+//         Node *temp = new Node(arr[i]);
+//         mover->next = temp; // link is made
+//         mover = temp;
+//     }
+//     return head;
+// }
+
+// Node *deletehead(Node *head)   // store the head in temp and move the head pointer and del temp..
+// {
+//     if (head == NULL)
+//         return head;
+//     Node *temp = head;
+//     head = head->next;
+//     delete temp;
+//     return head;
+// }
+
+// Node *removetail(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head;
+//     Node *temp = head;
+//     while (temp->next->next != NULL) // Second last element..
+//     {
+//         temp = temp->next; // just moving the temp...
+//     }
+//     delete temp->next; // delete the last element..
+//     temp->next = NULL;
+//     return head;
+// }
+
+// Node *removek(Node *head, int k)
+// {
+//     if (head == NULL)
+//         return head;
+//     if (k == 1)     // doubly linked list vich apa case bnake viche hi solve kr da ge
+//     { // removing first element..
+//         Node *temp = head;
+//         head = head->next;
+//         free(temp);
+//         return head;
+//     }
+//     Node *temp = head;
+//     Node *prev = NULL;
+//     int count = 0;
+//     while (temp != NULL)
+//     {
+//         count++;
+//         if (count == k)
+//         {
+//             prev->next = prev->next->next; // inbetween toh link remove krta.. te doje nal jodta..
+//             delete temp;
+//             break;
+//         }
+//         prev = temp;
+//         temp = temp->next;
+//     }
+//     return head;
+// }
+
+// Node *removeEl(Node *head, int el)
+// {
+//     if (head == NULL)
+//         return head;
+//     if (head->data == el)
+//     { // removing first element..
+//         Node *temp = head;
+//         head = head->next;
+//         free(temp);
+//         return head;
+//     }
+//     Node *temp = head;
+//     Node *prev = NULL;
+//     int count = 0;
+//     while (temp != NULL)
+//     {
+//         if (temp->data == el)
+//         {
+//             prev->next = prev->next->next; // inbetween toh link remove krta..
+//             delete temp;
+//             break;
+//         }
+
+//         prev = temp;
+//         temp = temp->next;
+//     }
+//     return head;
+// }
+
+// Node *inserthead(Node *head, int val)
+// {
+//     Node *temp = new Node(val, head);
+//     return temp;
+// }
+
+// Node *insertTail(Node *head, int val)
+// {
+//     if (head == NULL)
+//         return new Node(val); // if it is empty just create one node..
+//     Node *temp = head;
+//     while (temp->next != NULL)
+//     {
+//         temp = temp->next; // moving the temp...
+//     }
+//     Node *newNode = new Node(val);
+//     temp->next = newNode; // pointing is done here....
+//     return head;
+// }
+
+// Node *insertPosition(Node *head, int el, int k)
+// {
+//     if (head == NULL)
+//     {
+//         if (k == 1)
+//         {
+//             return new Node(el);
+//         }
+//         else
+//             return head;
+//     }
+//     if (k == 1)
+//     {
+//         return new Node(el);
+//     }
+//     int cnt = 0;
+//     Node *temp = head;
+//     while (temp->next != NULL)
+//     {
+//         cnt++;
+//         if (cnt == k - 1)
+//         {                                       // bec insert krna ek cut vekhna
+//             Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
+//             temp->next = x;
+//             break;
+//         }
+//         temp = temp->next;
+//     }
+//     return head;
+// }
+
+// Node *insertBeforeValue(Node *head, int el, int val)
+// {
+//     if (head == NULL)
+//     {
+//         return NULL;
+//     }
+//     if (head->data == val)
+//     {
+//         return new Node(el);
+//     }
+
+//     Node *temp = head;
+//     while (temp->next != NULL)
+//     {
+
+//         if (temp->next->data == val)
+//         {                                       // bec insert krna ek cut vekhna
+//             Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
+//             temp->next = x;
+//             break;
+//         }
+//         temp = temp->next;
+//     }
+//     return head;
+// }
+
+// int main()
+// {
+
+//     vector<int> arr = {1, 2, 3, 4, 5};
+
+//     Node *head = converttoll(arr); // head will always be returned by creating linked list
+//                                    // head = deletehead(head);
+//                                    // head = removetail(head);
+//                                    // head = removek(head, 3);
+//     // head = removeEl(head, 3);
+//     // head = inserthead(head, 100);
+//     // head = insertTail(head, 100);
+//     // head = insertPosition(head, 23, 4);
+//     head = insertBeforeValue(head, 100, 3);
+//     printnode(head);
+//     return 0;
+// }
+
+// Doubly linked list
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -3712,216 +3936,201 @@ class Node
 public:
     int data;
     Node *next;
+    Node *back;
 
 public:
+    Node(int data1, Node *next1, Node *back1)
+    {
+        data = data1;
+        next = next1;
+        back = back1;
+    }
     Node(int data1)
     {
         data = data1;
         next = nullptr;
-    }
-    Node(int data1, Node *next1)
-    {
-        data = data1;
-        next = next1;
+        back = nullptr;
     }
 };
 
-void printnode(Node *head)
+Node *dll(vector<int> arr)
 {
-    while (head)
+    Node *head = new Node(arr[0]);
+    Node *prev = head;
+    for (int i = 1; i < arr.size(); i++)
+    {
+        Node *temp = new Node(arr[i], nullptr, prev);
+        prev->next = temp; // creating link
+        prev = temp;       // moving the prev pointer to the temp..
+    }
+    return head;
+}
+
+void print(Node *head)
+{
+    while (head != NULL)
     {
         cout << head->data << " ";
         head = head->next;
     }
-    cout << endl;
-}
-
-Node *converttoll(vector<int> arr) // converting to ll  // also we have to return pointer
-{
-    Node *head = new Node(arr[0]);
-    Node *mover = head;
-    for (int i = 1; i < arr.size(); i++)
-    {
-        Node *temp = new Node(arr[i]);
-        mover->next = temp; // link is made
-        mover = temp;
-    }
-    return head;
 }
 
 Node *deletehead(Node *head)
 {
-    if (head == NULL)
-        return head;
-    Node *temp = head;
-    head = head->next;
-    delete temp;
+    if (head == NULL || head->next == NULL)
+        return NULL;
+    Node *prev = head;
+    head = head->next; // head should point to the next..
+    head->back = nullptr;
+    prev->next = nullptr;
+    delete prev;
     return head;
 }
 
-Node *removetail(Node *head)
+Node *deletetail(Node *head)
 {
     if (head == NULL || head->next == NULL)
-        return head;
-    Node *temp = head;
-    while (temp->next->next != NULL) // Second last element..
+        return NULL;
+    Node *tail = head;
+    while (tail->next != NULL) // next to next nhi java ge..
     {
-        temp = temp->next; // just moving the temp...
+        tail = tail->next;
     }
-    delete temp->next; // delete the last element..
-    temp->next = NULL;
+    Node *prev = tail->back; // always first store the answer
+    prev->next = nullptr;
+    tail->back = nullptr;
+    delete tail;
     return head;
 }
 
-Node *removek(Node *head, int k)
-{
-    if (head == NULL)
-        return head;
-    if (k == 1)
-    { // removing first element..
-        Node *temp = head;
-        head = head->next;
-        free(temp);
-        return head;
-    }
-    Node *temp = head;
-    Node *prev = NULL;
-    int count = 0;
-    while (temp != NULL)
-    {
-        count++;
-        if (count == k)
-        {
-            prev->next = prev->next->next; // inbetween toh link remove krta..
-            delete temp;
-            break;
-        }
-        prev = temp;
-        temp = temp->next;
-    }
-    return head;
-}
-
-Node *removeEl(Node *head, int el)
-{
-    if (head == NULL)
-        return head;
-    if (head->data == el)
-    { // removing first element..
-        Node *temp = head;
-        head = head->next;
-        free(temp);
-        return head;
-    }
-    Node *temp = head;
-    Node *prev = NULL;
-    int count = 0;
-    while (temp != NULL)
-    {
-        if (temp->data == el)
-        {
-            prev->next = prev->next->next; // inbetween toh link remove krta..
-            delete temp;
-            break;
-        }
-
-        prev = temp;
-        temp = temp->next;
-    }
-    return head;
-}
-
-Node *inserthead(Node *head, int val)
-{
-    Node *temp = new Node(val, head);
-    return temp;
-}
-
-Node *insertTail(Node *head, int val)
-{
-    if (head == NULL)
-        return new Node(val); // if it is empty just create one node..
-    Node *temp = head;
-    while (temp->next != NULL)
-    {
-        temp = temp->next; // moving the temp...
-    }
-    Node *newNode = new Node(val);
-    temp->next = newNode; // pointing is done here....
-    return head;
-}
-
-Node *insertPosition(Node *head, int el, int k)
-{
-    if (head == NULL)
-    {
-        if (k == 1)
-        {
-            return new Node(el);
-        }
-        else
-            return head;
-    }
-    if (k == 1)
-    {
-        return new Node(el);
-    }
-    int cnt = 0;
-    Node *temp = head;
-    while (temp->next != NULL)
-    {
-        cnt++;
-        if (cnt == k - 1)
-        {                                       // bec insert krna ek cut vekhna
-            Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
-            temp->next = x;
-            break;
-        }
-        temp = temp->next;
-    }
-    return head;
-}
-
-Node *insertBeforeValue(Node *head, int el, int val)
+Node *deletekth(Node *head, int k)
 {
     if (head == NULL)
     {
         return NULL;
     }
-    if (head->data == val)
+    int cnt = 0;
+    Node *knode = head;
+    while (knode != NULL)
     {
-        return new Node(el);
-    }
-
-    Node *temp = head;
-    while (temp->next != NULL)
-    {
-
-        if (temp->next->data == val)
-        {                                       // bec insert krna ek cut vekhna
-            Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
-            temp->next = x;
+        cnt++;
+        if (cnt == k)
+        {
             break;
         }
-        temp = temp->next;
+        knode = knode->next;
     }
+    Node *prev = knode->back;
+    Node *front = knode->next;
+
+    if (prev == 0 && front == 0)
+    { // only 1 element is present...
+        return NULL;
+    }
+    else if (prev == NULL)
+    {
+        return deletehead(head); // since first element...
+    }
+    else if (front == NULL)
+    {
+        return deletetail(head);
+    }
+    prev->next = knode->next;
+    front->back = knode->back;
+
+    knode->back = nullptr;
+    knode->next = nullptr;
+
+    delete knode;
     return head;
 }
 
+void deleteNode(Node *temp)
+{ // head cant be changed....
+    Node *prev = temp->back;
+    Node *front = temp->next;
+
+    if (front == NULL)
+    {
+        prev->next = nullptr;
+        temp->back = nullptr;
+        delete temp;
+        return;
+    }
+    prev->next = front;
+    front->back = prev;
+
+    temp->back = nullptr;
+    temp->next = nullptr;
+    delete temp;
+}
+
+Node *insertHead(Node *head, int val)
+{
+    Node *newNode = new Node(val, head, nullptr);
+    head->back = newNode;
+    return newNode; // donot return head here....
+}
+
+Node *inserttail(Node *head, int val)
+{
+    if (head->next == NULL)
+    {
+        return insertHead(head, val);
+    }
+    Node *tail = head;
+    while (tail->next != NULL)
+    {
+        tail = tail->next;
+    }
+    Node *prev = tail->back;
+    Node *newNode = new Node(val, tail, prev);
+    tail->back = newNode;
+    prev->next = newNode;
+    return head;
+}
+
+Node *insertbeforekth(Node *head, int k, int val)
+{
+    if (k == 1)
+        return insertHead(head, val);
+
+    Node *temp = head;
+    int cnt = 0;
+    while (temp != NULL)
+    {
+        cnt++;
+        if (cnt == k)
+            break;
+        temp = temp->next;
+    }
+
+    Node *prev = temp->back;
+    Node *newNode = new Node(val, temp, prev);
+    temp->back = newNode;
+    prev->next = newNode;
+    return head;
+}
+
+void insertbeforenode(Node *temp, int val)
+{
+    Node *prev = temp->back;
+    Node *newNode = new Node(val, temp, prev);
+    prev->next = newNode;
+    temp->back = newNode;
+}
 int main()
 {
-
     vector<int> arr = {1, 2, 3, 4, 5};
-
-    Node *head = converttoll(arr); // head will always be returned by creating linked list
-                                   // head = deletehead(head);
-                                   // head = removetail(head);
-                                   // head = removek(head, 3);
-    // head = removeEl(head, 3);
-    // head = inserthead(head, 100);
-    // head = insertTail(head, 100);
-    // head = insertPosition(head, 23, 4);
-    head = insertBeforeValue(head, 100, 3);
-    printnode(head);
+    Node *head = dll(arr);
+    // head = deletehead(head);
+    // head = deletetail(head);
+    // head = deletekth(head, 2);
+    // deleteNode(head->next);
+    // head = insertHead(head, 3);
+    // head = inserttail(head, 3);
+    // head = insertbeforekth(head, 3, 10);
+    insertbeforenode(head->next, 14);
+    print(head);
     return 0;
 }
