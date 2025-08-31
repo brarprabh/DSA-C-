@@ -4216,15 +4216,43 @@
 
 // Find the middle node of the linked list
 
-Node *middleNode(Node *head)
-{
-    Node *slow = head;
-    Node *fast = head;
+// Node *middleNode(Node *head)
+// {
+Node *slow = head;
+Node *fast = head;
 
-    while (fast != NULL || fast->next != NULL)
+while (fast != NULL || fast->next != NULL)
+{
+    slow = slow->next;
+    fast = fast->next->next;
+}
+return slow;
+// }
+
+// reverse a single linked list
+
+Node *reversell(Node *head)
+{
+    Node *temp = head;
+    Node *prev = NULL;
+    while (temp != NULL)
     {
-        slow = slow->next;
-        fast = fast->next->next;
+        Node *front = temp->next;
+        temp->next = prev; // link is made is previous
+        prev = temp;
+        temp = front;
     }
-    return slow;
+    retutn prev; // as temp and front will be exhausted...
+}
+
+// reverse using recurrsion
+
+Node *reccursivereverse(Node *head)
+{
+    if (head == NULL || head->next == NULL)
+        return head; // base case already sorted..
+    Node *newhead = reccursivereverse(head->next);
+    Node *front = head->next; // remember always link are changed..
+    head->next = NULL;
+    return newhead;
 }
