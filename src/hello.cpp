@@ -3726,7 +3726,7 @@
 //     }
 // };
 
-// void printnode(Node *head)
+// void printnode(Node *head)  // for printing
 // {
 //     while (head)
 //     {
@@ -3751,7 +3751,7 @@
 
 // Node *deletehead(Node *head)   // store the head in temp and move the head pointer and del temp..
 // {
-//     if (head == NULL)
+//     if (head == NULL)   // base case
 //         return head;
 //     Node *temp = head;
 //     head = head->next;
@@ -3762,7 +3762,7 @@
 // Node *removetail(Node *head)
 // {
 //     if (head == NULL || head->next == NULL)
-//         return head;
+//         return head; // i think NULL will be there
 //     Node *temp = head;
 //     while (temp->next->next != NULL) // Second last element..
 //     {
@@ -3928,6 +3928,215 @@
 
 // Doubly linked list
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *next;
+//     Node *back;
+
+// public:
+//     Node(int data1, Node *next1, Node *back1)
+//     {
+//         data = data1;
+//         next = next1;
+//         back = back1;
+//     }
+//     Node(int data1)
+//     {
+//         data = data1;
+//         next = nullptr;
+//         back = nullptr;
+//     }
+// };
+
+// Node *dll(vector<int> arr)
+// {
+//     Node *head = new Node(arr[0]);
+//     Node *prev = head;
+//     for (int i = 1; i < arr.size(); i++)
+//     {
+//         Node *temp = new Node(arr[i], nullptr, prev);
+//         prev->next = temp; // creating link
+//         prev = temp;       // moving the prev pointer to the temp..
+//     }
+//     return head;
+// }
+
+// void print(Node *head)
+// {
+//     while (head != NULL)
+//     {
+//         cout << head->data << " ";
+//         head = head->next;
+//     }
+// }
+
+// Node *deletehead(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return NULL;
+//     Node *prev = head;
+//     head = head->next; // head should point to the next..
+//     head->back = nullptr;
+//     prev->next = nullptr;
+//     delete prev;
+//     return head;
+// }
+
+// Node *deletetail(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return NULL;
+//     Node *tail = head;
+//     while (tail->next != NULL) // next to next nhi java ge..
+//     {
+//         tail = tail->next;
+//     }
+//     Node *prev = tail->back; // always first store the answer
+//     prev->next = nullptr;
+//     tail->back = nullptr;
+//     delete tail;
+//     return head;
+// }
+
+// Node *deletekth(Node *head, int k)
+// {
+//     if (head == NULL)
+//     {
+//         return NULL;
+//     }
+//     int cnt = 0;
+//     Node *knode = head;
+//     while (knode != NULL)
+//     {
+//         cnt++;
+//         if (cnt == k)
+//         {
+//             break;
+//         }
+//         knode = knode->next;
+//     }
+//     Node *prev = knode->back;
+//     Node *front = knode->next;
+
+//     if (prev == 0 && front == 0)
+//     { // only 1 element is present...
+//         return NULL;
+//     }
+//     else if (prev == NULL)
+//     {
+//         return deletehead(head); // since first element...
+//     }
+//     else if (front == NULL)
+//     {
+//         return deletetail(head);
+//     }
+//     prev->next = knode->next;
+//     front->back = knode->back;
+
+//     knode->back = nullptr;
+//     knode->next = nullptr;
+
+//     delete knode;
+//     return head;
+// }
+
+// void deleteNode(Node *temp)
+// { // head cant be changed....
+//     Node *prev = temp->back;
+//     Node *front = temp->next;
+
+//     if (front == NULL)
+//     {
+//         prev->next = nullptr;
+//         temp->back = nullptr;
+//         delete temp;
+//         return;
+//     }
+//     prev->next = front;
+//     front->back = prev;
+
+//     temp->back = nullptr;
+//     temp->next = nullptr;
+//     delete temp;
+// }
+
+// Node *insertHead(Node *head, int val)
+// {
+//     Node *newNode = new Node(val, head, nullptr);
+//     head->back = newNode;
+//     return newNode; // donot return head here....
+// }
+
+// Node *inserttail(Node *head, int val)
+// {
+//     if (head->next == NULL)
+//     {
+//         return insertHead(head, val);
+//     }
+//     Node *tail = head;
+//     while (tail->next != NULL)
+//     {
+//         tail = tail->next;
+//     }
+//     Node *prev = tail->back;                   // prev hmesha store krna...
+//     Node *newNode = new Node(val, tail, prev); // ek link ethe ban gaya
+//     tail->back = newNode;                      // doja link ethe ban gya..
+//     prev->next = newNode;
+//     return head;
+// }
+
+// Node *insertbeforekth(Node *head, int k, int val)
+// {
+//     if (k == 1)
+//         return insertHead(head, val);
+
+//     Node *temp = head;
+//     int cnt = 0;
+//     while (temp != NULL)
+//     {
+//         cnt++;
+//         if (cnt == k)
+//             break;
+//         temp = temp->next;
+//     }
+
+//     Node *prev = temp->back;
+//     Node *newNode = new Node(val, temp, prev);
+//     temp->back = newNode;
+//     prev->next = newNode;
+//     return head;
+// }
+
+// void insertbeforenode(Node *temp, int val)
+// {
+//     Node *prev = temp->back; // prev lena jarrori aa...
+//     Node *newNode = new Node(val, temp, prev);
+//     prev->next = newNode;
+//     temp->back = newNode;
+// }
+// int main()
+// {
+//     vector<int> arr = {1, 2, 3, 4, 5};
+//     Node *head = dll(arr);
+//     // head = deletehead(head);
+//     // head = deletetail(head);
+//     // head = deletekth(head, 2);
+//     // deleteNode(head->next);
+//     // head = insertHead(head, 3);
+//     // head = inserttail(head, 3);
+//     // head = insertbeforekth(head, 3, 10);
+//     insertbeforenode(head->next, 14);
+//     print(head);
+//     return 0;
+// }
+
+// Reversing the ddl
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -3938,13 +4147,13 @@ public:
     Node *next;
     Node *back;
 
-public:
     Node(int data1, Node *next1, Node *back1)
     {
         data = data1;
         next = next1;
         back = back1;
     }
+
     Node(int data1)
     {
         data = data1;
@@ -3953,17 +4162,37 @@ public:
     }
 };
 
-Node *dll(vector<int> arr)
+Node *arrToDll(vector<int> &arr)
 {
     Node *head = new Node(arr[0]);
     Node *prev = head;
     for (int i = 1; i < arr.size(); i++)
     {
         Node *temp = new Node(arr[i], nullptr, prev);
-        prev->next = temp; // creating link
-        prev = temp;       // moving the prev pointer to the temp..
+        prev->next = temp;
+        prev = temp;
     }
     return head;
+}
+
+Node *reverseDll(Node *head)
+{
+
+    if (head == NULL || head->next == NULL)
+        return head;
+
+    Node *last = NULL;
+    Node *current = head;
+
+    while (current != NULL)
+    {
+        last = current->back;
+        current->back = current->next;
+        current->next = last;
+
+        current = current->back;
+    }
+    return last->back;
 }
 
 void print(Node *head)
@@ -3973,164 +4202,14 @@ void print(Node *head)
         cout << head->data << " ";
         head = head->next;
     }
+    cout << endl;
 }
 
-Node *deletehead(Node *head)
-{
-    if (head == NULL || head->next == NULL)
-        return NULL;
-    Node *prev = head;
-    head = head->next; // head should point to the next..
-    head->back = nullptr;
-    prev->next = nullptr;
-    delete prev;
-    return head;
-}
-
-Node *deletetail(Node *head)
-{
-    if (head == NULL || head->next == NULL)
-        return NULL;
-    Node *tail = head;
-    while (tail->next != NULL) // next to next nhi java ge..
-    {
-        tail = tail->next;
-    }
-    Node *prev = tail->back; // always first store the answer
-    prev->next = nullptr;
-    tail->back = nullptr;
-    delete tail;
-    return head;
-}
-
-Node *deletekth(Node *head, int k)
-{
-    if (head == NULL)
-    {
-        return NULL;
-    }
-    int cnt = 0;
-    Node *knode = head;
-    while (knode != NULL)
-    {
-        cnt++;
-        if (cnt == k)
-        {
-            break;
-        }
-        knode = knode->next;
-    }
-    Node *prev = knode->back;
-    Node *front = knode->next;
-
-    if (prev == 0 && front == 0)
-    { // only 1 element is present...
-        return NULL;
-    }
-    else if (prev == NULL)
-    {
-        return deletehead(head); // since first element...
-    }
-    else if (front == NULL)
-    {
-        return deletetail(head);
-    }
-    prev->next = knode->next;
-    front->back = knode->back;
-
-    knode->back = nullptr;
-    knode->next = nullptr;
-
-    delete knode;
-    return head;
-}
-
-void deleteNode(Node *temp)
-{ // head cant be changed....
-    Node *prev = temp->back;
-    Node *front = temp->next;
-
-    if (front == NULL)
-    {
-        prev->next = nullptr;
-        temp->back = nullptr;
-        delete temp;
-        return;
-    }
-    prev->next = front;
-    front->back = prev;
-
-    temp->back = nullptr;
-    temp->next = nullptr;
-    delete temp;
-}
-
-Node *insertHead(Node *head, int val)
-{
-    Node *newNode = new Node(val, head, nullptr);
-    head->back = newNode;
-    return newNode; // donot return head here....
-}
-
-Node *inserttail(Node *head, int val)
-{
-    if (head->next == NULL)
-    {
-        return insertHead(head, val);
-    }
-    Node *tail = head;
-    while (tail->next != NULL)
-    {
-        tail = tail->next;
-    }
-    Node *prev = tail->back;
-    Node *newNode = new Node(val, tail, prev);
-    tail->back = newNode;
-    prev->next = newNode;
-    return head;
-}
-
-Node *insertbeforekth(Node *head, int k, int val)
-{
-    if (k == 1)
-        return insertHead(head, val);
-
-    Node *temp = head;
-    int cnt = 0;
-    while (temp != NULL)
-    {
-        cnt++;
-        if (cnt == k)
-            break;
-        temp = temp->next;
-    }
-
-    Node *prev = temp->back;
-    Node *newNode = new Node(val, temp, prev);
-    temp->back = newNode;
-    prev->next = newNode;
-    return head;
-}
-
-void insertbeforenode(Node *temp, int val)
-{
-    Node *prev = temp->back;
-    Node *newNode = new Node(val, temp, prev);
-    prev->next = newNode;
-    temp->back = newNode;
-}
 int main()
 {
-    vector<int> arr = {1, 2, 3, 4, 5};
-    Node *head = dll(arr);
-    // head = deletehead(head);
-    // head = deletetail(head);
-    // head = deletekth(head, 2);
-    // deleteNode(head->next);
-    // head = insertHead(head, 3);
-    // head = inserttail(head, 3);
-    // head = insertbeforekth(head, 3, 10);
-    insertbeforenode(head->next, 14);
+    vector<int> arr = {1, 2, 4, 5, 6};
+    Node *head = arrToDll(arr);
+    head = reverseDll(head);
     print(head);
     return 0;
 }
