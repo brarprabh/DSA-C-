@@ -4218,41 +4218,71 @@
 
 // Node *middleNode(Node *head)
 // {
-Node *slow = head;
-Node *fast = head;
+// Node *slow = head;
+// Node *fast = head;
 
-while (fast != NULL || fast->next != NULL)
-{
-    slow = slow->next;
-    fast = fast->next->next;
-}
-return slow;
+// while (fast != NULL || fast->next != NULL)
+// {
+//     slow = slow->next;
+//     fast = fast->next->next;
+// }
+// return slow;
 // }
 
 // reverse a single linked list
 
-Node *reversell(Node *head)
-{
-    Node *temp = head;
-    Node *prev = NULL;
-    while (temp != NULL)
-    {
-        Node *front = temp->next;
-        temp->next = prev; // link is made is previous
-        prev = temp;
-        temp = front;
-    }
-    retutn prev; // as temp and front will be exhausted...
-}
+// Node *reversell(Node *head)
+// {
+//     Node *temp = head;
+//     Node *prev = NULL;
+//     while (temp != NULL)
+//     {
+//         Node *front = temp->next;
+//         temp->next = prev; // link is made is previous
+//         prev = temp;
+//         temp = front;
+//     }
+//     retutn prev; // as temp and front will be exhausted...
+// }
 
 // reverse using recurrsion
 
-Node *reccursivereverse(Node *head)
+// Node *reccursivereverse(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head; // base case already sorted..
+//     Node *newhead = reccursivereverse(head->next);
+//     Node *front = head->next; // remember always link are changed..
+//     head->next = NULL;
+//     return newhead;
+// }
+
+// Find a loop in the linked list
+
+// bool isloop(Node* head) {
+//     map<Node*, int> mpp;
+//     Node* temp = head;
+
+//     while(temp != NULL) {
+//         if(mpp.find(temp) == 2) return true;
+//         mpp[temp] = 1;
+//         temp = temp->next;
+//     }
+//     return false;
+// }
+
+// Find a loop using recurrsion
+
+bool detectcycle(Node *head)
 {
-    if (head == NULL || head->next == NULL)
-        return head; // base case already sorted..
-    Node *newhead = reccursivereverse(head->next);
-    Node *front = head->next; // remember always link are changed..
-    head->next = NULL;
-    return newhead;
+    Node *slow = head;
+    Node *fast = head;
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast)
+            return true;
+    }
+    return false;
 }
