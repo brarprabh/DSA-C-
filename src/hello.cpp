@@ -4271,18 +4271,47 @@
 //     return false;
 // }
 
-// Find a loop using recurrsion
+// Find a loop using tortoise and hare..
 
-bool detectcycle(Node *head)
+// bool detectcycle(Node *head)
+// {
+//     Node *slow = head;
+//     Node *fast = head;
+//     while (fast != NULL && fast->next != NULL)
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//         if (slow == fast)
+//             return true;
+//     }
+//     return false;
+// }
+
+// Detect the starting point of loop
+
+// 1. using hashing same code as we have done previously..
+
+// 2. using tortouise and hare..
+
+Node *detectstartloop(Node *head)
 {
     Node *slow = head;
     Node *fast = head;
+
     while (fast != NULL && fast->next != NULL)
     {
         slow = slow->next;
         fast = fast->next->next;
         if (slow == fast)
-            return true;
+        {
+            slow = head;
+            while (slow != fast)
+            {
+                slow = slow->next;
+                fast = fast->next;
+            }
+            return slow;
+        }
     }
-    return false;
+    return NULL;
 }
