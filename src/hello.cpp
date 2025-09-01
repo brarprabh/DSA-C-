@@ -4339,34 +4339,107 @@
 //     return 0;
 // }
 
-// using tortoise hare pointer
+// using tortoise hare pointer fing the length of the loop
 
-int findlength(Node *slow, Node *fast)
+// int findlength(Node *slow, Node *fast)
+// {
+//     int count = 1;
+//     fast = fast->next;
+
+//     while (slow != fast)
+//     {
+//         count++;
+//         fast = fast->next;
+//     }
+//     return count;
+// }
+
+// int detectlength(Node *head)
+// {
+//     Node *slow = head;
+//     Node *fast = head;
+
+//     while (fast != NULL && fast->next != NULL)
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     if (slow == fast)
+//     {
+//         return findlength(slow, fast);
+//     }
+//     return 0;
+// }
+
+// Check whether the linked list is palindrome or not
+
+// 1. Using Stack data structure..
+
+bool addele(Node *head)
 {
-    int count = 1;
-    fast = fast->next;
+    stack<int> st;
+    Node *temp = head;
 
-    while (slow != fast)
+    while (temp != NULL)
     {
-        count++;
-        fast = fast->next;
+        st.push_back(temp->data);
+        temp = temp->next;
     }
-    return count;
+
+    temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data != st.top())
+        {
+            return false;
+        }
+        temp = temp->next;
+        st.pop();
+    }
+    return true;
 }
 
-int detectlength(Node *head)
+// 2. reversing the second half of the ll
+
+Node *reverse(Node *head)
+{
+    if (head == NULL || head->next == NULL)
+        return head;
+    Node *newHead = reverse(head->next);
+    Node *front = head->next; // head de next wali node front aa just remembering its positions
+    front->next = head;
+    head->next = NULL;
+    return newHead;
+}
+
+bool ispalindrome(Node *head)
 {
     Node *slow = head;
     Node *fast = head;
 
-    while (fast != NULL && fast->next != NULL)
+    if (head == NULL || head->next == NULL)
+        return true; // edge case..
+
+    while (fast->next != fast->next->next)
     {
         slow = slow->next;
         fast = fast->next->next;
     }
-    if (slow == fast)
+    Node *newHead = reverse(slow->next);
+
+    Node *first = head;
+    Node *second = newHead;
+
+    while (second != NULL)
     {
-        return findlength(slow, fast);
+        if (first != second)
+        {
+            reverse(newHead);
+            return false;
+        }
+        first = first->next;
+        second = second->next;
     }
-    return 0;
+    reverse(newHead);
+    return false;
 }
