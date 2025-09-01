@@ -3802,7 +3802,7 @@
 //     return head;
 // }
 
-// Node *removeEl(Node *head, int el)
+// Node *removeEl(Node *head, int el) // head wala case you have to deal with..
 // {
 //     if (head == NULL)
 //         return head;
@@ -3871,7 +3871,7 @@
 //     while (temp->next != NULL)
 //     {
 //         cnt++;
-//         if (cnt == k - 1)
+//         if (cnt == k - 1)  // imp points..
 //         {                                       // bec insert krna ek cut vekhna
 //             Node *x = new Node(el, temp->next); // first the link is made bt new node made and temp de agli si jehdi..
 //             temp->next = x;
@@ -3975,17 +3975,17 @@
 //     }
 // }
 
-// Node *deletehead(Node *head)
+//  Node *deletehead(Node *head)  //  take always prev that will be delete or in tail it can be used to remove head
 // {
-//     if (head == NULL || head->next == NULL)
+//     if (head == NULL || head->next == NULL)  // only one ele is preseent..
 //         return NULL;
-//     Node *prev = head;
+//     Node *prev = head; // storing head is imp..
 //     head = head->next; // head should point to the next..
 //     head->back = nullptr;
 //     prev->next = nullptr;
-//     delete prev;
+//     delete prev; // remove links and delete prev..
 //     return head;
-// }
+//}
 
 // Node *deletetail(Node *head)
 // {
@@ -4018,9 +4018,9 @@
 //         {
 //             break;
 //         }
-//         knode = knode->next;
+//         knode = knode->next; // move
 //     }
-//     Node *prev = knode->back;
+//     Node *prev = knode->back;  // there can be three cases so take that into account..
 //     Node *front = knode->next;
 
 //     if (prev == 0 && front == 0)
@@ -4035,10 +4035,10 @@
 //     {
 //         return deletetail(head);
 //     }
-//     prev->next = knode->next;
+//     prev->next = knode->next;  // links are made
 //     front->back = knode->back;
 
-//     knode->back = nullptr;
+//     knode->back = nullptr; // also remeber to make null pointers of knode
 //     knode->next = nullptr;
 
 //     delete knode;
@@ -4046,11 +4046,11 @@
 // }
 
 // void deleteNode(Node *temp)
-// { // head cant be changed....
+// { // head cant be changed.... // the prev == NULL case is not there
 //     Node *prev = temp->back;
 //     Node *front = temp->next;
 
-//     if (front == NULL)
+//     if (front == NULL) // the tail..
 //     {
 //         prev->next = nullptr;
 //         temp->back = nullptr;
@@ -4066,20 +4066,20 @@
 // }
 
 // Node *insertHead(Node *head, int val)
-// {
+// {  // remember to make the link backwards and frontwards
 //     Node *newNode = new Node(val, head, nullptr);
-//     head->back = newNode;
+//     head->back = newNode;  // link made bt head and newNode
 //     return newNode; // donot return head here....
 // }
 
-// Node *inserttail(Node *head, int val)
+// Node *inserttail(Node *head, int val) // before the tail..
 // {
 //     if (head->next == NULL)
 //     {
-//         return insertHead(head, val);
+//         return insertHead(head, val);  // only one element is present
 //     }
 //     Node *tail = head;
-//     while (tail->next != NULL)
+//     while (tail->next != NULL) // traverse till tail
 //     {
 //         tail = tail->next;
 //     }
@@ -4112,7 +4112,7 @@
 //     return head;
 // }
 
-// void insertbeforenode(Node *temp, int val)
+// void insertbeforenode(Node *temp, int val)  // head will not be there as it will be altered
 // {
 //     Node *prev = temp->back; // prev lena jarrori aa...
 //     Node *newNode = new Node(val, temp, prev);
@@ -4144,17 +4144,17 @@
 // {
 // public:
 //     int data;
-//     Node *next;
-//     Node *back;
+//     Node *next;  // next ptr..
+//     Node *back; // back ptr..
 
-//     Node(int data1, Node *next1, Node *back1)
+//     Node(int data1, Node *next1, Node *back1) // constructor 1..
 //     {
 //         data = data1;
 //         next = next1;
 //         back = back1;
 //     }
 
-//     Node(int data1)
+//     Node(int data1) // constructor 2..
 //     {
 //         data = data1;
 //         next = nullptr;
@@ -4164,13 +4164,13 @@
 
 // Node *arrToDll(vector<int> &arr)
 // {
-//     Node *head = new Node(arr[0]);
+//     Node *head = new Node(arr[0]); // storing first as head
 //     Node *prev = head;
 //     for (int i = 1; i < arr.size(); i++)
 //     {
 //         Node *temp = new Node(arr[i], nullptr, prev);
-//         prev->next = temp;
-//         prev = temp;
+//         prev->next = temp; // link is made bt prev and temp
+//         prev = temp;  // move prev to temp
 //     }
 //     return head;
 // }
@@ -4178,19 +4178,19 @@
 // Node *reverseDll(Node *head)
 // {
 
-//     if (head == NULL || head->next == NULL)
+//     if (head == NULL || head->next == NULL) // base case..
 //         return head;
 
 //     Node *last = NULL;
-//     Node *current = head;
+//     Node *current = head;// node last  - node current
 
-//     while (current != NULL)
+//     while (current != NULL) // till we dont reaches the end..
 //     {
-//         last = current->back;
+//         last = current->back; // remembering the last pointer
 //         current->back = current->next;
 //         current->next = last;
 
-//         current = current->back;
+//         current = current->back;  // we will move back as links has changed
 //     }
 //     return last->back;
 // }
@@ -4214,7 +4214,7 @@
 //     return 0;
 // }
 
-// Find the middle node of the linked list
+// Find the middle node of the linked list //tortouise and hare algorithm..
 
 // Node *middleNode(Node *head)
 // {
@@ -4233,12 +4233,12 @@
 
 // Node *reversell(Node *head)
 // {
-//     Node *temp = head;
+//     Node *temp = head; // we dont temper head..
 //     Node *prev = NULL;
 //     while (temp != NULL)
 //     {
-//         Node *front = temp->next;
-//         temp->next = prev; // link is made is previous
+//         Node *front = temp->next; // we are just storing it..
+//         temp->next = prev; // link is made is previous  pointing to null..
 //         prev = temp;
 //         temp = front;
 //     }
@@ -4249,7 +4249,7 @@
 
 // Node *reccursivereverse(Node *head)
 // {
-//     if (head == NULL || head->next == NULL)
+//     if (head == NULL || head->next == NULL)  // one node ie is already sorted..
 //         return head; // base case already sorted..
 //     Node *newhead = reccursivereverse(head->next);
 //     Node *front = head->next; // remember always link are changed..
@@ -4281,7 +4281,7 @@
 //     {
 //         slow = slow->next;
 //         fast = fast->next->next;
-//         if (slow == fast)
+//         if (slow == fast) // imp condition//
 //             return true;
 //     }
 //     return false;
@@ -4293,7 +4293,68 @@
 
 // 2. using tortouise and hare..
 
-Node *detectstartloop(Node *head)
+// Node *detectstartloop(Node *head)
+// {
+//     Node *slow = head;
+//     Node *fast = head;
+
+//     while (fast != NULL && fast->next != NULL)
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//         if (slow == fast)
+//         {
+//             slow = head;
+//             while (slow != fast)
+//             {
+//                 slow = slow->next;
+//                 fast = fast->next;
+//             }
+//             return slow;
+//         }
+//     }
+//     return NULL;
+// }
+
+// Detecting the length of loop
+
+// Solution with hashing..
+
+// int detectlength(Node *head)
+// {
+//     map<Node *, int> mpp;
+//     int timer = 1;
+//     Node *temp = head;
+//     while (temp != NULL)
+//     {
+//         if (mpp.find(temp) == mpp.end())
+//         {
+//             int diff = timer - mpp[temp];
+//             return diff;
+//         }
+//         mpp[temp] = timer;
+//         timer++;
+//         temp = temp->next;
+//     }
+//     return 0;
+// }
+
+// using tortoise hare pointer
+
+int findlength(Node *slow, Node *fast)
+{
+    int count = 1;
+    fast = fast->next;
+
+    while (slow != fast)
+    {
+        count++;
+        fast = fast->next;
+    }
+    return count;
+}
+
+int detectlength(Node *head)
 {
     Node *slow = head;
     Node *fast = head;
@@ -4302,16 +4363,10 @@ Node *detectstartloop(Node *head)
     {
         slow = slow->next;
         fast = fast->next->next;
-        if (slow == fast)
-        {
-            slow = head;
-            while (slow != fast)
-            {
-                slow = slow->next;
-                fast = fast->next;
-            }
-            return slow;
-        }
     }
-    return NULL;
+    if (slow == fast)
+    {
+        return findlength(slow, fast);
+    }
+    return 0;
 }
