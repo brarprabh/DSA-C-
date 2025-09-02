@@ -4327,9 +4327,9 @@
 //     Node *temp = head;
 //     while (temp != NULL)
 //     {
-//         if (mpp.find(temp) == mpp.end())
+//         if (mpp.find(temp) == mpp.end()) // temp have been found again
 //         {
-//             int diff = timer - mpp[temp];
+//             int diff = timer - mpp[temp];  in map we are storing the temp..
 //             return diff;
 //         }
 //         mpp[temp] = timer;
@@ -4346,7 +4346,7 @@
 //     int count = 1;
 //     fast = fast->next;
 
-//     while (slow != fast)
+//     while (slow != fast)  // we move fast to one step ahead because the loop will not run
 //     {
 //         count++;
 //         fast = fast->next;
@@ -4375,71 +4375,131 @@
 
 // 1. Using Stack data structure..
 
-bool addele(Node *head)
-{
-    stack<int> st;
-    Node *temp = head;
+// bool addele(Node *head)
+// {
+//     stack<int> st;
+//     Node *temp = head;
 
-    while (temp != NULL)
-    {
-        st.push_back(temp->data);
-        temp = temp->next;
-    }
+//     while (temp != NULL)
+//     {
+//         st.push(temp->data);
+//         temp = temp->next;
+//     }
 
-    temp = head;
-    while (temp != NULL)
-    {
-        if (temp->data != st.top())
-        {
-            return false;
-        }
-        temp = temp->next;
-        st.pop();
-    }
-    return true;
-}
+//     temp = head;
+//     while (temp != NULL)
+//     {
+//         if (temp->data != st.top())
+//         {
+//             return false;
+//         }
+//         temp = temp->next; // remember which iteration we have to perform
+//         st.pop();
+//     }
+//     return true;
+// }
 
-// 2. reversing the second half of the ll
+// 2. reversing the second half of the ll to find palindrome.
 
-Node *reverse(Node *head)
+// Node *reverse(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head;
+//     Node *newHead = reverse(head->next); // callaing the same function for smaller problem..
+//     Node *front = head->next; // head de next wali node front aa just remembering its positions
+//     front->next = head;
+//     head->next = NULL;
+//     return newHead;
+// }
+
+// bool ispalindrome(Node *head)
+// {
+//     Node *slow = head;
+//     Node *fast = head;
+
+//     if (head == NULL || head->next == NULL) // then the no will be the palinddrome
+//         return true; // edge case..
+
+//     while (fast->next != NULL && fast->next->next != NULL)  // finding m1
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     Node *newHead = reverse(slow->next); // reverse from the next of m1
+
+//     Node *first = head;
+//     Node *second = newHead; // checking from the new head
+
+//     while (second != NULL)
+//     {
+//         if (first->data != second->data)
+//         {
+//             reverse(newHead);  // restore the list
+//             return false;
+//         }
+//         first = first->next;
+//         second = second->next;
+//     }
+//     reverse(newHead);  // restore the list
+//     return true;
+// }
+
+// Odd Even linked list
+
+// Node *oddeven(Node * head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head;
+//     vector<int> arr;
+//     Node *temp = head;
+
+//     while (temp != NULL && temp->next != NULL)  // for odd length the last ele will be left..
+//     {
+//         arr.push_back(temp->data);
+//         temp = temp->next->next;
+//     }
+//     if (temp)
+//         arr.push_back(temp->data);
+
+//     temp = head->next;
+
+//     while (temp != NULL && temp->next != NULL)
+//     {
+//         arr.push_back(temp->data);
+//         temp = temp->next->next;
+//     }
+//     if (temp)
+//         arr.push_back(temp->data);
+
+//     int i = 0;
+//     temp = head;
+//     while (temp != NULL)
+//     {
+//         temp->data = arr[i];
+//         i++;
+//         temp = temp->next;
+//     }
+//     return head;
+// }
+
+// Odd Even by changing the links without using extra data structure..
+
+Node *oddeven(Node *head)
 {
     if (head == NULL || head->next == NULL)
         return head;
-    Node *newHead = reverse(head->next);
-    Node *front = head->next; // head de next wali node front aa just remembering its positions
-    front->next = head;
-    head->next = NULL;
-    return newHead;
-}
+    Node *odd = head;
+    Node *even = head->next;
+    Node *evenIndex = head->next;
 
-bool ispalindrome(Node *head)
-{
-    Node *slow = head;
-    Node *fast = head;
-
-    if (head == NULL || head->next == NULL)
-        return true; // edge case..
-
-    while (fast->next != fast->next->next)
+    while (even != NULL && even->next != NULL) // because even is ahead of odd so first the even will be terminated.
     {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    Node *newHead = reverse(slow->next);
+        odd->next = odd->next->next;
+        even->next = even->next->next;
 
-    Node *first = head;
-    Node *second = newHead;
-
-    while (second != NULL)
-    {
-        if (first != second)
-        {
-            reverse(newHead);
-            return false;
-        }
-        first = first->next;
-        second = second->next;
+        odd = odd->next;
+        even = even->next;
     }
-    reverse(newHead);
-    return false;
+    odd->next = evenIndex;
+    return head;
 }
