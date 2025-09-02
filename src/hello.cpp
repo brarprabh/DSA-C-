@@ -4570,22 +4570,41 @@
 
 // Delete the middle node
 
-Node *dlmiddlenode(Node *head)
+// Node *dlmiddlenode(Node *head)
+// {
+//     Node *slow = head;
+//     Node *fast = head;
+
+//     if (head == NULL || head->next == NULL)  // remember these test cases..
+//         return NULL;
+
+//     fast = fast->next->next; // skipping one step of slow
+//     while (fast != NULL && fast->next != NULL)
+//     {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     Node *middleNode = slow->next;
+//     slow->next = slow->next->next;
+//     delete middleNode;
+//     return head;
+// }
+
+// sorting a ll
+
+Node *sort(Node *head)
 {
-    Node *slow = head;
-    Node *fast = head;
-
     if (head == NULL || head->next == NULL)
-        return NULL;
-
-    fast = fast->next->next; // skipping one step of slow
-    while (fast != NULL && fast->next != NULL)
     {
-        slow = slow->next;
-        fast = fast->next->next;
+        return head;
     }
-    Node *middleNode = slow->next;
-    slow->next = slow->next->next;
-    delete middleNode;
-    return head;
+    Node *middle = findmiddle(Node * head);
+    Node *right = middle->next;
+    Node *left = head;
+
+    middle->next = NULL;
+
+    left = sort(left); // for left portion
+    right = sort(right);
+    return mergesrt(left, right);
 }
