@@ -4484,22 +4484,81 @@
 
 // Odd Even by changing the links without using extra data structure..
 
-Node *oddeven(Node *head)
+// Node *oddeven(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head;
+//     Node *odd = head;
+//     Node *even = head->next;
+//     Node *evenIndex = head->next;
+
+//     while (even != NULL && even->next != NULL) // because even is ahead of odd so first the even will be terminated.
+//     {
+//         odd->next = odd->next->next;
+//         even->next = even->next->next;
+
+//         odd = odd->next;
+//         even = even->next;
+//     }
+//     odd->next = evenIndex;
+//     return head;
+// }
+
+// Delete the nth node from last
+
+Node *deletenthNode(Node *head, int n)
 {
-    if (head == NULL || head->next == NULL)
-        return head;
-    Node *odd = head;
-    Node *even = head->next;
-    Node *evenIndex = head->next;
+    int cnt = 0;
+    Node *temp = head;
 
-    while (even != NULL && even->next != NULL) // because even is ahead of odd so first the even will be terminated.
+    while (temp != NULL)
     {
-        odd->next = odd->next->next;
-        even->next = even->next->next;
-
-        odd = odd->next;
-        even = even->next;
+        cnt++;
+        temp = temp->next;
     }
-    odd->next = evenIndex;
+    int res = cnt - n;
+    if (res == 0)
+    {
+        return head->next;
+    }
+    temp = head;
+
+    while (temp != NULL)
+    {
+        res--;
+        if (res == 0)
+        {
+            break;
+        }
+    }
+    Node *delNdoe = temp->next;
+    temp->next = temp->next->next;
+    free(delNode);
+    return head;
+}
+
+// Optimal version
+
+Node *deletenthNode(Node *head, int n)
+{
+    Node *slow = head;
+    Node *fast = head;
+
+    for (int i = 0; i < n; i++)
+        fast = fast->next; // like given n = 2 from last
+
+    while (fast->next != NULL)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    if (fast == NULL) // 5 ll and we have to 5 steps it will point to NULl that is it is head
+    {
+        return head->next;
+    }
+    Node *delNdoe = slow->next;
+    slow->next = slow->next->next;
+    free(delNode);
     return head;
 }
