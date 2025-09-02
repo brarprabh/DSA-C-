@@ -4506,59 +4506,86 @@
 
 // Delete the nth node from last
 
-Node *deletenthNode(Node *head, int n)
-{
-    int cnt = 0;
-    Node *temp = head;
+// Node *deletenthNode(Node *head, int n)
+// {
+//     int cnt = 0;
+//     Node *temp = head;
 
-    while (temp != NULL)
-    {
-        cnt++;
-        temp = temp->next;
-    }
-    int res = cnt - n;
-    if (res == 0)
-    {
-        return head->next;
-    }
-    temp = head;
+//     while (temp != NULL)
+//     {
+//         cnt++;
+//         temp = temp->next;
+//     }
+//     int res = cnt - n;
+//     if (res == 0)
+//     {
+//         return head->next;
+//     }
+//     temp = head;
 
-    while (temp != NULL)
-    {
-        res--;
-        if (res == 0)
-        {
-            break;
-        }
-    }
-    Node *delNdoe = temp->next;
-    temp->next = temp->next->next;
-    free(delNode);
-    return head;
-}
+//     while (temp != NULL)
+//     {
+//         res--;
+//         if (res == 0)
+//         {
+//             break;
+//         }
+//     }
+//     Node *delNdoe = temp->next;
+//     temp->next = temp->next->next;
+//     free(delNode);
+//     return head;
+// }
 
-// Optimal version
+// // Optimal version of delete nth node from last..
 
-Node *deletenthNode(Node *head, int n)
+// class Solution {
+// public:
+//     ListNode* removeNthFromEnd(ListNode* head, int n) {
+//             ListNode *slow = head;
+//     ListNode *fast = head;
+
+//     for (int i = 0; i < n; i++)
+//         fast = fast->next; // like given n = 2 from last
+
+//  if (fast == NULL) // 5 ll and we have to 5 steps it will point to NULl that is it is head
+//     {
+//         ListNode* newHead = head->next;
+// delete head;
+//         return newHead;
+
+//     }
+//     while (fast->next != NULL)
+//     {
+//         fast = fast->next;
+//         slow = slow->next;
+//     }
+
+//     ListNode *delNdoe = slow->next;
+//     slow->next = slow->next->next;
+//     delete delNdoe;
+//     return head;
+//     }
+// };
+
+// Delete the middle node
+
+Node *dlmiddlenode(Node *head)
 {
     Node *slow = head;
     Node *fast = head;
 
-    for (int i = 0; i < n; i++)
-        fast = fast->next; // like given n = 2 from last
+    if (head == NULL || head->next == NULL)
+        return NULL;
 
-    while (fast->next != NULL)
+    fast = fast->next->next; // skipping one step of slow
+    while (fast != NULL && fast->next != NULL)
     {
-        fast = fast->next;
         slow = slow->next;
+        fast = fast->next->next;
     }
-
-    if (fast == NULL) // 5 ll and we have to 5 steps it will point to NULl that is it is head
-    {
-        return head->next;
-    }
-    Node *delNdoe = slow->next;
+    Node *middleNode = slow->next;
     slow->next = slow->next->next;
-    free(delNode);
+    delete middleNode;
     return head;
 }
