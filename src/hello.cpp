@@ -4592,19 +4592,105 @@
 
 // sorting a ll
 
-Node *sort(Node *head)
+// class Solution {
+// public:
+
+// ListNode* findmiddle(ListNode* head) {
+//     ListNode* slow = head;
+//     ListNode* fast = head;
+//     if(head == NULL || head->next == NULL) return head;
+//     fast = head->next;  // since in wven we have to find m1
+//     while(fast != NULL && fast->next != NULL) {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     return slow;
+// }
+
+// ListNode* mergesort(ListNode* left, ListNode* right) {
+//     ListNode* dummy = new ListNode(-1); // adding -1 in the list
+//     ListNode* temp = dummy;
+//     while(left != NULL && right != NULL) {
+//         if(left->val <=  right->val) {
+//             temp->next = left;
+//             temp = left;
+//             left = left->next;  // move the left ptr to next
+//         }
+//         else{
+//         temp->next = right;
+//             temp = right;
+//             right = right->next;
+//         }
+//     }
+//     if(left) // left is remaining
+//     {
+//         temp->next = left;
+//     }
+//     else {
+//         temp->next = right;
+//     }
+//     return dummy->next;
+// }
+
+//     ListNode* sortList(ListNode* head) {
+//         if (head == NULL || head->next == NULL)
+//     {
+//         return head;
+//     }
+//     ListNode *middle = findmiddle(head);
+//     ListNode *right = middle->next;
+//     ListNode *left = head;
+//     middle->next = NULL;
+
+//     left = sortList(left); // for left portion
+//     right = sortList(right);
+//     return mergesort(left, right);
+//     }
+// };
+
+// Sorting of 0, 1, 2..
+
+Node sort012(Node *head)
 {
     if (head == NULL || head->next == NULL)
     {
         return head;
     }
-    Node *middle = findmiddle(Node * head);
-    Node *right = middle->next;
-    Node *left = head;
+    Node *zeroHead = new Node(-1); // just dummy Nodes...
+    Node *oneHead = new Node(-1);
+    Node *twoHead = new Node(-1);
 
-    middle->next = NULL;
+    Node *zero = zeroHead; // for traversal
+    Node *one = oneHead;
+    Node *two = twoHead;
 
-    left = sort(left); // for left portion
-    right = sort(right);
-    return mergesrt(left, right);
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == 0)
+        {
+            zero->next = temp;
+            zero = zero->next;
+        }
+        else if (temp->data == 1)
+        {
+            one->next = temp;
+            one = one->next;
+        }
+        else
+        {
+            two->next = temp;
+            two = two->next;
+        }
+        temp = temp->next;
+    }
+    zero->next = oneHead->next ? oneHead->next : twoHead->next; // if onehead->next present then it will be else
+    one->next = twoHead->next;
+    two->next = NULL;
+    Node *newhead = zeroHead->next; // for main link starting from first..
+    delete zeroHead;
+    delete oneHead;
+    delete twoHead;
+
+    return newhead;
 }
