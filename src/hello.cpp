@@ -4697,52 +4697,131 @@
 
 // Find the intersecting point of the ll
 
-Node *intersectpoint(Node *head1, Node *head2)
-{
-    Node *temp = head1;
-    map<Node *, int> mpp;
-    while (temp != NULL)
-    {
-        mpp[temp] = 1;
-        temp = temp->next;
-    }
-    temp = head2;
+// Node *intersectpoint(Node *head1, Node *head2)
+// {
+//     Node *temp = head1;
+//     map<Node *, int> mpp;
+//     while (temp != NULL)
+//     {
+//         mpp[temp] = 1;
+//         temp = temp->next;
+//     }
+//     temp = head2;
 
-    while (temp != NULL)
-    {
-        if (mpp.find(temp) != mpp.end())
-        {
-            return temp;
-        }
-        temp = temp->next;
-    }
-    return NULL;
-}
+//     while (temp != NULL)
+//     {
+//         if (mpp.find(temp) != mpp.end())
+//         {
+//             return temp;
+//         }
+//         temp = temp->next;
+//     }
+//     return NULL;
+// }
 // time compl = O(N1*N1*log n) + O(N2*N2*log n)
 
 // 2 approach = find the length of the two LL and the differene between them and move the pointer with larger steps and iterate them till they are not equal..
 
 // 3. approach
 
-Node *findintersectpnt(Node *head1, Node *head2)
+// Node *findintersectpnt(Node *head1, Node *head2)
+// {
+//     Node *temp1 = head1;
+//     Node *temp2 = head2;
+
+//     while (temp1 != temp2)
+//     { // we are not checking first element if same return temp1
+//         temp1 = temp1->next;
+//         temp2 = temp2->next;
+
+//         if (temp1 == temp2)
+//             return temp1; // the case as they are not equal will result temp1 to NULL and temp2 to NULL as well they will return NULL
+
+//         if (temp1 == NULL)
+//             temp1 = head2;
+//         if (temp2 == NULL temp2 = head1)
+//             ;
+//     }
+//     return temp1;
+//      tc = O(N1 + N2)
+//      sc = O(1)
+}
+
+// Add 1 to a number represented by LinkedList
+//  Brute force
+
+Node *reverse(Node *head)
 {
-    Node *temp1 = head1;
-    Node *temp2 = head2;
+    if (head == NULL || head->next == NULL)
+        return head;
+    Node *newHead = reverse(head->next);
+    Node *front = head->next;
+    front->next = head;
+    head->next = NULL;
+    return newhead;
+}
 
-    while (temp1 != temp2)
-    { // we are not checking first element if same return temp1
-        temp1 = temp1->next;
-        temp2 = temp2->next;
+Node *add1(Node *head)
+{
 
-        if (temp1 == temp2)
-            return temp1; // the case as they are not equal will result temp1 to NULL and temp2 to NULL as well they will return NULL
-
-        if (temp1 == NULL)
-            temp1 = head2;
-        if (temp2 == NULL temp2 = head1)
-            ;
+    head = reverse(head);
+    int carry = 1;
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        temp->data = temp->data + carry; // for the first time you hace to add 1;
+        if (temp->data < 10)
+        {
+            carry = 0;
+            break; // the same number will be there..
+        }
+        else
+        {
+            temp->data = 0; // just visualise what is happening
+            carry = 1;
+        }
+        temp = temp->next;
     }
-    return temp1;
-    // tc = O(N1 + N2)
-    // sc = O(1)
+    if (carry == 1)
+    {
+        head = reverse(head);
+        Node *newNode = new Node(1);
+        newNode->next = head;
+        return newNode;
+    }
+    head = reverse(head); // if carry is not present..
+    return head;
+}
+
+// using recurrsion
+
+int addhelper(Node *temp)
+{
+    if (temp == NULL)
+    {
+        return 1; // carry as 1 also a base case
+    }
+    int carry = addhelper(temp->next);
+    temp->data += carry;
+    if (temp->data < 10)
+    {
+        return 0;
+    }
+    else
+    {
+        temp->data = 0;
+        return 1; // we are returning carry
+    }
+}
+
+Node *add1(Node *head)
+{
+    int carry = addhelper(head); // will tell for the first if carry is reqd or not
+    if (carry == 1)
+    {
+        Node *newNode = new Node(1);
+        newNode->next = head;
+        return newNode;
+    }
+    return head;
 }
