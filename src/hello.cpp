@@ -4745,83 +4745,117 @@
 //     return temp1;
 //      tc = O(N1 + N2)
 //      sc = O(1)
-}
+//}
 
 // Add 1 to a number represented by LinkedList
 //  Brute force
 
-Node *reverse(Node *head)
-{
-    if (head == NULL || head->next == NULL)
-        return head;
-    Node *newHead = reverse(head->next);
-    Node *front = head->next;
-    front->next = head;
-    head->next = NULL;
-    return newhead;
-}
+// Node *reverse(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//         return head;
+//     Node *newHead = reverse(head->next);
+//     Node *front = head->next;
+//     front->next = head;
+//     head->next = NULL;
+//     return newhead;
+// }
 
-Node *add1(Node *head)
-{
+// Node *add1(Node *head)
+// {
 
-    head = reverse(head);
-    int carry = 1;
-    Node *temp = head;
-    while (temp != NULL)
-    {
-        temp->data = temp->data + carry; // for the first time you hace to add 1;
-        if (temp->data < 10)
-        {
-            carry = 0;
-            break; // the same number will be there..
-        }
-        else
-        {
-            temp->data = 0; // just visualise what is happening
-            carry = 1;
-        }
-        temp = temp->next;
-    }
-    if (carry == 1)
-    {
-        head = reverse(head);
-        Node *newNode = new Node(1);
-        newNode->next = head;
-        return newNode;
-    }
-    head = reverse(head); // if carry is not present..
-    return head;
-}
+//     head = reverse(head);
+//     int carry = 1;
+//     Node *temp = head;
+//     while (temp != NULL)
+//     {
+//         temp->data = temp->data + carry; // for the first time you hace to add 1;
+//         if (temp->data < 10)
+//         {
+//             carry = 0;
+//             break; // the same number will be there..
+//         }
+//         else
+//         {
+//             temp->data = 0; // just visualise what is happening
+//             carry = 1;
+//         }
+//         temp = temp->next;
+//     }
+//     if (carry == 1)
+//     {
+//         head = reverse(head);
+//         Node *newNode = new Node(1);
+//         newNode->next = head;
+//         return newNode;
+//     }
+//     head = reverse(head); // if carry is not present..
+//     return head;
+// }
 
 // using recurrsion
 
-int addhelper(Node *temp)
-{
-    if (temp == NULL)
-    {
-        return 1; // carry as 1 also a base case
-    }
-    int carry = addhelper(temp->next);
-    temp->data += carry;
-    if (temp->data < 10)
-    {
-        return 0;
-    }
-    else
-    {
-        temp->data = 0;
-        return 1; // we are returning carry
-    }
-}
+// int addhelper(Node *temp)
+// {
+//     if (temp == NULL)
+//     {
+//         return 1; // carry as 1 also a base case
+//     }
+//     int carry = addhelper(temp->next);
+//     temp->data += carry;
+//     if (temp->data < 10)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         temp->data = 0;
+//         return 1; // we are returning carry
+//     }
+// }
 
-Node *add1(Node *head)
+// Node *add1(Node *head)
+// {
+//     int carry = addhelper(head); // will tell for the first if carry is reqd or not
+//     if (carry == 1)
+//     {
+//         Node *newNode = new Node(1);
+//         newNode->next = head;
+//         return newNode;
+//     }
+//     return head;
+//}
+
+// Add 2 numbers in LinkedList | Dummy Node Approach
+
+Node *add2number(Node *head1, Node *head2)
 {
-    int carry = addhelper(head); // will tell for the first if carry is reqd or not
-    if (carry == 1)
+
+    Node *temp1 = head1;
+    Node *temp2 = head2;
+    Node *dummyNode = new Node(-1);
+    Node *curr = dummyNode;
+    int carry = 0;
+    while (temp1 != NULL || temp2 != NULL)
     {
-        Node *newNode = new Node(1);
-        newNode->next = head;
-        return newNode;
+        int sum = carry; // we should take the carry
+        if (temp1)
+            sum += temp1->data;
+        if (temp2)
+            sum += temp2->data;
+        Node *newNode = new Node(sum % 10);
+        carry = sum / 10;
+        curr->next = newNode;
+        curr = curr->next;
+        if (temp1)
+            temp1 = temp1->next;
+        if (temp2)
+            temp2 = temp2->next;
     }
-    return head;
+    if (carry) // if carry is left new node will be created..
+    {
+        Node *newNode = new Node(carry);
+        curr->next = newNode;
+    }
+    return dummyNode->next;
 }
