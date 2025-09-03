@@ -4420,7 +4420,7 @@
 //     if (head == NULL || head->next == NULL) // then the no will be the palinddrome
 //         return true; // edge case..
 
-//     while (fast->next != NULL && fast->next->next != NULL)  // finding m1
+//     while (fast->next != NULL && fast->next->next != NULL)  // finding m1 that is fast != NULL case is not there
 //     {
 //         slow = slow->next;
 //         fast = fast->next->next;
@@ -4490,17 +4490,17 @@
 //         return head;
 //     Node *odd = head;
 //     Node *even = head->next;
-//     Node *evenIndex = head->next;
+//     Node *evenIndex = head->next; // afterwards linkwill be mad between odd and even
 
 //     while (even != NULL && even->next != NULL) // because even is ahead of odd so first the even will be terminated.
 //     {
 //         odd->next = odd->next->next;
 //         even->next = even->next->next;
 
-//         odd = odd->next;
+//         odd = odd->next; // moving the pointer as well
 //         even = even->next;
 //     }
-//     odd->next = evenIndex;
+//     odd->next = evenIndex; //link is made
 //     return head;
 // }
 
@@ -4511,7 +4511,7 @@
 //     int cnt = 0;
 //     Node *temp = head;
 
-//     while (temp != NULL)
+//     while (temp != NULL) // calculating the length..
 //     {
 //         cnt++;
 //         temp = temp->next;
@@ -4531,7 +4531,7 @@
 //             break;
 //         }
 //     }
-//     Node *delNdoe = temp->next;
+//     Node *delNode = temp->next;
 //     temp->next = temp->next->next;
 //     free(delNode);
 //     return head;
@@ -4543,27 +4543,27 @@
 // public:
 //     ListNode* removeNthFromEnd(ListNode* head, int n) {
 //             ListNode *slow = head;
-//     ListNode *fast = head;
+//         ListNode *fast = head;
 
-//     for (int i = 0; i < n; i++)
-//         fast = fast->next; // like given n = 2 from last
+//     for (int i = 0; i < n; i++)//given n = 2 from last
+//         fast = fast->next;
 
 //  if (fast == NULL) // 5 ll and we have to 5 steps it will point to NULl that is it is head
 //     {
 //         ListNode* newHead = head->next;
-// delete head;
+//         delete head;
 //         return newHead;
 
 //     }
 //     while (fast->next != NULL)
 //     {
-//         fast = fast->next;
+//         fast = fast->next; // moving one step
 //         slow = slow->next;
 //     }
 
-//     ListNode *delNdoe = slow->next;
+//     ListNode *delNode = slow->next;
 //     slow->next = slow->next->next;
-//     delete delNdoe;
+//     delete delNode;
 //     return head;
 //     }
 // };
@@ -4578,14 +4578,14 @@
 //     if (head == NULL || head->next == NULL)  // remember these test cases..
 //         return NULL;
 
-//     fast = fast->next->next; // skipping one step of slow
+//     fast = fast->next->next; // skipping one step of slow as we need to appear before middle
 //     while (fast != NULL && fast->next != NULL)
 //     {
 //         slow = slow->next;
 //         fast = fast->next->next;
 //     }
-//     Node *middleNode = slow->next;
-//     slow->next = slow->next->next;
+//     Node *middleNode = slow->next; // for deleting purposes we are storing..
+//     slow->next = slow->next->next; // link is made
 //     delete middleNode;
 //     return head;
 // }
@@ -4599,7 +4599,7 @@
 //     ListNode* slow = head;
 //     ListNode* fast = head;
 //     if(head == NULL || head->next == NULL) return head;
-//     fast = head->next;  // since in wven we have to find m1
+//     fast = head->next;  // since in even we have to find m1
 //     while(fast != NULL && fast->next != NULL) {
 //         slow = slow->next;
 //         fast = fast->next->next;
@@ -4629,7 +4629,7 @@
 //     else {
 //         temp->next = right;
 //     }
-//     return dummy->next;
+//     return dummy->next; // link from main branch
 // }
 
 //     ListNode* sortList(ListNode* head) {
@@ -4638,7 +4638,7 @@
 //         return head;
 //     }
 //     ListNode *middle = findmiddle(head);
-//     ListNode *right = middle->next;
+//     ListNode *right = middle->next; // its end is already null
 //     ListNode *left = head;
 //     middle->next = NULL;
 
@@ -4650,47 +4650,99 @@
 
 // Sorting of 0, 1, 2..
 
-Node sort012(Node *head)
+// Node sort012(Node *head)
+// {
+//     if (head == NULL || head->next == NULL)
+//     {
+//         return head;
+//     }
+//     Node *zeroHead = new Node(-1); // just dummy Nodes...
+//     Node *oneHead = new Node(-1);
+//     Node *twoHead = new Node(-1);
+
+//     Node *zero = zeroHead; // for traversal
+//     Node *one = oneHead;
+//     Node *two = twoHead;
+
+//     Node *temp = head;
+//     while (temp != NULL)
+//     {
+//         if (temp->data == 0)
+//         {
+//             zero->next = temp;  // 0 node will be stored..
+//             zero = zero->next;
+//         }
+//         else if (temp->data == 1)
+//         {
+//             one->next = temp;
+//             one = one->next;
+//         }
+//         else
+//         {
+//             two->next = temp;
+//             two = two->next;
+//         }
+//         temp = temp->next;
+//     }
+//     zero->next = oneHead->next ? oneHead->next : twoHead->next; // if onehead->next present then it will be else
+//     one->next = twoHead->next;
+//     two->next = NULL;
+//     Node *newhead = zeroHead->next; // for main link starting from first..
+//     delete zeroHead;
+//     delete oneHead;
+//     delete twoHead;
+
+//     return newhead;
+// }
+
+// Find the intersecting point of the ll
+
+Node *intersectpoint(Node *head1, Node *head2)
 {
-    if (head == NULL || head->next == NULL)
-    {
-        return head;
-    }
-    Node *zeroHead = new Node(-1); // just dummy Nodes...
-    Node *oneHead = new Node(-1);
-    Node *twoHead = new Node(-1);
-
-    Node *zero = zeroHead; // for traversal
-    Node *one = oneHead;
-    Node *two = twoHead;
-
-    Node *temp = head;
+    Node *temp = head1;
+    map<Node *, int> mpp;
     while (temp != NULL)
     {
-        if (temp->data == 0)
+        mpp[temp] = 1;
+        temp = temp->next;
+    }
+    temp = head2;
+
+    while (temp != NULL)
+    {
+        if (mpp.find(temp) != mpp.end())
         {
-            zero->next = temp;
-            zero = zero->next;
-        }
-        else if (temp->data == 1)
-        {
-            one->next = temp;
-            one = one->next;
-        }
-        else
-        {
-            two->next = temp;
-            two = two->next;
+            return temp;
         }
         temp = temp->next;
     }
-    zero->next = oneHead->next ? oneHead->next : twoHead->next; // if onehead->next present then it will be else
-    one->next = twoHead->next;
-    two->next = NULL;
-    Node *newhead = zeroHead->next; // for main link starting from first..
-    delete zeroHead;
-    delete oneHead;
-    delete twoHead;
+    return NULL;
+}
+// time compl = O(N1*N1*log n) + O(N2*N2*log n)
 
-    return newhead;
+// 2 approach = find the length of the two LL and the differene between them and move the pointer with larger steps and iterate them till they are not equal..
+
+// 3. approach
+
+Node *findintersectpnt(Node *head1, Node *head2)
+{
+    Node *temp1 = head1;
+    Node *temp2 = head2;
+
+    while (temp1 != temp2)
+    { // we are not checking first element if same return temp1
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+
+        if (temp1 == temp2)
+            return temp1; // the case as they are not equal will result temp1 to NULL and temp2 to NULL as well they will return NULL
+
+        if (temp1 == NULL)
+            temp1 = head2;
+        if (temp2 == NULL temp2 = head1)
+            ;
+    }
+    return temp1;
+    // tc = O(N1 + N2)
+    // sc = O(1)
 }
