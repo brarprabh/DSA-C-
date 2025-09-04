@@ -4828,34 +4828,116 @@
 
 // Add 2 numbers in LinkedList | Dummy Node Approach
 
-Node *add2number(Node *head1, Node *head2)
+// Node *add2number(Node *head1, Node *head2)
+// {
+
+//     Node *temp1 = head1;
+//     Node *temp2 = head2;
+//     Node *dummyNode = new Node(-1);
+//     Node *curr = dummyNode;
+//     int carry = 0;
+//     while (temp1 != NULL || temp2 != NULL)
+//     {
+//         int sum = carry; // we should take the carry
+//         if (temp1)
+//             sum += temp1->data;
+//         if (temp2)
+//             sum += temp2->data;
+//         Node *newNode = new Node(sum % 10);
+//         carry = sum / 10;
+//         curr->next = newNode;
+//         curr = curr->next;
+//         if (temp1)
+//             temp1 = temp1->next;
+//         if (temp2)
+//             temp2 = temp2->next;
+//     }
+//     if (carry) // if carry is left new node will be created..
+//     {
+//         Node *newNode = new Node(carry);
+//         curr->next = newNode;
+//     }
+//     return dummyNode->next;
+// }
+
+// STACK..
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define size 100
+
+class Stack
 {
 
-    Node *temp1 = head1;
-    Node *temp2 = head2;
-    Node *dummyNode = new Node(-1);
-    Node *curr = dummyNode;
-    int carry = 0;
-    while (temp1 != NULL || temp2 != NULL)
+    int arr[size];
+
+public:
+    int top;
+    Stack()
     {
-        int sum = carry; // we should take the carry
-        if (temp1)
-            sum += temp1->data;
-        if (temp2)
-            sum += temp2->data;
-        Node *newNode = new Node(sum % 10);
-        carry = sum / 10;
-        curr->next = newNode;
-        curr = curr->next;
-        if (temp1)
-            temp1 = temp1->next;
-        if (temp2)
-            temp2 = temp2->next;
+        top = -1;
     }
-    if (carry) // if carry is left new node will be created..
+    void push(int val)
     {
-        Node *newNode = new Node(carry);
-        curr->next = newNode;
+        if (top == size - 1)
+        {
+            cout << "can't push it";
+            return;
+        }
+        top++;
+        arr[top] = val;
     }
-    return dummyNode->next;
+
+    int topel()
+    {
+        if (top == -1)
+        {
+            cout << "underflow condition";
+            return -1;
+        }
+        return arr[top];
+    }
+
+    void pop()
+    {
+        if (top == -1)
+        {
+            cout << "cant pop anymore";
+            return;
+        }
+        top--;
+    }
+
+    bool isempty()
+    {
+        return top == -1;
+    }
+
+    void display()
+    {
+        if (top == -1)
+        {
+            cout << "No element to display";
+            return;
+        }
+        for (int i = 0; i <= top; i++)
+        {
+            cout << arr[i] << " ";
+        }
+    }
+};
+
+int main()
+{
+    Stack st;
+    st.push(4);
+    st.push(2);
+    st.push(9);
+    st.pop();
+    st.display();
+    cout << st.topel() << endl;
+    st.push(9);
+    cout << st.topel() << endl;
+    return 0;
 }
