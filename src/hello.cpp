@@ -5100,80 +5100,223 @@
 
 // Queue using LL
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-class Node
-{
-public:
-    int data;
-    Node *next;
+// class Node
+// {
+// public:
+//     int data;
+//     Node *next;
 
-    Node(int val)
-    {
-        data = val;
-        next = NULL;
-    }
-    Node(int val, Node *next1)
-    {
-        data = val;
-        next = next1;
-    }
-};
+//     Node(int val)
+//     {
+//         data = val;
+//         next = NULL;
+//     }
+//     Node(int val, Node *next1)
+//     {
+//         data = val;
+//         next = next1;
+//     }
+// };
 
-class Queue
-{
-public:
-    int size = 0;
-    Node *start = NULL;
-    Node *end = NULL;
+// class Queue
+// {
+// public:
+//     int size = 0;
+//     Node *start = NULL;
+//     Node *end = NULL;
 
-    void push(int val)
-    {
-        Node *temp = new Node(val);
-        if (start == NULL)
-        {
-            start = temp;
-            end = temp;
-            size += 1;
-        }
-        else
-        {
-            end->next = temp; // moving forward..
-            size += 1;
-        }
-    }
-    void pop()
-    {
-        if (size == 0)
-        {
-            cout << " Underflow condition";
-            return;
-        }
-        Node *temp = start;
-        start = start->next;
-        size -= 1;
-        delete temp;
-    }
-    int topel()
-    {
-        return start->data;
-    }
-    int sizeel()
-    {
-        return size;
-    }
-};
+//     void push(int val)
+//     {
+//         Node *temp = new Node(val);
+//         if (start == NULL)
+//         {
+//             start = temp;
+//             end = temp;
+//             size += 1;
+//         }
+//         else
+//         {
+//             end->next = temp; // moving forward..
+//             size += 1;
+//         }
+//     }
+//     void pop()
+//     {
+//         if (size == 0)
+//         {
+//             cout << " Underflow condition";
+//             return;
+//         }
+//         Node *temp = start;
+//         start = start->next;
+//         size -= 1;
+//         delete temp;
+//     }
+//     int topel()
+//     {
+//         return start->data;
+//     }
+//     int sizeel()
+//     {
+//         return size;
+//     }
+// };
 
-int main()
-{
-    Queue q;
-    q.push(2);
-    q.push(3);
-    q.push(4);
-    q.push(5);
-    q.push(7);
-    q.pop();
-    cout << q.topel() << endl;
-    cout << q.sizeel();
-}
+// int main()
+// {
+//     Queue q;
+//     q.push(2);
+//     q.push(3);
+//     q.push(4);
+//     q.push(5);
+//     q.push(7);
+//     q.pop();
+//     cout << q.topel() << endl;
+//     cout << q.sizeel();
+//     return 0;
+// }
+
+// Stack using queue..
+
+// class MyStack {
+// public:
+//      queue<int> q;
+//     void push(int x) {
+//          int s = q.size();
+//          q.push(x);
+//          for (int i = 0; i < s; i++)
+//          {
+//              q.push(q.front());
+//              q.pop();
+//          }
+//     }
+
+//     int pop() {
+//         if (q.empty())
+//          {
+//             cout << "Stack underflow\n";
+//            return -1;
+//                    }
+//          int el = q.front();
+//           q.pop();
+//           return el;
+//     }
+
+//     int top() {
+//         if (q.empty())
+//             {
+//                 cout << "Stack is empty\n";
+//                 return -1;
+//             }
+//             return q.front();
+//     }
+
+//     bool empty() {
+//         return q.empty();
+//     }
+// };
+
+// queue using stack..
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Queue
+// {
+//     stack<int> s1, s2;
+
+// public:
+//     void push(int val) // O(2N)
+//     {
+//         while (s1.size())
+//         {
+//             s2.push(s1.top());
+//             s1.pop();
+//         }
+//         s1.push(val);
+//         while (s2.size())
+//         {
+//             s1.push(s2.top());
+//             s2.pop();
+//         }
+//     }
+//     void pop()
+//     {
+//         if (s1.empty())
+//             return;
+//         s1.pop();
+//     }
+//     int top()
+//     {
+//         if (s1.empty())
+//         {
+//             return -1;
+//         }
+//         return s1.top();
+//     }
+// };
+
+// optimal approach to solve queue using stack
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// class MyQueue
+// {
+// public:
+//     stack<int> s1, s2;
+
+// public:
+//     void push(int x)
+//     {
+//         s1.push(x);
+//     }
+
+//     int pop()
+//     {
+//         if (!s2.empty())
+//         {
+//             int el = s2.top();
+//             s2.pop();
+//             return el;
+//         }
+//         else if (s2.empty())
+//         {
+//             while (!s1.empty())
+//             {
+//                 s2.push(s1.top());
+//                 s1.pop();
+//             }
+//             int el2 = s2.top();
+//             s2.pop();
+//             return el2;
+//         }
+//         return -1;
+//     }
+
+//     int peek()
+//     {
+//         if (!s2.empty())
+//         {
+//             return s2.top();
+//         }
+//         else if (s2.empty())
+//         {
+//             while (!s1.empty())
+//             {
+//                 s2.push(s1.top());
+//                 s1.pop();
+//             }
+//             return s2.top();
+//         }
+//         cout << "Queue is empty\n";
+//         return -1;
+//     }
+
+//     bool empty()
+//     {
+//         return s1.empty() && s2.empty();
+//     }
+// };
