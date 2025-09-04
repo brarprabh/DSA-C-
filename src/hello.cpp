@@ -4944,83 +4944,156 @@
 
 // Queue
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define n 100
+
+// class Queue
+// {
+//     int arr[n];
+//     int currsize = 0;
+//     int end = -1;
+//     int start = -1;
+
+// public:
+//     void push(int val) // we move back and curr++
+//     {
+//         if (currsize == n)
+//         {
+//             cout << "cant push" << endl;
+//             return;
+//         }
+//         if (currsize == 0)
+//         {
+//             start = 0;
+//             end = 0;
+//             arr[end] = val;
+//             currsize++;
+//         }
+//         else
+//         {
+//             end = (end + 1) % n;
+//             arr[end] = val;
+//             currsize++;
+//         }
+//     }
+//     int pop()
+//     {
+//         if (currsize == 0) // we move start and cur--
+//         {
+//             cout << "cant pop" << endl;
+//             return -1;
+//         }
+//         int el = arr[start];
+//         if (currsize == 1)
+//         {
+//             start = -1;
+//             end = -1;
+//         }
+//         else
+//         {
+//             start = (start + 1) % n;
+//             currsize -= 1;
+//             return el;
+//         }
+//     }
+//     int topel()
+//     {
+//         if (currsize == 0)
+//         {
+//             cout << "no element";
+//             return 0;
+//         }
+//         return arr[start];
+//     }
+//     int size()
+//     {
+//         return currsize;
+//     }
+// };
+// int main()
+// {
+//     Queue q;
+//     q.push(1);
+//     q.push(3);
+//     q.push(6);
+//     cout << q.topel();
+//     q.pop();
+//     cout << q.topel();
+//     cout << q.size();
+//     return 0;
+// }
+
+// Stack using linked list
+
 #include <bits/stdc++.h>
 using namespace std;
 
-#define n 100
-
-class Queue
+class Node
 {
-    int arr[n];
-    int currsize = 0;
-    int end = -1;
-    int start = -1;
+public:
+    int data;
+    Node *next;
+
+    Node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+    Node(int val, Node *next1)
+    {
+        data = val;
+        next = next1;
+    }
+};
+
+class Stack
+{
+    Node *top;
+    int size = 0;
 
 public:
-    void push(int val) // we move back and curr++
+    void push(int data)
     {
-        if (currsize == n)
+        Node *temp = new Node(data);
+        temp->next = top;
+        top = temp;
+        size += 1;
+    }
+
+    void pop()
+    {
+        if (top == NULL)
         {
-            cout << "cant push" << endl;
+            cout << "underflow condition";
             return;
         }
-        if (currsize == 0)
-        {
-            start = 0;
-            end = 0;
-            arr[end] = val;
-            currsize++;
-        }
-        else
-        {
-            end = (end + 1) % n;
-            arr[end] = val;
-            currsize++;
-        }
-    }
-    int pop()
-    {
-        if (currsize == 0) // we move start and cur--
-        {
-            cout << "cant pop" << endl;
-            return -1;
-        }
-        int el = arr[start];
-        if (currsize == 1)
-        {
-            start = -1;
-            end = -1;
-        }
-        else
-        {
-            start = (start + 1) % n;
-            currsize -= 1;
-            return el;
-        }
+        Node *temp = top; // stored in reverse order.
+        top = top->next;
+        delete temp;
+        size -= 1;
     }
     int topel()
     {
-        if (currsize == 0)
-        {
-            cout << "no element";
-            return 0;
-        }
-        return arr[start];
+        return top->data;
     }
-    int size()
+    int sizeel()
     {
-        return currsize;
+        return size;
     }
 };
+
 int main()
 {
-    Queue q;
-    q.push(1);
-    q.push(3);
-    q.push(6);
-    cout << q.topel();
-    q.pop();
-    cout << q.topel();
-    cout << q.size();
+    Stack st;
+    st.push(2);
+    st.push(3);
+    st.push(4);
+    st.push(6);
+    st.pop();
+    st.pop();
+    cout << st.topel() << endl;
+    cout << st.sizeel() << endl;
     return 0;
 }
