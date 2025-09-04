@@ -4862,82 +4862,165 @@
 
 // STACK..
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define size 100
+
+// class Stack
+// {
+
+//     int arr[size];
+
+// public:
+//     int top;
+//     Stack()
+//     {
+//         top = -1;
+//     }
+//     void push(int val)
+//     {
+//         if (top == size - 1)
+//         {
+//             cout << "can't push it";
+//             return;
+//         }
+//         top++;
+//         arr[top] = val;
+//     }
+
+//     int topel()
+//     {
+//         if (top == -1)
+//         {
+//             cout << "underflow condition";
+//             return -1;
+//         }
+//         return arr[top];
+//     }
+
+//     void pop()
+//     {
+//         if (top == -1)
+//         {
+//             cout << "cant pop anymore";
+//             return;
+//         }
+//         top--;
+//     }
+
+//     bool isempty()
+//     {
+//         return top == -1;
+//     }
+
+//     void display()
+//     {
+//         if (top == -1)
+//         {
+//             cout << "No element to display";
+//             return;
+//         }
+//         for (int i = 0; i <= top; i++)
+//         {
+//             cout << arr[i] << " ";
+//         }
+//     }
+// };
+
+// int main()
+// {
+//     Stack st;
+//     st.push(4);
+//     st.push(2);
+//     st.push(9);
+//     st.pop();
+//     st.display();
+//     cout << st.topel() << endl;
+//     st.push(9);
+//     cout << st.topel() << endl;
+//     return 0;
+// }
+
+// Queue
+
 #include <bits/stdc++.h>
 using namespace std;
 
-#define size 100
+#define n 100
 
-class Stack
+class Queue
 {
-
-    int arr[size];
+    int arr[n];
+    int currsize = 0;
+    int end = -1;
+    int start = -1;
 
 public:
-    int top;
-    Stack()
+    void push(int val) // we move back and curr++
     {
-        top = -1;
-    }
-    void push(int val)
-    {
-        if (top == size - 1)
+        if (currsize == n)
         {
-            cout << "can't push it";
+            cout << "cant push" << endl;
             return;
         }
-        top++;
-        arr[top] = val;
-    }
-
-    int topel()
-    {
-        if (top == -1)
+        if (currsize == 0)
         {
-            cout << "underflow condition";
+            start = 0;
+            end = 0;
+            arr[end] = val;
+            currsize++;
+        }
+        else
+        {
+            end = (end + 1) % n;
+            arr[end] = val;
+            currsize++;
+        }
+    }
+    int pop()
+    {
+        if (currsize == 0) // we move start and cur--
+        {
+            cout << "cant pop" << endl;
             return -1;
         }
-        return arr[top];
-    }
-
-    void pop()
-    {
-        if (top == -1)
+        int el = arr[start];
+        if (currsize == 1)
         {
-            cout << "cant pop anymore";
-            return;
+            start = -1;
+            end = -1;
         }
-        top--;
-    }
-
-    bool isempty()
-    {
-        return top == -1;
-    }
-
-    void display()
-    {
-        if (top == -1)
+        else
         {
-            cout << "No element to display";
-            return;
+            start = (start + 1) % n;
+            currsize -= 1;
+            return el;
         }
-        for (int i = 0; i <= top; i++)
+    }
+    int topel()
+    {
+        if (currsize == 0)
         {
-            cout << arr[i] << " ";
+            cout << "no element";
+            return 0;
         }
+        return arr[start];
+    }
+    int size()
+    {
+        return currsize;
     }
 };
-
 int main()
 {
-    Stack st;
-    st.push(4);
-    st.push(2);
-    st.push(9);
-    st.pop();
-    st.display();
-    cout << st.topel() << endl;
-    st.push(9);
-    cout << st.topel() << endl;
+    Queue q;
+    q.push(1);
+    q.push(3);
+    q.push(6);
+    cout << q.topel();
+    q.pop();
+    cout << q.topel();
+    cout << q.size();
     return 0;
 }
