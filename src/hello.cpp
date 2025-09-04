@@ -5027,6 +5027,79 @@
 
 // Stack using linked list
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *next;
+
+//     Node(int val)
+//     {
+//         data = val;
+//         next = NULL;
+//     }
+//     Node(int val, Node *next1)
+//     {
+//         data = val;
+//         next = next1;
+//     }
+// };
+
+// class Stack
+// {
+//     Node *top;
+//     int size = 0;
+
+// public:
+//     void push(int data) // no edge case
+//     {
+//         Node *temp = new Node(data);
+//         temp->next = top;
+//         top = temp;
+//         size += 1;
+//     }
+
+//     void pop()
+//     {
+//         if (top == NULL)
+//         {
+//             cout << "underflow condition";
+//             return;
+//         }
+//         Node *temp = top; // stored in reverse order.
+//         top = top->next;
+//         delete temp;
+//         size -= 1;
+//     }
+//     int topel()
+//     {
+//         return top->data;
+//     }
+//     int sizeel()
+//     {
+//         return size;
+//     }
+// };
+
+// int main()
+// {
+//     Stack st;
+//     st.push(2);
+//     st.push(3);
+//     st.push(4);
+//     st.push(6);
+//     st.pop();
+//     st.pop();
+//     cout << st.topel() << endl;
+//     cout << st.sizeel() << endl;
+//     return 0;
+// }
+
+// Queue using LL
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -5048,35 +5121,43 @@ public:
     }
 };
 
-class Stack
+class Queue
 {
-    Node *top;
-    int size = 0;
-
 public:
-    void push(int data)
-    {
-        Node *temp = new Node(data);
-        temp->next = top;
-        top = temp;
-        size += 1;
-    }
+    int size = 0;
+    Node *start = NULL;
+    Node *end = NULL;
 
+    void push(int val)
+    {
+        Node *temp = new Node(val);
+        if (start == NULL)
+        {
+            start = temp;
+            end = temp;
+            size += 1;
+        }
+        else
+        {
+            end->next = temp; // moving forward..
+            size += 1;
+        }
+    }
     void pop()
     {
-        if (top == NULL)
+        if (size == 0)
         {
-            cout << "underflow condition";
+            cout << " Underflow condition";
             return;
         }
-        Node *temp = top; // stored in reverse order.
-        top = top->next;
-        delete temp;
+        Node *temp = start;
+        start = start->next;
         size -= 1;
+        delete temp;
     }
     int topel()
     {
-        return top->data;
+        return start->data;
     }
     int sizeel()
     {
@@ -5086,14 +5167,13 @@ public:
 
 int main()
 {
-    Stack st;
-    st.push(2);
-    st.push(3);
-    st.push(4);
-    st.push(6);
-    st.pop();
-    st.pop();
-    cout << st.topel() << endl;
-    cout << st.sizeel() << endl;
-    return 0;
+    Queue q;
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+    q.push(7);
+    q.pop();
+    cout << q.topel() << endl;
+    cout << q.sizeel();
 }
