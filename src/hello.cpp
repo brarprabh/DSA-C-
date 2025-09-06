@@ -4872,8 +4872,9 @@
 
 //     int arr[size];
 
-// public:
 //     int top;
+
+// public:
 //     Stack()
 //     {
 //         top = -1;
@@ -4952,7 +4953,7 @@
 // class Queue
 // {
 //     int arr[n];
-//     int currsize = 0;
+//     int currsize = 0; // makes queue easier
 //     int end = -1;
 //     int start = -1;
 
@@ -4986,14 +4987,14 @@
 //             return -1;
 //         }
 //         int el = arr[start];
-//         if (currsize == 1)
+//         if (currsize == 1) // we destroy the queue
 //         {
 //             start = -1;
 //             end = -1;
 //         }
 //         else
 //         {
-//             start = (start + 1) % n;
+//             start = (start + 1) % n; // to pop we move start pointer
 //             currsize -= 1;
 //             return el;
 //         }
@@ -5054,7 +5055,7 @@
 //     int size = 0;
 
 // public:
-//     void push(int data) // no edge case
+//     void push(int data) // no edge case they are combined in reverse order
 //     {
 //         Node *temp = new Node(data);
 //         temp->next = top;
@@ -5125,13 +5126,13 @@
 // {
 // public:
 //     int size = 0;
-//     Node *start = NULL;
+//     Node *start = NULL; // two pointer are there
 //     Node *end = NULL;
 
 //     void push(int val)
 //     {
 //         Node *temp = new Node(val);
-//         if (start == NULL)
+//         if (start == NULL) // for initial case..
 //         {
 //             start = temp;
 //             end = temp;
@@ -5181,40 +5182,45 @@
 
 // Stack using queue..
 
-// class MyStack {
+// class MyStack
+// {
 // public:
-//      queue<int> q;
-//     void push(int x) {
-//          int s = q.size();
-//          q.push(x);
-//          for (int i = 0; i < s; i++)
-//          {
-//              q.push(q.front());
-//              q.pop();
-//          }
+//     queue<int> q;
+//     void push(int x)
+//     {
+//         int s = q.size();
+//         q.push(x); // after loop it will be at last..
+//         for (int i = 0; i < s; i++)
+//         {
+//             q.push(q.front());
+//             q.pop();
+//         }
 //     }
 
-//     int pop() {
+//     int pop()
+//     {
 //         if (q.empty())
-//          {
+//         {
 //             cout << "Stack underflow\n";
-//            return -1;
-//                    }
-//          int el = q.front();
-//           q.pop();
-//           return el;
+//             return -1;
+//         }
+//         int el = q.front(); // top in case of queue is front
+//         q.pop();
+//         return el;
 //     }
 
-//     int top() {
+//     int top()
+//     {
 //         if (q.empty())
-//             {
-//                 cout << "Stack is empty\n";
-//                 return -1;
-//             }
-//             return q.front();
+//         {
+//             cout << "Stack is empty\n";
+//             return -1;
+//         }
+//         return q.front();
 //     }
 
-//     bool empty() {
+//     bool empty()
+//     {
 //         return q.empty();
 //     }
 // };
@@ -5320,3 +5326,44 @@
 //         return s1.empty() && s2.empty();
 //     }
 // };
+
+// Balanced parathesis
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool checkbalanced(string str)
+{
+    stack<int> st;
+    int l = str.length();
+    for (int i = 0; i < l; i++)
+    {
+        if (str[i] == '(' || str[i] == '[' || str[i] == '{')
+        {
+            st.push(str[i]);
+        }
+        else
+        {
+            if (st.empty())
+                return false;
+            char ch = st.top();
+            if (str[i] == ')' && ch == '(' || str[i] == ']' && ch == '[' || str[i] == '}' && ch == '{')
+            {
+                st.pop();
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return st.empty();
+}
+
+int main()
+{
+    string s;
+    cin >> s;
+    cout << checkbalanced(s);
+    return 0;
+}
