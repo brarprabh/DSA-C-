@@ -5329,41 +5329,417 @@
 
 // Balanced parathesis
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool checkbalanced(string str)
+// {
+//     stack<int> st;
+//     int l = str.length();
+//     for (int i = 0; i < l; i++)
+//     {
+//         if (str[i] == '(' || str[i] == '[' || str[i] == '{')
+//         {
+//             st.push(str[i]);
+//         }
+//         else
+//         {
+//             if (st.empty())
+//                 return false;
+//             char ch = st.top();
+//             if (str[i] == ')' && ch == '(' || str[i] == ']' && ch == '[' || str[i] == '}' && ch == '{')
+//             {
+//                 st.pop();
+//             }
+//             else
+//             {
+//                 return false;
+//             }
+//         }
+//     }
+//     return st.empty();
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+//     cout << checkbalanced(s);
+//     return 0;
+// }
+
+// min get function in stack.. using pair
+
+// class Stack
+// {
+//     stack<pair<int, int>> st;
+
+// public:
+//     void push(int val)
+//     {
+//         if (st.empty())
+//         {
+//             st.push({val, val});
+//         }
+//         else
+//         {
+//             st.push({val, min(st.top().second, val)}); // using space comp O(2N)
+//         }
+//     }
+//     int getmin()
+//     {
+//         return st.top().second;
+//     }
+//     int top()
+//     {
+//         return st.top().first;
+//     }
+// };
+
+// using formula to optimise the space..
+
+// class Stack
+// {
+//     stack<int> st;
+//     int min = INT_MAX;
+
+// public:
+//     void push(int val)
+//     {
+//         if (st.empty())
+//         {
+//             min = val;
+//             st.push(min);
+//         }
+//         else
+//         {
+//             min =
+//         }
+//     }
+// }
+
+// infix to postfix
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int priority(char ch)
+// {
+//     if (ch == '^')
+//         return 3;
+//     else if (ch == '*' || ch == '/')
+//         return 2;
+//     else if (ch == '+' || ch == '-')
+//         return 1;
+//     else
+//         return -1;
+// }
+
+// int main()
+// {
+//     string s;
+//     string ans = "";
+//     stack<char> st;
+//     cin >> s;
+//     int n = s.length();
+
+// int i = 0;
+// while (i < n)
+// {
+//     if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//     {
+//         ans += s[i];
+//     }
+//     else if (s[i] == '(')
+//     {
+//         st.push(s[i]);
+//     }
+//     else if (s[i] == ')')
+//     {
+//         while (!st.empty() && st.top() != '(')
+//         {
+//             ans += st.top();
+//             st.pop();
+//         }
+//         if (!st.empty())
+//             st.pop(); // for the ( bracket
+//     }
+//     else
+//     {
+//         while (!st.empty() && priority(s[i]) <= priority(st.top()))
+//         {
+//             ans += st.top();
+//             st.pop();
+//         }
+//         st.push(s[i]);
+//     }
+//     i++;
+// }
+// while (!st.empty())
+// {
+//     ans += st.top();
+//     st.pop();
+// }
+//     cout << ans;
+//     return 0;
+// }
+
+// infix to prefix conversion
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int priority(char ch)
+// {
+//     if (ch == '^')
+//         return 3;
+//     else if (ch == '*' || ch == '/')
+//         return 2;
+//     else if (ch == '+' || ch == '-')
+//         return 1;
+//     else
+//         return -1;
+// }
+
+// void reverseAndBrac(string &s)
+// {
+//     int i = 0, l = s.length() - 1;
+//     while (i <= l)
+//     {
+//         char temp = s[i];
+//         s[i] = s[l];
+//         s[l] = temp;
+//         i++;
+//         l--;
+//     }
+//     i = 0;
+//     while (i < s.length())
+//     {
+//         if (s[i] == ')')
+//             s[i] = '(';
+//         else if (s[i] == '(')
+//             s[i] = ')';
+//         i++;
+//     }
+// }
+
+// string infixtoprefix(string &s)
+// {
+//     string ans = "";
+//     stack<char> st;
+//     reverseAndBrac(s);
+//     int n = s.length();
+//     int i = 0;
+//     while (i < n)
+//     {
+//         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//         {
+//             ans += s[i];
+//         }
+//         else if (s[i] == '(')
+//         {
+//             st.push(s[i]);
+//         }
+//         else if (s[i] == ')')
+//         {
+//             while (!st.empty() && st.top() != '(')
+//             {
+//                 ans += st.top();
+//                 st.pop();
+//             }
+//             if (!st.empty())
+//                 st.pop(); // for the ( bracket
+//         }
+//         else if (s[i] == '^') //  one ^ in ans and we are only 1 pushing ^ in stack.
+//         { // right assosiative
+//             while (!st.empty() && priority(s[i]) < priority(st.top()))
+//             {
+//                 ans = ans + st.top();
+//                 st.pop();
+//             }
+//             st.push(s[i]);
+//         }
+//         else
+//         {
+//             while (!st.empty() && priority(s[i]) <= priority(st.top())) //
+//             { //left associative
+//                 ans += st.top();
+//                 st.pop();
+//             }
+//             st.push(s[i]);
+//         }
+//         i++;
+//     }
+//     while (!st.empty())
+//     {
+//         ans += st.top();
+//         st.pop();
+//     }
+//     reverse(ans.begin(), ans.end());
+//     return ans;
+// }
+
+// int main()
+// {
+//     string s;
+
+//     cin >> s;
+//     cout << infixtoprefix(s);
+//     return 0;
+// }
+
+// postfix to infix
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// string postfixtoinfix(string &s)
+// {
+//     stack<string> st;
+//     int i = 0, l = s.length();
+//     while (i < l)
+//     {
+//         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//         {
+//             st.push(string(1, s[i])); // imp step
+//         }
+//         else
+//         {
+//             string t1 = st.top();
+//             st.pop();
+//             string t2 = st.top();
+//             st.pop();
+
+//             string convert = '(' + t2 + s[i] + t1 + ')';
+//             st.push(convert);
+//         }
+// i++;
+//     }
+//     return st.top();
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+
+//     cout << postfixtoinfix(s);
+//     return 0;
+// }
+
+// prefix to infix
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// string prefixtoinfix(string &s)
+// {
+//     stack<string> st;
+//     int i = s.length() - 1;
+//     while (i >= 0)
+//     {
+//         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//         {
+//             st.push(string(1, s[i])); // imp step
+//         }
+//         else
+//         {
+//             string t1 = st.top();
+//             st.pop();
+//             string t2 = st.top();
+//             st.pop();
+
+//             string convert = '(' + t1 + s[i] + t2 + ')';
+//             st.push(convert);
+//         }
+//         i--;
+//     }
+//     return st.top();
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+
+//     cout << prefixtoinfix(s);
+//     return 0;
+// }
+// postfix to prefix
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// string postfixtoprefix(string &s)
+// {
+//     stack<string> st;
+//     int i = 0;
+//     int l = s.length();
+//     while (i < l)
+//     {
+//         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//         {
+//             st.push(string(1, s[i])); // imp step
+//         }
+//         else
+//         {
+//             string t1 = st.top();
+//             st.pop();
+//             string t2 = st.top();
+//             st.pop();
+
+//             string convert = s[i] + t2 + t1; // this only changes..
+//             st.push(convert);
+//         }
+//         i++;
+//     }
+//     return st.top();
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+
+//     cout << postfixtoprefix(s);
+//     return 0;
+// }
+
+// prefix to postfix
+
 #include <bits/stdc++.h>
 using namespace std;
 
-bool checkbalanced(string str)
+string prefixtopostfix(string &s)
 {
-    stack<int> st;
-    int l = str.length();
-    for (int i = 0; i < l; i++)
+    stack<string> st;
+    int i = s.length() - 1;
+    while (i >= 0)
     {
-        if (str[i] == '(' || str[i] == '[' || str[i] == '{')
+        if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
         {
-            st.push(str[i]);
+            st.push(string(1, s[i])); // imp step
         }
         else
         {
-            if (st.empty())
-                return false;
-            char ch = st.top();
-            if (str[i] == ')' && ch == '(' || str[i] == ']' && ch == '[' || str[i] == '}' && ch == '{')
-            {
-                st.pop();
-            }
-            else
-            {
-                return false;
-            }
+            string t1 = st.top();
+            st.pop();
+            string t2 = st.top();
+            st.pop();
+
+            string convert = t1 + t2 + s[i]; // this only changes..
+            st.push(convert);
         }
+        i--;
     }
-    return st.empty();
+    return st.top();
 }
 
 int main()
 {
     string s;
     cin >> s;
-    cout << checkbalanced(s);
+
+    cout << prefixtopostfix(s);
     return 0;
 }
