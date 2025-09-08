@@ -5707,39 +5707,82 @@
 
 // prefix to postfix
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// string prefixtopostfix(string &s)
+// {
+//     stack<string> st;
+//     int i = s.length() - 1;
+//     while (i >= 0)
+//     {
+//         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//         {
+//             st.push(string(1, s[i])); // imp step
+//         }
+//         else
+//         {
+//             string t1 = st.top();
+//             st.pop();
+//             string t2 = st.top();
+//             st.pop();
+
+//             string convert = t1 + t2 + s[i]; // this only changes..
+//             st.push(convert);
+//         }
+//         i--;
+//     }
+//     return st.top();
+// }
+
+// int main()
+// {
+//     string s;
+//     cin >> s;
+
+//     cout << prefixtopostfix(s);
+//     return 0;
+// }
+
+// next greater integer...
+
 #include <bits/stdc++.h>
 using namespace std;
 
-string prefixtopostfix(string &s)
+vector<int> greaterNext(vector<int> arr, int n)
 {
-    stack<string> st;
-    int i = s.length() - 1;
-    while (i >= 0)
+    stack<int> st;
+    vector<int> nge(n);
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+        while (!st.empty() && st.top() <= arr[i])
         {
-            st.push(string(1, s[i])); // imp step
+            st.pop();
         }
+        if (st.empty())
+            nge[i] = -1;
         else
-        {
-            string t1 = st.top();
-            st.pop();
-            string t2 = st.top();
-            st.pop();
-
-            string convert = t1 + t2 + s[i]; // this only changes..
-            st.push(convert);
-        }
-        i--;
+            nge[i] = st.top();
+        st.push(arr[i]);
     }
-    return st.top();
+    return nge;
 }
 
 int main()
 {
-    string s;
-    cin >> s;
-
-    cout << prefixtopostfix(s);
+    int n;
+    cin >> n;
+    vector<int> arr;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    vector<int> result = greaterNext(arr, n);
+    for (auto it : result)
+    {
+        cout << it << " ";
+    }
     return 0;
 }
