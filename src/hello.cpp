@@ -5746,43 +5746,219 @@
 
 // next greater integer...
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-vector<int> greaterNext(vector<int> arr, int n)
-{
-    stack<int> st;
-    vector<int> nge(n);
-    for (int i = n - 1; i >= 0; i--)
+// vector<int> greaterNext(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     vector<int> nge(n);
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         while (!st.empty() && st.top() <= arr[i])
+//         {
+//             st.pop();
+//         }
+//         if (st.empty())
+//             nge[i] = -1;
+//         else
+//             nge[i] = st.top();
+//         st.push(arr[i]);
+//     }
+//     return nge;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     vector<int> result = greaterNext(arr, n);
+//     for (auto it : result)
+//     {
+//         cout << it << " ";
+//     }
+//     return 0;
+// }
+
+// next greater element 2 (circular)
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> greaterNext(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     vector<int> nge(n);
+//     for (int i = 2 * n - 1; i >= 0; i--)
+//     {
+//         while (!st.empty() && st.top() <= arr[i % n]) // here change
+//         {
+//             st.pop();
+//         }
+//         if (i < n) // we cant store i = 2* n as it should be less than n
+//         {
+//             if (st.empty())
+//                 nge[i] = -1;
+//             else
+//                 nge[i] = st.top();
+//         }
+
+//         st.push(arr[i % n]); // imp for index
+//     }
+//     return nge;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     vector<int> result = greaterNext(arr, n);
+//     for (auto it : result)
+//     {
+//         cout << it << " ";
+//     }
+//     return 0;
+// }
+
+// greater int when two arrays given num 1 element should be greater integer in num 2 arr.
+
+// class Solution
+// {
+// public:
+//     vector<int> nextGreaterElement(vector<int> &brr, vector<int> &arr)
+//     {
+//         int n = arr.size();
+//         stack<int> st;
+//         map<int, int> nge;
+//         for (int i = n - 1; i >= 0; i--)
+//         {
+//             while (!st.empty() && st.top() <= arr[i])
+//             {
+//                 st.pop();
+//             }
+//             if (st.empty())
+//                 nge[arr[i]] = -1; // key is element, value is -1
+//             else
+//                 nge[arr[i]] = st.top();
+//             st.push(arr[i]);
+//         }
+//         vector<int> result;
+//         for (auto it : brr)
+//         {
+//             result.push_back(nge[it]); // index te changed value payi aa..
+//         }
+//         return result;
+//     }
+// };
+
+// smaller integer..
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> nextSmaller(vector<int> arr, int n) {
+//     stack<int> st;
+//     vector<int> nse(n);
+//     for (int i = n - 1; i >= 0; i--) {
+//         while (!st.empty() && st.top() >= arr[i]) {
+//             st.pop();
+//         }
+//         if (st.empty())
+//             nse[i] = -1;
+//         else
+//             nse[i] = st.top();
+//         st.push(arr[i]);
+//     }
+//     return nse;
+// }
+
+// int main() {
+//     int n;
+//     cin >> n;
+//     vector<int> arr(n);
+//     for (int i = 0; i < n; i++)
+//         cin >> arr[i];
+//     vector<int> result = nextSmaller(arr, n);
+//     for (auto it : result)
+//         cout << it << " ";
+//     return 0;
+// }
+
+// trapping rain water (optimal solution)
+
+int total(vector<int> arr, int n)
+{ // pointer approach
+    int l = 0;
+    int r = n - 1;
+    int lmax = 0, rmax = 0, total = 0;
+    while (l <= r)
     {
-        while (!st.empty() && st.top() <= arr[i])
-        {
-            st.pop();
+        if (arr[l] < arr[r])
+        { // when right is large we play with left..
+            if (lmax > arr[l])
+            {
+                total += lmax - arr[l];
+            }
+            else
+            {
+                lmax = arr[l];
+            }
+            l = l + 1;
         }
-        if (st.empty())
-            nge[i] = -1;
         else
-            nge[i] = st.top();
-        st.push(arr[i]);
+        {
+            if (rmax > arr[r])
+            {
+                total += rmax - arr[r];
+            }
+            else
+            {
+                rmax = arr[r];
+            }
+            r = r - 1;
+        }
     }
-    return nge;
+    return total;
 }
 
-int main()
+// Brute force
+
+int totalUnits(vector<int> arr, int n)
 {
-    int n;
-    cin >> n;
-    vector<int> arr;
+
+    vector<int> prefix(n);
+    vector<int> suffix(n);
+    suffix[n - 1] = arr[n - 1];
+    prefix[0] = arr[0];
+    for (int i = 1; i < n; i++)
+    {
+        prefix[i] = max(prefix[i - 1], arr[i]);
+        suffix[n - 1 - i] = max(suffix[n - i], arr[n - 1 - i]);
+    }
+
+    int total = 0;
     for (int i = 0; i < n; i++)
     {
-        int x;
-        cin >> x;
-        arr.push_back(x);
+        int lmax = prefix[i];
+        int rmax = suffix[i];
+        if (arr[i] < lmax && arr[i] < rmax) // smaller than the lmax and rmax
+        {
+            total += min(lmax, rmax) - arr[i]; // without if just total += min(prefix[i], suffix[i]) - arr[i];
+        }
     }
-    vector<int> result = greaterNext(arr, n);
-    for (auto it : result)
-    {
-        cout << it << " ";
-    }
-    return 0;
+    return total;
 }
