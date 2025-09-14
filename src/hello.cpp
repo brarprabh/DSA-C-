@@ -5446,7 +5446,7 @@
 // int i = 0;
 // while (i < n)
 // {
-//     if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
+//     if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9') // without any special chracters
 //     {
 //         ans += s[i];
 //     }
@@ -5464,14 +5464,14 @@
 //         if (!st.empty())
 //             st.pop(); // for the ( bracket
 //     }
-//     else
+//     else // special character
 //     {
 //         while (!st.empty() && priority(s[i]) <= priority(st.top()))
 //         {
 //             ans += st.top();
 //             st.pop();
 //         }
-//         st.push(s[i]);
+//         st.push(s[i]); // lower priority is added
 //     }
 //     i++;
 // }
@@ -5503,7 +5503,8 @@
 
 // void reverseAndBrac(string &s)
 // {
-//     int i = 0, l = s.length() - 1;
+//     int i = 0;
+//     int l = s.length() - 1;
 //     while (i <= l)
 //     {
 //         char temp = s[i];
@@ -5527,7 +5528,7 @@
 // {
 //     string ans = "";
 //     stack<char> st;
-//     reverseAndBrac(s);
+//     reverseAndBrac(s); // the string is reversed in this only
 //     int n = s.length();
 //     int i = 0;
 //     while (i < n)
@@ -5561,7 +5562,7 @@
 //         }
 //         else
 //         {
-//             while (!st.empty() && priority(s[i]) <= priority(st.top())) //
+//             while (!st.empty() && priority(s[i]) <= priority(st.top())) // for all except ^
 //             { //left associative
 //                 ans += st.top();
 //                 st.pop();
@@ -5570,7 +5571,7 @@
 //         }
 //         i++;
 //     }
-//     while (!st.empty())
+//     while (!st.empty()) // the remaining elemnts after all
 //     {
 //         ans += st.top();
 //         st.pop();
@@ -5595,7 +5596,7 @@
 
 // string postfixtoinfix(string &s)
 // {
-//     stack<string> st;
+//     stack<string> st;// stack is of string
 //     int i = 0, l = s.length();
 //     while (i < l)
 //     {
@@ -5605,9 +5606,9 @@
 //         }
 //         else
 //         {
-//             string t1 = st.top();
+//             string t1 = st.top(); // B element
 //             st.pop();
-//             string t2 = st.top();
+//             string t2 = st.top();//A element
 //             st.pop();
 
 //             string convert = '(' + t2 + s[i] + t1 + ')';
@@ -5635,7 +5636,7 @@
 // string prefixtoinfix(string &s)
 // {
 //     stack<string> st;
-//     int i = s.length() - 1;
+//     int i = s.length() - 1; // i is the last pointer
 //     while (i >= 0)
 //     {
 //         if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9')
@@ -5688,7 +5689,7 @@
 //             string t2 = st.top();
 //             st.pop();
 
-//             string convert = s[i] + t2 + t1; // this only changes..
+//             string convert = s[i] + t2 + t1; // this only changes.. // all will be in front
 //             st.push(convert);
 //         }
 //         i++;
@@ -5755,12 +5756,12 @@
 //     vector<int> nge(n);
 //     for (int i = n - 1; i >= 0; i--)
 //     {
-//         while (!st.empty() && st.top() <= arr[i])
+//         while (!st.empty() && st.top() <= arr[i]) // when the element is smaller but make sure the stack is not empty
 //         {
 //             st.pop();
 //         }
 //         if (st.empty())
-//             nge[i] = -1;
+//             nge[i] = -1;  // no element is greater
 //         else
 //             nge[i] = st.top();
 //         st.push(arr[i]);
@@ -5900,65 +5901,134 @@
 
 // trapping rain water (optimal solution)
 
-int total(vector<int> arr, int n)
-{ // pointer approach
-    int l = 0;
-    int r = n - 1;
-    int lmax = 0, rmax = 0, total = 0;
-    while (l <= r)
+// int total(vector<int> arr, int n)
+// { // pointer approach
+//     int l = 0;
+//     int r = n - 1;
+//     int lmax = 0, rmax = 0, total = 0;
+//     while (l <= r)
+//     {
+//         if (arr[l] < arr[r])
+//         { // when right is large we play with left..
+//             if (lmax > arr[l])
+//             {
+//                 total += lmax - arr[l];
+//             }
+//             else
+//             {
+//                 lmax = arr[l]; // when it is not greater
+//             }
+//             l = l + 1;
+//         }
+//         else
+//         {
+//             if (rmax > arr[r])
+//             {
+//                 total += rmax - arr[r];
+//             }
+//             else
+//             {
+//                 rmax = arr[r];
+//             }
+//             r = r - 1;
+//         }
+//     }
+//     return total;
+// }
+
+// // Brute force
+
+// int totalUnits(vector<int> arr, int n)
+// {
+
+//     vector<int> prefix(n);
+//     vector<int> suffix(n);
+//     suffix[n - 1] = arr[n - 1]; // last element
+//     prefix[0] = arr[0]; // first element
+//     for (int i = 1; i < n; i++)
+//     {
+//         prefix[i] = max(prefix[i - 1], arr[i]);
+//         suffix[n - 1 - i] = max(suffix[n - i], arr[n - 1 - i]);
+//     }
+
+//     int total = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int lmax = prefix[i];
+//         int rmax = suffix[i];
+//         if (arr[i] < lmax && arr[i] < rmax) // smaller than the lmax and rmax
+//         {
+//             total += min(lmax, rmax) - arr[i]; // without if just total += min(prefix[i], suffix[i]) - arr[i];
+//         }
+//     }
+//     return total;
+// }
+
+// sum of subarray minimum
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> findnse(vector<int> arr, int n)
+{
+    stack<int> st;
+    vector<int> nse(n);
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (arr[l] < arr[r])
-        { // when right is large we play with left..
-            if (lmax > arr[l])
-            {
-                total += lmax - arr[l];
-            }
-            else
-            {
-                lmax = arr[l];
-            }
-            l = l + 1;
+        while (!st.empty() && arr[st.top()] >= arr[i])
+        { // imp of st.top() since in st the index is stored..
+            st.pop();
         }
-        else
-        {
-            if (rmax > arr[r])
-            {
-                total += rmax - arr[r];
-            }
-            else
-            {
-                rmax = arr[r];
-            }
-            r = r - 1;
+        nse[i] = st.empty() ? n : st.top();
+        st.push(i);
+    }
+    return nse;
+}
+
+vector<int> findpse(vector<int> arr, int n)
+{
+    stack<int> st;
+    vector<int> pse(n);
+    for (int i = 0; i < n; i++) // imp since previous find krna
+    {
+        while (!st.empty() && arr[st.top()] > arr[i])
+        { // = will not be there to solve the edge case of 1 1
+            st.pop();
         }
+        pse[i] = st.empty() ? -1 : st.top();
+        st.push(i);
+    }
+    return pse;
+}
+
+int sum(vector<int> arr, int n)
+{
+    int total = 0;
+    vector<int> nse = findnse(arr, n);
+    vector<int> pse = findpse(arr, n);
+    int mod = (int)(1e9 + 7);
+
+    for (int i = 0; i < n; i++)
+    {
+        int right = nse[i] - i;
+        int left = i - pse[i];
+        total = (total + (1LL * right * left % mod) * arr[i] % mod) % mod;
     }
     return total;
 }
 
-// Brute force
-
-int totalUnits(vector<int> arr, int n)
+int main()
 {
-
-    vector<int> prefix(n);
-    vector<int> suffix(n);
-    suffix[n - 1] = arr[n - 1];
-    prefix[0] = arr[0];
-    for (int i = 1; i < n; i++)
-    {
-        prefix[i] = max(prefix[i - 1], arr[i]);
-        suffix[n - 1 - i] = max(suffix[n - i], arr[n - 1 - i]);
-    }
-
-    int total = 0;
+    int n;
+    cin >> n;
+    vector<int> arr;
     for (int i = 0; i < n; i++)
     {
-        int lmax = prefix[i];
-        int rmax = suffix[i];
-        if (arr[i] < lmax && arr[i] < rmax) // smaller than the lmax and rmax
-        {
-            total += min(lmax, rmax) - arr[i]; // without if just total += min(prefix[i], suffix[i]) - arr[i];
-        }
+        int x;
+        cin >> x;
+        arr.push_back(x);
     }
-    return total;
+    int result = sum(arr, n);
+    cout << result;
+    return 0;
 }
