@@ -6257,54 +6257,71 @@
 
 // Maximal Rectangle
 
-class Solution
+// class Solution
+// {
+// public:
+//     int largestRectangleArea(vector<int> &arr)
+//     { // for calculating the area of maximum rectangle
+//         int n = arr.size();
+//         stack<int> st;
+//         int maxarea = 0;
+
+//         for (int i = 0; i <= n; i++)
+//         {
+//             int currentHeight = (i == n) ? 0 : arr[i]; // Append a '0' at the end to flush remaining stack
+
+//             while (!st.empty() && arr[st.top()] >= currentHeight)
+//             {
+//                 int height = arr[st.top()];
+//                 st.pop();
+//                 int width = st.empty() ? i : i - st.top() - 1;
+//                 maxarea = max(maxarea, height * width);
+//             }
+
+//             st.push(i);
+//         }
+
+//         return maxarea;
+//     }
+//     int maximalRectangle(vector<vector<char>> &matrix)
+//     {
+//         int n = matrix.size();   // calculating the number of rows
+//         int m = matrix[0].size() // calculating the number of columns
+//                 int maxarea = 0;
+//         vector<int> height(m, 0); // list of number of columns
+//         for (int i = 0; i < n; i++)
+//         {
+//             for (int j = 0; j < m; j++)
+//             {
+//                 if (matrix[i][j] == '1')
+//                 { // iterate through each row   plus + if one is encountered
+//                     height[j]++;
+//                 }
+//                 else
+//                 {
+//                     height[j] = 0; // else 0
+//                 }
+//             }
+//             int currentarea = largestRectangleArea(height); // simultaneously calculating the results
+//             maxarea = max(maxarea, currentarea);            // return maxarea;
+//         }
+//         return maxarea;
+//     }
+// };
+
+// sliding window problem
+
+vector<int> func(vector<int> arr, int n, int k)
 {
-public:
-    int largestRectangleArea(vector<int> &arr)
-    { // for calculating the area of maximum rectangle
-        int n = arr.size();
-        stack<int> st;
-        int maxarea = 0;
-
-        for (int i = 0; i <= n; i++)
-        {
-            int currentHeight = (i == n) ? 0 : arr[i]; // Append a '0' at the end to flush remaining stack
-
-            while (!st.empty() && arr[st.top()] >= currentHeight)
-            {
-                int height = arr[st.top()];
-                st.pop();
-                int width = st.empty() ? i : i - st.top() - 1;
-                maxarea = max(maxarea, height * width);
-            }
-
-            st.push(i);
-        }
-
-        return maxarea;
-    }
-    int maximalRectangle(vector<vector<char>> &matrix)
+    vector<int> store;
+    for (int i = 0; i < n - k; i++)
     {
-        int n = matrix.size();   // calculating the number of rows
-        int m = matrix[0].size() // calculating the number of columns
-                int maxarea = 0;
-        vector<int> height(m, 0); // list of number of columns
-        for (int i = 0; i < n; i++)
+        int maxi = arr[i];
+        for (int j = i; j < i + k - 1; j++)
         {
-            for (int j = 0; j < m; j++)
-            {
-                if (matrix[i][j] == '1')
-                { // iterate through each row   plus + if one is encountered
-                    height[j]++;
-                }
-                else
-                {
-                    height[j] = 0; // else 0
-                }
-            }
-            int currentarea = largestRectangleArea(height); // simultaneously calculating the results
-            maxarea = max(maxarea, currentarea);            // return maxarea;
+            maxi = max(maxi, arr[j]);
+            store.push_back(maxi);
         }
-        return maxarea;
     }
-};
+    return store;
+}
