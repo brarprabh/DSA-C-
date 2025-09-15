@@ -5966,69 +5966,345 @@
 
 // sum of subarray minimum
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-vector<int> findnse(vector<int> arr, int n)
+// vector<int> findnse(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     vector<int> nse(n);
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         while (!st.empty() && arr[st.top()] >= arr[i])
+//         { // imp of st.top() since in st the index is stored..
+//             st.pop();
+//         }
+//         nse[i] = st.empty() ? n : st.top();
+//         st.push(i);
+//     }
+//     return nse;
+// }
+
+// vector<int> findpse(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     vector<int> pse(n);
+//     for (int i = 0; i < n; i++) // imp since previous find krna
+//     {
+//         while (!st.empty() && arr[st.top()] > arr[i])
+//         { // = will not be there to solve the edge case of 1 1
+//             st.pop();
+//         }
+//         pse[i] = st.empty() ? -1 : st.top();
+//         st.push(i);
+//     }
+//     return pse;
+// }
+
+// int sum(vector<int> arr, int n)
+// {
+//     int total = 0;
+//     vector<int> nse = findnse(arr, n);
+//     vector<int> pse = findpse(arr, n);
+//     int mod = (int)(1e9 + 7);
+
+//     for (int i = 0; i < n; i++)
+//     {
+//         int right = nse[i] - i;
+//         int left = i - pse[i];
+//         total = (total + (1LL * right * left % mod) * arr[i] % mod) % mod;
+//     }
+//     return total;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int result = sum(arr, n);
+//     cout << result;
+//     return 0;
+// }
+
+// Asteriod Collision
+
+// class Solution {
+// public:
+//     vector<int> asteroidCollision(vector<int>& arr) {
+//         int n = arr.size();
+//     vector<int> st;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (arr[i] > 0) // add the positive elements
+//         {
+//             st.push_back(arr[i]);
+//         }
+//         else
+//         {
+//             bool destroyed = false;
+//             while (!st.empty() && st.back() > 0)
+//             {
+//                 if(st.back() < abs(arr[i])){
+//                 st.pop_back(); // then till the element is smaller than that will be poped..
+//                 continue;
+//                 }
+//                else if (!st.empty() && st.back() == abs(arr[i]))
+//                 {
+//                     st.pop_back();
+//                     destroyed = true;
+//                     break;
+//                 }
+//                 else
+//                 {
+//                     destroyed = true; // -ve is destroyed
+//                     break;
+//                 }
+//             }
+//             if (!destroyed)
+//             {
+//                 st.push_back(arr[i]);
+//             }
+//         }
+//     }
+//     return st;
+//     }
+// };
+
+// sum of largest and smallest subarray
+// sum of min as we have done previously and sum of max ngl(next greater element) and prev greater element take index and minus the index.. multiply them and then multiply them with the num for which you are finding..
+
+// remove k digits to make the number smaller
+
+// class Solution {
+// public:
+//     string removeKdigits(string num, int k) {
+//         stack<char> st;
+//         int n = num.length();
+//         for(int i = 0; i < n; i++) {
+//             while(!st.empty() && k > 0 && st.top() > num[i]) { // num is coming smaller
+//                 st.pop();
+//                 k--; // k should be removed
+//             }
+//             st.push(num[i]);
+//             }
+
+//             while(k) { // if elements are left
+//                 st.pop();
+//                 k--;
+//         }
+//         if(st.empty()) return "0";
+//         string res ="";
+//         while(!st.empty()) { // stored in res in reversed order
+//             res += st.top();
+//             st.pop();
+//         }
+//         while(res.length() != 0 && res.back() == '0' ) {
+//             res.pop_back();
+//         }
+//             reverse(res.begin(), res.end());
+//             if(res.length() == 0) {
+//                 return "0";
+
+//         }
+//     return res;
+//     }
+// };
+
+// Extreme brute force of largest area in histogram (time limit exceeded)
+
+// class Solution {
+// public:
+//     int largestRectangleArea(vector<int>& arr) {
+//         int n = arr.size();
+//         int maxarea = 0;
+//         for(int i = 0; i < n; i++) {
+//             int minarea = arr[i]; // as a check if the smaller area than this is also present
+//             for(int j = i; j < n; j++) {
+//                 minarea = min(minarea, arr[j]);
+//                 maxarea = max(maxarea, minarea*( j - i + 1)); // for calculating the units till minarea is received..
+//             }
+//         }
+//         return maxarea;
+//     }
+// };
+
+// Largest area in histogram // better than brute
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> previoussmallerelement(vector<int> arr, int n)
+// {
+//     vector<int> pse(n);
+//     stack<int> st;
+//     for (int i = 0; i < n; i++)
+//     {
+//         while (!st.empty() && arr[st.top()] >= arr[i])
+//         {
+//             st.pop();
+//         }
+//         pse[i] = st.empty() ? -1 : st.top();
+//         st.push(i); // keep in mind it should be index..
+//     }
+//     return pse;
+// }
+
+// vector<int> findnse(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     vector<int> nse(n);
+//     for (int i = n - 1; i >= 0; i--)
+//     {
+//         while (!st.empty() && arr[st.top()] >= arr[i])
+//         { // imp of st.top() since in st the index is stored..
+//             st.pop();
+//         }
+//         nse[i] = st.empty() ? n : st.top();
+//         st.push(i);
+//     }
+//     return nse;
+// }
+
+// int area(vector<int> arr, int n)
+// {
+//     vector<int> pse = previoussmallerelement(arr, n);
+//     vector<int> nse = findnse(arr, n);
+//     int maxarea = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         maxarea = max(maxarea, arr[i] * (pse[i] - nse[i] - 1));
+//     }
+//     return maxarea;
+// }
+
+// int main()
+// {
+//     int n;
+//     cin >> n;
+//     vector<int> arr;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int result = area(arr, n);
+//     cout << result;
+//     return 0;
+// }
+
+// optimal solution
+
+// int area(vector<int> arr, int n)
+// {
+//     stack<int> st;
+//     int maxarea = 0;
+//     int element = 0;
+//     int nse = 0;
+//     int pse = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         while (!st.empty() && arr[st.top()] >= arr[i])
+//         {
+//             element = st.top();
+//             st.pop();
+//         }
+//         nse = i;
+//         pse = st.empty() ? -1 : st.top();
+//         maxarea = max(maxarea, arr[element] * (nse - pse - 1));
+//         st.push(i);
+//     }
+//     while (!st.empty())
+//     {
+//         nse = n;
+//         element = st.top();
+//         st.pop();
+//         pse = st.empty() ? -1 : st.top();
+//         maxarea = max(arr[element] * (nse - pse - 1), maxarea);
+//     }
+//     return maxarea;
+// }
+
+// from chatgpt
+
+// int largestRectangleArea(vector<int>& arr) {
+//     int n = arr.size();
+//     stack<int> st;
+//     int maxarea = 0;
+
+//     for (int i = 0; i <= n; i++) {
+//         int currentHeight = (i == n) ? 0 : arr[i];  // Append a '0' at the end to flush remaining stack
+
+//         while (!st.empty() && arr[st.top()] >= currentHeight) {
+//             int height = arr[st.top()];
+//             st.pop();
+//             int width = st.empty() ? i : i - st.top() - 1;
+//             maxarea = max(maxarea, height * width);
+//         }
+
+//         st.push(i);
+//     }
+
+//     return maxarea;
+// }
+
+// Maximal Rectangle
+
+class Solution
 {
-    stack<int> st;
-    vector<int> nse(n);
-    for (int i = n - 1; i >= 0; i--)
-    {
-        while (!st.empty() && arr[st.top()] >= arr[i])
-        { // imp of st.top() since in st the index is stored..
-            st.pop();
+public:
+    int largestRectangleArea(vector<int> &arr)
+    { // for calculating the area of maximum rectangle
+        int n = arr.size();
+        stack<int> st;
+        int maxarea = 0;
+
+        for (int i = 0; i <= n; i++)
+        {
+            int currentHeight = (i == n) ? 0 : arr[i]; // Append a '0' at the end to flush remaining stack
+
+            while (!st.empty() && arr[st.top()] >= currentHeight)
+            {
+                int height = arr[st.top()];
+                st.pop();
+                int width = st.empty() ? i : i - st.top() - 1;
+                maxarea = max(maxarea, height * width);
+            }
+
+            st.push(i);
         }
-        nse[i] = st.empty() ? n : st.top();
-        st.push(i);
-    }
-    return nse;
-}
 
-vector<int> findpse(vector<int> arr, int n)
-{
-    stack<int> st;
-    vector<int> pse(n);
-    for (int i = 0; i < n; i++) // imp since previous find krna
+        return maxarea;
+    }
+    int maximalRectangle(vector<vector<char>> &matrix)
     {
-        while (!st.empty() && arr[st.top()] > arr[i])
-        { // = will not be there to solve the edge case of 1 1
-            st.pop();
+        int n = matrix.size();   // calculating the number of rows
+        int m = matrix[0].size() // calculating the number of columns
+                int maxarea = 0;
+        vector<int> height(m, 0); // list of number of columns
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (matrix[i][j] == '1')
+                { // iterate through each row   plus + if one is encountered
+                    height[j]++;
+                }
+                else
+                {
+                    height[j] = 0; // else 0
+                }
+            }
+            int currentarea = largestRectangleArea(height); // simultaneously calculating the results
+            maxarea = max(maxarea, currentarea);            // return maxarea;
         }
-        pse[i] = st.empty() ? -1 : st.top();
-        st.push(i);
+        return maxarea;
     }
-    return pse;
-}
-
-int sum(vector<int> arr, int n)
-{
-    int total = 0;
-    vector<int> nse = findnse(arr, n);
-    vector<int> pse = findpse(arr, n);
-    int mod = (int)(1e9 + 7);
-
-    for (int i = 0; i < n; i++)
-    {
-        int right = nse[i] - i;
-        int left = i - pse[i];
-        total = (total + (1LL * right * left % mod) * arr[i] % mod) % mod;
-    }
-    return total;
-}
-
-int main()
-{
-    int n;
-    cin >> n;
-    vector<int> arr;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        arr.push_back(x);
-    }
-    int result = sum(arr, n);
-    cout << result;
-    return 0;
-}
+};
