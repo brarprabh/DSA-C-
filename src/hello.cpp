@@ -5051,7 +5051,7 @@
 
 // class Stack
 // {
-//     Node *top;
+//     Node *top; // cuz the pointer will be top in case of stack..
 //     int size = 0;
 
 // public:
@@ -5189,7 +5189,7 @@
 //     void push(int x)
 //     {
 //         int s = q.size();
-//         q.push(x); // after loop it will be at last..
+//         q.push(x); // after loop it will be at front..
 //         for (int i = 0; i < s; i++)
 //         {
 //             q.push(q.front());
@@ -5299,7 +5299,7 @@
 //             s2.pop();
 //             return el2;
 //         }
-//         return -1;
+//         return -1; // this is a edge case..
 //     }
 
 //     int peek()
@@ -5310,7 +5310,7 @@
 //         }
 //         else if (s2.empty())
 //         {
-//             while (!s1.empty())
+//             while (!s1.empty()) // while is used if we want to shift the elements..
 //             {
 //                 s2.push(s1.top());
 //                 s1.pop();
@@ -5334,7 +5334,7 @@
 
 // bool checkbalanced(string str)
 // {
-//     stack<int> st;
+//     stack<char> st;
 //     int l = str.length();
 //     for (int i = 0; i < l; i++)
 //     {
@@ -5344,7 +5344,7 @@
 //         }
 //         else
 //         {
-//             if (st.empty())
+//             if (st.empty())  // any other thing except bracket was present..
 //                 return false;
 //             char ch = st.top();
 //             if (str[i] == ')' && ch == '(' || str[i] == ']' && ch == '[' || str[i] == '}' && ch == '{')
@@ -5353,7 +5353,7 @@
 //             }
 //             else
 //             {
-//                 return false;
+//                 return other is present...
 //             }
 //         }
 //     }
@@ -5448,13 +5448,13 @@
 // {
 //     if (s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9') // without any special chracters
 //     {
-//         ans += s[i];
+//         ans += s[i]; // just add in ans..
 //     }
 //     else if (s[i] == '(')
 //     {
-//         st.push(s[i]);
+//         st.push(s[i]); // ( is pushed in stack..
 //     }
-//     else if (s[i] == ')')
+//     else if (s[i] == ')') // if we encountered this then elements from stack will be removed..
 //     {
 //         while (!st.empty() && st.top() != '(')
 //         {
@@ -5468,14 +5468,14 @@
 //     {
 //         while (!st.empty() && priority(s[i]) <= priority(st.top()))
 //         {
-//             ans += st.top();
+//             ans += st.top(); // higher priority is added in ans..
 //             st.pop();
 //         }
-//         st.push(s[i]); // lower priority is added
+//         st.push(s[i]); // lower priority is added in stack
 //     }
 //     i++;
 // }
-// while (!st.empty())
+// while (!st.empty()) // the remaining special characters
 // {
 //     ans += st.top();
 //     st.pop();
@@ -5505,7 +5505,7 @@
 // {
 //     int i = 0;
 //     int l = s.length() - 1;
-//     while (i <= l)
+//     while (i <= l) // for reversal
 //     {
 //         char temp = s[i];
 //         s[i] = s[l];
@@ -5551,7 +5551,7 @@
 //             if (!st.empty())
 //                 st.pop(); // for the ( bracket
 //         }
-//         else if (s[i] == '^') //  one ^ in ans and we are only 1 pushing ^ in stack.
+//         else if (s[i] == '^') //  The strict < prevents an incoming ^ from popping a ^ that is already on the stack, forcing it to wait.
 //         { // right assosiative
 //             while (!st.empty() && priority(s[i]) < priority(st.top()))
 //             {
@@ -5576,7 +5576,7 @@
 //         ans += st.top();
 //         st.pop();
 //     }
-//     reverse(ans.begin(), ans.end());
+//     reverse(ans.begin(), ans.end()); // we have to reverse atlast as we have reversed it at first..
 //     return ans;
 // }
 
@@ -5604,7 +5604,7 @@
 //         {
 //             st.push(string(1, s[i])); // imp step
 //         }
-//         else
+//         else  // any operator
 //         {
 //             string t1 = st.top(); // B element
 //             st.pop();
@@ -5666,6 +5666,7 @@
 //     cout << prefixtoinfix(s);
 //     return 0;
 // }
+
 // postfix to prefix
 
 // #include <bits/stdc++.h>
@@ -6311,17 +6312,247 @@
 
 // sliding window problem
 
-vector<int> func(vector<int> arr, int n, int k)
+// vector<int> func(vector<int> arr, int n, int k)
+// {
+//     vector<int> store;
+//     for (int i = 0; i < n - k; i++)
+//     {
+//         int maxi = arr[i];
+//         for (int j = i; j < i + k - 1; j++)// each time 3 are generated
+//         {
+//             maxi = max(maxi, arr[j]);
+//             store.push_back(maxi);
+//         }
+//     }
+//     return store;
+// }
+
+// optimal using monotonic stack
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// vector<int> func(vector<int> arr, int n, int k)
+// {
+//     vector<int> store;
+//     deque<int> dq;
+//     for (int i = 0; i < n; i++)
+//     {
+//         if (!dq.empty() && dq.front() <= i - k)
+//         {
+//             dq.pop_front();
+//         }
+//         while (!dq.empty() && arr[dq.back()] <= arr[i])
+//         {
+//             dq.pop_back();
+//         }
+//         dq.push_back(i); // keep in mind we are index only
+//         if (i >= k - 1)
+//         {
+//             store.push_back(arr[dq.front()]); // we are storing the maximum number in front
+//         }
+//     }
+//     return store;
+// }
+
+// int main()
+// {
+//     return 0;
+// }
+
+// stock problem
+
+// class StockSpanner
+// {
+// public:
+//     int ind;
+//     stack<pair<int, int>> st; // price, index
+//     StockSpanner()
+//     {
+//         ind = -1; // at the start we are clearing the data
+//         st = stack<pair<int, int>>();// stack is cleared
+//     }
+
+//     int next(int price)
+//     {
+//         ind += 1;
+//         while (!st.empty() && st.top().first <= price)
+//         { // smaller element will be removed
+//             st.pop();
+//         }
+//         int ans = ind - (st.empty() ? -1 : st.top().second); // till this it can be counted
+//         st.push({price, ind});                               // next will be called again and again which will contain the new val
+//         return ans;
+//     }
+// };
+
+// Celebrity problem
+
+// int func(vector<vector<int>> arr) // this is a matrix
+// {
+//     int n = arr.size(); // rows
+//     int m = arr[0].size();// columns
+
+//     int top = 0;
+//     int down = n - 1;
+
+//     while (top < down)
+//     {
+//         if (arr[top][down] == 1)
+//         {          // top knows down
+//             top++; // he cant be celebrity
+//         }
+//         else if (arr[down][top] == 1)
+//         { // down known top
+//             down--;
+//         }
+//         else
+//         {
+//             top++; // both dont know each other so they cant be celebrity..
+//             down--;
+//         }
+//     }
+//     if (top > down)
+//     {
+//         return -1;
+//     }
+//     if (top == down) // boht pointer on same..
+//     {                // at this point it point to the celebrity
+//         for (int i = 0; i < n; i++)
+//         {
+//             if (i == top) // can be taken equal to down as well
+//                 continue; // because diagonal will always be zero
+//             if (arr[top][i] != 0 || arr[i][down] != 1)
+//             {
+//                 return -1;
+//             }
+//         }
+//     }
+//     return top;
+// }
+
+//  Longest Substring Without Repeating Characters
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int lengthOfLongestSubstring(string s)
+// {
+//     int r = 0;
+//     int l = 0;
+//     vector<int> hash(255, -1);
+//     int n = s.length();
+//     int maxlen = 0;
+//     int len = 0;
+//     if (s == " ")
+//     {
+//         return 1;
+//     }
+//     while (r < n)
+//     {
+//         if (hash[s[r]] != -1)
+//         {                        // in the map
+//             if (hash[s[r]] >= l) // but it is coming after l
+//             {
+//                 l = hash[s[r]] + 1;
+//             }
+//         }
+//         len = r - l + 1;
+//         maxlen = max(maxlen, len);
+//         hash[s[r]] = r;
+//         r++; // i was not moving the pointer..
+//     }
+//     return maxlen;
+// }
+
+// int main()
+// {
+//     string str;
+//     cin >> str;
+//     cout << lengthOfLongestSubstring(str);
+//     return 0;
+// }
+
+// Max Consecutive Ones III
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int findmaxconsecutive(vector<int> arr, int n, int k)
+// {
+//     int r = 0, l = 0;
+//     int zeros;
+//     int maxlen = 0;
+//     int len = 0;
+
+//     while (r < n)
+//     {
+//         if (arr[r] == 0)
+//         {
+//             zeros++;
+//         }
+//         while (zeros > k)
+//         {
+//             if (arr[l] == 0)
+//             {
+//                 zeros--;
+//             }
+//             l++;
+//         }
+//         if (zeros <= k)
+//         {
+//             len = r - l + 1;
+//             maxlen = max(maxlen, len);
+//         }
+//         r++;
+//     }
+//     return maxlen;
+// }
+
+// int main()
+// {
+//     vector<int> arr;
+//     int n;
+//     cin >> n;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         arr.push_back(x);
+//     }
+//     int k;
+//     cin >> k;
+//     int result = findmaxconsecutive(arr, n, k);
+//     cout << result;
+//     return 0;
+// }
+
+// tree...
+
+class Solution
 {
-    vector<int> store;
-    for (int i = 0; i < n - k; i++)
+public:
+    vector<int> preorderTraversal(TreeNode *root)
     {
-        int maxi = arr[i];
-        for (int j = i; j < i + k - 1; j++)
+        vector<int> preorder;
+        if (root == NULL)
+            return preorder;
+        stack<TreeNode *> st;
+        st.push(root);
+        while (!st.empty())
         {
-            maxi = max(maxi, arr[j]);
-            store.push_back(maxi);
+            root = st.top();
+            st.pop();
+            preorder.push_back(root->val);
+            if (root->right != NULL)
+            {
+                st.push(root->right);
+            }
+            if (root->left != NULL)
+            {
+                st.push(root->left);
+            }
         }
+        return preorder;
     }
-    return store;
-}
+};

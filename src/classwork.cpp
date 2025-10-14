@@ -97,3 +97,28 @@
 //     cout << (valid ? "Valid" : "Invalid") << endl;
 //     return 0;
 // }
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string s = "data structure";
+    string ans = "";
+    stack<char> st;
+
+    int i = 0;
+    int l = s.length();
+    while (i < l)
+    {
+        st.push(s[i]);
+        i++;
+    }
+    while (!st.empty())
+    {
+        ans += st.top();
+        st.pop();
+    }
+    cout << ans;
+    return 0;
+}
