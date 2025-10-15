@@ -6529,30 +6529,211 @@
 
 // tree...
 
-class Solution
-{
-public:
-    vector<int> preorderTraversal(TreeNode *root)
-    {
-        vector<int> preorder;
-        if (root == NULL)
-            return preorder;
-        stack<TreeNode *> st;
-        st.push(root);
-        while (!st.empty())
-        {
-            root = st.top();
-            st.pop();
-            preorder.push_back(root->val);
-            if (root->right != NULL)
-            {
-                st.push(root->right);
-            }
-            if (root->left != NULL)
-            {
-                st.push(root->left);
-            }
-        }
-        return preorder;
-    }
-};
+// class Solution
+// {
+// public:
+//     vector<int> preorderTraversal(TreeNode *root)
+//     {
+//         vector<int> preorder;
+//         if (root == NULL)
+//             return preorder;
+//         stack<TreeNode *> st;
+//         st.push(root);
+//         while (!st.empty())
+//         {
+//             root = st.top();
+//             st.pop();
+//             preorder.push_back(root->val);
+//             if (root->right != NULL)
+//             {
+//                 st.push(root->right);
+//             }
+//             if (root->left != NULL)
+//             {
+//                 st.push(root->left);
+//             }
+//         }
+//         return preorder;
+//     }
+// };
+
+// initialise tree
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     int data;
+//     Node *left;
+//     Node *right;
+
+//     Node(int val)
+//     {
+//         data = val;
+//         left = right = NULL;
+//     }
+//     Node(int val, Node *left, Node *right)
+//     {
+//         data = val;
+//         this->left = left;
+//         this->right = right;
+//     }
+// };
+
+// int main()
+// {
+//     Node *root = new Node(4);
+//     root->left = new Node(5);
+//     root->right = new Node(5);
+// }
+
+// Level order traversal
+
+// class Solution
+//  {
+//  public:
+//      vector<vector<int>> levelOrder(TreeNode *root)
+//      {
+//          vector<vector<int>> ans;
+//          if (root == NULL)
+//              return ans;
+//          queue<TreeNode *> q;
+//          q.push(root);
+//          while (!q.empty())
+//          {
+//              int size = q.size();
+//              vector<int> level;
+//              for (int i = 0; i < size; i++)
+//              {
+//                  TreeNode *node = q.front();
+//                  q.pop();
+//                  if (node->left != NULL)
+//                      q.push(node->left);
+//                  if (node->right != NULL)
+//                      q.push(node->right);
+//                  level.push_back(node->val);
+//              }
+//              ans.push_back(level);
+//          }
+//          return ans;
+//      }
+//  };
+
+// iterative inorder traversal
+
+// class Solution {
+// public:
+//     vector<int> inorderTraversal(TreeNode* root) {
+//          stack<TreeNode*> st;
+//          TreeNode* node = root;
+//          vector<int> inorder;
+//         while(true) {
+//             if(node != NULL) {
+//                 st.push(node);
+//                 node = node->left;
+//             }
+//             else {
+//                 if(st.empty()) break;
+//                 node = st.top();
+//                 st.pop();
+//                 inorder.push_back(node->val);
+//                 node = node->right;
+//             }
+//         }
+//         return inorder;
+//     }
+
+// };
+
+// iterative postorder traversal
+
+// class Solution {
+// public:
+//     vector<int> postorderTraversal(TreeNode* root) {
+
+//         stack<TreeNode*> st1;
+//         stack<TreeNode*> st2;
+//         vector<int> postorder;
+//         if(root == NULL) return postorder;
+//         st1.push(root);
+//         while(!st1.empty()){
+//             TreeNode* node = st1.top();
+//             st1.pop();
+//             st2.push(node);
+//             if(node->left != NULL) {
+//                 st1.push(node->left);}
+
+//             if(node->right != NULL) {
+//                 st1.push(node->right);
+//             }
+//         }
+//             while(!st2.empty()) {
+
+//                 postorder.push_back(st2.top()->val);
+//                 st2.pop();
+//             }
+//             return postorder;
+//         }
+// };
+
+// iterative preorder traversal
+
+// class Solution {
+// public:
+//     vector<int> preorderTraversal(TreeNode* root) {
+//         vector<int> preorder;
+//         if(root == NULL) return preorder;
+//         stack<TreeNode*> st;
+//         st.push(root);
+//         while(!st.empty()) {
+//             root = st.top();
+//             st.pop();
+//             preorder.push_back(root->val);
+//             if(root->right != NULL) {
+//                 st.push(root->right);
+//             }
+//              if(root->left != NULL) {
+//                 st.push(root->left);
+//             }
+
+//         }
+//         return preorder;
+//     }
+// };
+
+// All traversals
+
+// class Solution{
+// 	public:
+// 		vector<vector<int> > treeTraversal(TreeNode* root){
+// 			stack<pair<TreeNode*, int>> st;
+//             vector<int> pre, post, inorder;
+//             if(root == nullptr) return;
+//             st.push({root, 1});
+//             while(!st.empty()) {
+//                 auto it = st.top();
+//                 st.pop();
+//                 if(it.second == 1) {
+//                     pre.push_back(it.first->val);
+//                     it.second++;
+//                     st.push(it);
+//                     if(it.first->left != nullptr) {
+//                     st.push({it.first->left, 1});
+//                     }
+//                 }
+//                 if(it.second == 2) {
+//                     inorder.push_back(it.first->val);
+//                     it.second++;
+//                     st.push(it);
+//                     if(it.first->right != nullptr) {
+//                     st.push({it.first->right, 1});
+//                     }
+//                 }
+//                 else {
+//                     post.push_back(it.first->val);
+//                 }
+//             }
+// 		}
+// };
